@@ -7,17 +7,19 @@ function mostrarTexto() {
     data = {nombre: a};
     document.getElementById('text1').textContent = data.nombre;
 }
-function consultarTipoCambio() {
+async function consultarTipoCambio() {
     try{
         const response = await fetch(banxicourl+token)
         if(!response.ok){
             console.log("sin respuesta")
             return
         }
-        const data=await response.json()
+        const data= await response.json()
         const series= data.bmx.series[0]
-        const tipCam = series.datos[0].datos 
+        const tipCam = series.datos[0].dato 
+        console.log(tipCam)
         document.getElementById("input0").value = tipCam;
+    
     } catch(error){
         console.log("error de informacion", error)
     }
