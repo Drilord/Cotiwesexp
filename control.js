@@ -17,6 +17,7 @@ function consultarTipoCambio() {
         const data=await response.json()
         const series= data.bmx.series[0]
         const tipCam = series.datos[0].datos 
+        document.getElementById("input0").value = tipCam;
     } catch(error){
         console.log("error de informacion", error)
     }
