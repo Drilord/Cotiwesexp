@@ -1,4 +1,19 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
+let datos = [
+    {
+        id: 1,
+        nombre: "Juan"
+    },
+    {
+        id: 2,
+        nombre: "Pedro"
+    }
+]
+
+b = datos[0].nombre;
+c = datos[1].nombre;
+console.log(b);
+console.log(c);
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno?token="
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
 function mostrarTexto() {
@@ -6,6 +21,10 @@ function mostrarTexto() {
     alert(a);
     data = {nombre: a};
     document.getElementById('text1').textContent = data.nombre;
+}
+function actualizar() {
+    a = document.getElementById('input0').value;
+    alert('Los datos se actualizaron correctamente!');
 }
 async function consultarTipoCambio() {
     try{
@@ -21,6 +40,6 @@ async function consultarTipoCambio() {
         document.getElementById("input0").value = tipCam;
     
     } catch(error){
-        console.log("error de informacion", error)
+        console.log("error de informacion recibida:", error)
     }
 }

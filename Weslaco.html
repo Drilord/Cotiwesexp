@@ -1,86 +1,153 @@
+
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="control.js"></script>
-    <title>Plantilla</title>
-    
-</head>
-<body>
-<script>window.onload = consultarTipoCambio()</script>
- <!--Ventana Modal-->
- <input type="checkbox" id="btn-modal">
- <div class="container-modal">
-    <div class="content-modal">
-        <div><img src="logo-WESLACO1.png" width="20%" alt="logo" align="left">
-        <h5 align="center">Ingresa los datos a actualizar:</h5></div>
-        <div><br>
-            <p>Aqui va el contenido de la ventana</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+       <script src="control.js"></script>
+    <title>Autocotizador</title>
+    <style>
+      .container {
+        background-color: rgb(236, 245, 225);
+        margin-top: 70px;
+      }
+      .div {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <script>window.onload = consultarTipoCambio()</script>
+    <!--Ventana modal-->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Modal title
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">...</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cerrar
+            </button>
+            <button
+              onclick="actualizar()"
+              type="button"
+              class="btn btn-primary"
+            >
+              Actualizar
+            </button>
+          </div>
         </div>
-        <div class="btn-cerrar">
-            <label for="btn-modal">Cerrar</label>
-        </div>
+      </div>
     </div>
-    <label for="btn-modal" class="cerrar-modal"></label>
-</div>
- <!--Fin Ventana Modal-->
- <div class="ventana-principal">
-    <div><img src="LOGO-WESLACO2.png" alt="logo weslaco" align="left">
-    <h3>Autocotizador</h3><br><br>
-    <h5>Por favor ingresa los datos:</h5>
-    </div>
-    <div>
-        <p>
-            <label for="input0">Tipo de Cambio DOF: </label><input text="$tipCam" type="text" id="input0">
-        </p>
-        <p>
-            <label for="input1">Nombre del cliente: </label><input type="text" id="input1">
-        </p>
-        <p>
-            <label for="input2">Localidad: </label><input type="text" id="input2">
-        </p>
-        <p>
-            <label for="input3">Kilometros: </label><input type="text" id="input3">
-        </p>
-        <p>
-            <label for="input4">Volumen de agua: </label><input type="text" id="input4">
-        </p>
-        <p>
-            <label for="input5">Profundidad del pozo(mts): </label><input type="text" id="input5">
-        </p>
-        <p>
-            <label for="input6">CDT(mts): </label><input type="text" id="input6">
-        </p>
-        <p>
-            <label for="input7">Gastos Indirectos: </label><input type="text" id="input7">
-        </p>
-        <p>
-            <label for="input8">Distancia de Boma a Paneles: </label><input type="text" id="input8">
-        </p>
-        <p>
-            <label for="check0">Agua Caliente: </label><input type="checkbox" id="check0">
-        </p>
-        <p>
-            <label for="input9">Costo Grua: </label><input type="text" id="input9">
-        </p>
-        <p>
-            <label for="input9">Vendedor: </label><input type="text" id="input10">
-        </p>
-    </div>
-    
-       
-    <button onclick="mostrarTexto()">Enviar</button>
-</div>   
+    <!--Fin Ventana modal-->
 
- <!--Boton Modal-->
- <div class="boton-modal">
-    <label for="btn-modal">
-        Actualizar datos
-    </label>
- </div>
- <!--Fin Boton Modal-->
-</body>
+    <!--Ventana Principal-->
+    <div class="container">
+      <div class="row justify-content-center align-items-center">
+        <div class="col-9"><h2>Autocotizador</h2></div>
+        <div class="col-1 align-items-center">
+          <img src="./images/LOGO-WESLACO2.png" alt="logo" />
+        </div>
+        <div class="col-2"></div>
+      </div>
+      <div class="row">
+        <h5>Por favor ingresa los datos:</h5>
+      </div>
+      <p>
+        <label for="input0">Tipo de Cambio DOF: </label
+        ><input type="text" id="input0" />
+      </p>
+      <p>
+        <label for="input1">Nombre del cliente: </label
+        ><input type="text" id="input1" />
+      </p>
+      <p>
+        <label for="input2">Localidad: </label><input type="text" id="input2" />
+      </p>
+      <p>
+        <label for="input3">Kilometros: </label
+        ><input type="text" id="input3" />
+      </p>
+      <p>
+        <label for="input4">Volumen de agua: </label
+        ><input type="text" id="input4" />
+      </p>
+      <p>
+        <label for="input5">Profundidad del pozo(mts): </label
+        ><input type="text" id="input5" />
+      </p>
+      <p>
+        <label for="input6">CDT(mts): </label><input type="text" id="input6" />
+      </p>
+      <p>
+        <label for="input7">Gastos Indirectos: </label
+        ><input type="text" id="input7" />
+      </p>
+      <p>
+        <label for="input8">Distancia de Bomba a Paneles: </label
+        ><input type="text" id="input8" />
+      </p>
+      <p>
+        <label for="check0">Agua Caliente: </label
+        ><input type="checkbox" id="check0" />
+      </p>
+      <p>
+        <label for="input9">Costo Grua: </label
+        ><input type="text" id="input9" />
+      </p>
+      <p>
+        <label for="input9">Vendedor: </label><input type="text" id="input9" />
+      </p>
+      <a href="./cotizacion.html" target="_blank" rel="noopener noreferrer">
+        <button onclick="mostrarTexto()" type="button" class="btn btn-success">
+          Cotizar
+        </button>
+      </a>
+    </div>
+    <div class="container text-center">
+      <!-- Button trigger modal -->
+      <button
+        type="button"
+        class="btn btn-success align-items-center"
+        data-bs-toggle="modal"
+        data-bs-target="#staticBackdrop"
+      >
+        Editar Datos
+      </button>
+    </div>
+    <!--Fin Ventana Principal-->
+  </body>
 </html>
