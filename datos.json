@@ -395,136 +395,136 @@
             "calibre": 10
         },
         {
-            "Modelo": "KOR3 R200-50F",
-            "hp": 20,
-            "precio": 4456,
-            "altMax": 329,
+            "Modelo": "KOR6 R150-12",
+            "hp": 15,
+            "precio": 1632,
+            "altMax": 147,
             "calibre": 10
         },
         {
-            "Modelo": "KOR3 R200-58F",
-            "hp": 20,
-            "precio": 4556,
-            "altMax": 382,
+            "Modelo": "KOR6 R150-13",
+            "hp": 15,
+            "precio": 1746,
+            "altMax": 157,
             "calibre": 10
         },
         {
-            "Modelo": "KOR3 R200-66F",
+            "Modelo": "KOR6 R200-14",
             "hp": 20,
-            "precio": 4556,
-            "altMax": 422,
+            "precio": 1920,
+            "altMax": 171,
             "calibre": 8
         },
         {
-            "Modelo": "KOR3 R200-58F",
+            "Modelo": "KOR6 R200-15",
             "hp": 20,
-            "precio": 4556,
-            "altMax": 382,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R200-66F",
-            "hp": 20,
-            "precio": 4556,
-            "altMax": 422,
+            "precio": 2035,
+            "altMax": 183,
             "calibre": 8
         },
         {
-            "Modelo": "KOR6 R30-2",
-            "hp": 3,
-            "precio": 560,
-            "altMax": 23,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR6 R50-3",
-            "hp": 5,
-            "precio": 674,
-            "altMax": 37,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR6 R50-4",
-            "hp": 5,
-            "precio": 750,
-            "altMax": 48,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR6 R75-5",
-            "hp": 7.5,
-            "precio": 900,
-            "altMax": 76,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R50-15",
-            "hp": 7.5,
-            "precio": 965,
-            "altMax": 94,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R75-21",
-            "hp": 10,
-            "precio": 1387,
-            "altMax": 132,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR3 R75-25",
-            "hp": 10,
-            "precio": 1561,
-            "altMax": 156,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR3 R100-30",
-            "hp": 10,
-            "precio": 1902,
-            "altMax": 189,
-            "calibre": 12
-        },
-        {
-            "Modelo": "KOR3 R150 -37",
-            "hp": 15,
-            "precio": 2046,
-            "altMax": 246,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R150-44",
-            "hp": 15,
-            "precio": 2411,
-            "altMax": 289,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R200-50F",
-            "hp": 15,
-            "precio": 4456,
-            "altMax": 329,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R200-58F",
-            "hp": 15,
-            "precio": 4556,
-            "altMax": 382,
-            "calibre": 10
-        },
-        {
-            "Modelo": "KOR3 R200-66F",
+            "Modelo": "KOR6 R200-16",
             "hp": 20,
-            "precio": 4556,
-            "altMax": 422,
-            "calibre": 8
+            "precio": 2109,
+            "altMax": 197,
+            "calibre": 6
         },
         {
-            "Modelo": "KOR3 R200-58F",
+            "Modelo": "KOR6 R200-17",
             "hp": 20,
-            "precio": 4556,
-            "altMax": 382,
+            "precio": 2179,
+            "altMax": 209,
+            "calibre": 6
+        },
+        {
+            "Modelo": "KOR6 R250-18",
+            "hp": 25,
+            "precio": 2375,
+            "altMax": 220,
+            "calibre": 6
+        },
+        {
+            "Modelo": "KOR6 R250-19",
+            "hp": 25,
+            "precio": 2488,
+            "altMax": 234,
+            "calibre": 6
+        },
+        {
+            "Modelo": "KOR6 R250-20",
+            "hp": 25,
+            "precio": 2602,
+            "altMax": 247,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R250-21",
+            "hp": 55,
+            "precio": 2714,
+            "altMax": 258,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R250-22",
+            "hp": 25,
+            "precio": 2829,
+            "altMax": 270,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R300-23",
+            "hp": 30,
+            "precio": 2943,
+            "altMax": 284,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R300-24",
+            "hp": 30,
+            "precio": 3056,
+            "altMax": 296,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R300-25",
+            "hp": 30,
+            "precio": 3169,
+            "altMax": 304,
+            "calibre": 4
+        },
+        {
+            "Modelo": "KOR6 R300-26",
+            "hp": 30,
+            "precio": 3283,
+            "altMax": 321,
+            "calibre": 2
+        },
+        {
+            "Modelo": "KOR6 R400-27",
+            "hp": 40,
+            "precio": 3396,
+            "altMax": 333,
+            "calibre": 2
+        },
+        {
+            "Modelo": "KOR6 R400-28",
+            "hp": 40,
+            "precio": 3509,
+            "altMax": 345,
+            "calibre": 2
+        },
+        {
+            "Modelo": "KOR6 R400-29",
+            "hp": 40,
+            "precio": 3623,
+            "altMax": 354,
+            "calibre": 2
+        },
+        {
+            "Modelo": "KOR6 R400-30",
+            "hp": 40,
+            "precio": 3736,
+            "altMax": 369,
             "calibre": 10
         },
         {
