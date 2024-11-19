@@ -1932,14 +1932,252 @@
     }
  ],
  "solar":{
-    "gabinetesArmados": {
-
-
-
-     },
+    "gabinetesArmados": [
+      {
+        "hp": 2,
+        "voltaje": 220,
+        "Sin filtro": 4983,
+        "filtro 150": 10783,
+        "filtro 500": 15983
+      },
+      {
+        "hp": 3,
+        "voltaje": 220,
+        "Sin filtro": 4574,
+        "filtro 150": 10374,
+        "filtro 500": 15574
+      },
+      {
+        "hp": 5,
+        "voltaje": 220,
+        "Sin filtro": 3174,
+        "filtro 150": 8974,
+        "filtro 500": 14174
+      },
+      {
+        "hp": 7.5,
+        "voltaje": 220,
+        "Sin filtro": 3529,
+        "filtro 150": 9329,
+        "filtro 500": 14529
+      },
+      {
+        "hp": 7.5,
+        "voltaje": 440,
+        "Sin filtro": 4233,
+        "filtro 150": 10033,
+        "filtro 500": 15233
+      },
+      {
+        "hp": 10,
+        "voltaje": 440,
+        "Sin filtro": 4074,
+        "filtro 150": 9874,
+        "filtro 500": 19374
+      },
+      {
+        "hp": 15,
+        "voltaje": 440,
+        "Sin filtro": 7524,
+        "filtro 150": 13824,
+        "filtro 500": 19024
+      },
+      {
+        "hp": 20,
+        "voltaje": 440,
+        "Sin filtro": 5345,
+        "filtro 150": 16845,
+        "filtro 500": 26345
+      },
+      {
+        "hp": 25,
+        "voltaje": 440,
+        "Sin filtro": 8086,
+        "filtro 150": 21486,
+        "filtro 500": 29586
+      },
+      {
+        "hp": 30,
+        "voltaje": 440,
+        "Sin filtro": 8987,
+        "filtro 150": 20987,
+        "filtro 500": 30487
+      },
+      {
+        "hp": 40,
+        "voltaje": 440,
+        "Sin filtro": 12978,
+        "filtro 150": 25328,
+        "filtro 500": 45828
+      },
+      {
+        "hp": 50,
+        "voltaje": 440,
+        "Sin filtro": 25120,
+        "filtro 150": 37470,
+        "filtro 500": 57970
+      },
+      {
+        "hp": 60,
+        "voltaje": 440,
+        "Sin filtro": 16762,
+        "filtro 150": 49612,
+        "filtro 500": ""
+      },
+      {
+        "hp": 75,
+        "voltaje": 440,
+        "Sin filtro": 24604,
+        "filtro 150": 65454,
+        "filtro 500": ""
+      },
+      {
+        "hp": 100,
+        "voltaje": 440,
+        "Sin filtro": 27688,
+        "filtro 150": 79638,
+        "filtro 500": ""
+      },
+      {
+        "hp": 150,
+        "voltaje": 440,
+        "Sin filtro": 61595,
+        "filtro 150": "",
+        "filtro 500": ""
+      },
+      {
+        "hp": 250,
+        "voltaje": 440,
+        "Sin filtro": 103828,
+        "filtro 150": "",
+        "filtro 500": ""
+      }
+    ],
+    "variadorSolar":[
+      {
+        "hp": 2,
+        "voltaje": 220,
+        "descripcion": "3 HP trifasico 220",
+        "amp": 10,
+        "precio": 7840
+      },
+      {
+        "hp": 3,
+        "voltaje": 220,
+        "descripcion": "5 HP trifasico 220",
+        "amp": 16,
+        "precio": 12800
+      },
+      {
+        "hp": 5,
+        "voltaje": 220,
+        "descripcion": "7.5 HP trifasico 220",
+        "amp": 20,
+        "precio": 17500
+      },
+      {
+        "hp": 7.5,
+        "voltaje": 220,
+        "descripcion": "10 HP trifasico 220",
+        "amp": 30,
+        "precio": 23345
+      },
+      {
+        "hp": 7.5,
+        "voltaje": 440,
+        "descripcion": "10 HP trifasico 440",
+        "amp": 18.5,
+        "precio": 15950
+      },
+      {
+        "hp": 10,
+        "voltaje": 440,
+        "descripcion": "15 HP trifasico 440",
+        "amp": 25,
+        "precio": 19800
+      },
+      {
+        "hp": 15,
+        "voltaje": 440,
+        "descripcion": "20 HP trifasico 440",
+        "amp": 32,
+        "precio": 23600
+      },
+      {
+        "hp": 20,
+        "voltaje": 440,
+        "descripcion": "25 HP trifasico 440",
+        "amp": 38,
+        "precio": 31800
+      },
+      {
+        "hp": 25,
+        "voltaje": 440,
+        "descripcion": "30 HP trifasico 440",
+        "amp": 45,
+        "precio": 36280
+      },
+      {
+        "hp": 30,
+        "voltaje": 440,
+        "descripcion": "40 HP trifasico 440",
+        "amp": 60,
+        "precio": 45800
+      },
+      {
+        "hp": 40,
+        "voltaje": 440,
+        "descripcion": "50 HP trifasico 440",
+        "amp": 75,
+        "precio": 52600
+      },
+      {
+        "hp": 50,
+        "voltaje": 440,
+        "descripcion": "60 HP trifasico 440",
+        "amp": 92,
+        "precio": 63800
+      },
+      {
+        "hp": 60,
+        "voltaje": 440,
+        "descripcion": "75 HP trifasico 440",
+        "amp": 115,
+        "precio": 80800
+      },
+      {
+        "hp": 75,
+        "voltaje": 440,
+        "descripcion": "100 HP trifasico 440",
+        "amp": 150,
+        "precio": 84500
+      },
+      {
+        "hp": 100,
+        "voltaje": 440,
+        "descripcion": "125 HP trifasico 440",
+        "amp": 180,
+        "precio": 94500
+      },
+      {
+        "hp": 150,
+        "voltaje": 440,
+        "descripcion": "150 HP trifasico 440",
+        "amp": 215,
+        "precio": 108800
+      },
+      {
+        "hp": 250,
+        "voltaje": 440,
+        "descripcion": "295HP trifasico",
+        "amp": 300,
+        "precio": 205000
+      }
+    ],
      "paneles": {
          "tipoPaneles": "Canadian",
-         "potencia": 550,
+         "potencia": 555,
+         "recio": 99.90,
          "cantidadxHP": [
             {
                 "hp":1,
