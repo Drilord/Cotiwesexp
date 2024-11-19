@@ -50,7 +50,7 @@ fetch('datos.json')
   }
   
 
-const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF43718/datos/oportuno?token="
+const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token="
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
 function mostrarTexto() {
     a = document.getElementById('input0').value;
