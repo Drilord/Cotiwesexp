@@ -1,8 +1,9 @@
 {
 "bomSol":
  {
- "bombas": {
-    "0.6 lt/s":[
+ "bombas": [
+    { "lts":0.6,
+      "modelos":[
         
                 {
                  "Modelo": "KOR07 R05-9",
@@ -54,8 +55,10 @@
                   "calibre":4
                 }
 
-            ],
-     "0.96 lt/s": [
+            ]
+    },
+    { "lts": 0.96,
+      "modelos": [
                 {
                     "Modelo": "KOR1.2 R05-5",
                     "hp": 0.5,
@@ -112,8 +115,10 @@
                     "altMax": 381,
                     "calibre": 8
                 }
-            ],
-     "1.4 lt/s": [
+            ]
+    },
+    { "lts": 1.4,
+      "modelos": [
         {
             "Modelo": "KOR2 R05-4",
             "hp": 0.5,
@@ -177,8 +182,10 @@
             "altMax": 356,
             "calibre": 8
         }
-     ],
-     "2.5 lt/s": [
+     ]
+    },
+    { "lts":2.5,
+      "modelos": [
         {
             "Modelo": "KOR3 R10-4",
             "hp": 1,
@@ -278,8 +285,10 @@
             "calibre": 4
         }
         
-     ],
-     "4.16 lt/s":[
+       ]
+     },
+     { "lts": 4.16,
+       "modelos":[
         {
             "Modelo": "KOR4.5 R20-3",
             "hp": 2,
@@ -315,8 +324,10 @@
             "altMax": 123,
             "calibre": 12
         }
-     ],
-     "5.33 lt/s": [
+     ]
+    },
+    { "lts": 5.33,
+      "modelos": [
         {
             "Modelo": "KOR6 R15-1",
             "hp": 1.5,
@@ -535,8 +546,10 @@
             "calibre": 8
         }
         
-     ],
-     "9.33 lt/s": [
+     ]
+    },
+    { "lts": 9.33,
+      "modelos": [
         {
             "Modelo": "KOR10 R20-1",
             "hp": 2,
@@ -747,8 +760,10 @@
             "altMax": 343,
             "calibre": 0
           }
-     ],
-     "15 lt/s": [
+     ]
+    },
+    { "lts": 15,
+      "15 lt/s": [
         {
             "Modelo": "KOR15 R20-1-1B",
             "hp": 2,
@@ -931,8 +946,10 @@
             "altMax": 242,
             "calibre": 0
           }
-     ],
-     "20 lt/s": [
+     ]
+    },
+    { "lts": 20,
+      "modelos": [
           {
             "Modelo": "KOR20 R50-1",
             "hp": 5,
@@ -1067,8 +1084,10 @@
             "calibre": 2
           } 
         
-     ],
-     "23.3 lt/s": [
+     ]
+    },
+    { "lts": 23.3,
+      "modelos": [
         {
             "Modelo": "KOR25 R75-1",
             "hp": 7.5,
@@ -1209,8 +1228,9 @@
             "altMax": 250,
             "calibre": "2/0"
           }
-     ],
-     "30 lt/s": [
+     ]},
+     { "lts": 30,
+       "modelos": [
         {
             "Modelo": "KOR32 R75-1A",
             "hp": 7.5,
@@ -1338,8 +1358,10 @@
             "calibre": "2/0"
           }
         
-     ],
-     "40 lt/s": [
+     ]
+    },
+    { "lts": 40,
+      "modelos": [
         {
             "Modelo": "KOR40 R150-1A",
             "hp": 15,
@@ -1432,8 +1454,9 @@
             "calibre": "2/0"
           }
         
-     ],
-     "53.3 lt/s": [
+     ]},
+     { "lts": 53.3,
+       "modelos": [
         {
             "Modelo": "KOR53 R200-1A",
             "hp": 20,
@@ -1511,8 +1534,9 @@
             "altMax": 119,
             "calibre": "2/0"
           } 
-     ],
-     "70 lt/s": [
+     ]},
+     { "lts": 70,
+       "modelos": [
         {
             "Modelo": "KOR70 R300-1-1",
             "hp": 30,
@@ -1555,8 +1579,10 @@
             "altMax": 83,
             "calibre": "2/0"
           }
-     ],
-     "motores":[
+     ]
+    },
+  ],
+  "motores":[
         {
             "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 0.5,
@@ -1738,12 +1764,11 @@
             "serie": "X"
           }
      ],
-     "kolosal":[
+  "BombasKolosal":[
         
-     ]
- },
- "equipamientoBomba":{
-    "1 1/4":[
+     ],
+  "equipamientoBomba":{
+     "1 1/4":[
         {
         "Accesorio": "Tubo Altamira Serie 150",
         "precio": 25 
@@ -1896,7 +1921,7 @@
         }
     ]
 
- },
+   },
  "cableSumergible":[
     {
         "calibre":12,

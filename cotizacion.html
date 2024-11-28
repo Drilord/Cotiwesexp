@@ -15,9 +15,24 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="control.js"></script>
     <title>Cotización</title>
+    ,<style>
+    @media print {
+        body {
+           width: 100%;
+           margin: 0cm;
+           font-size: 12px;
+
+        }
+    }
+    .section{
+      page-break-after: always;
+    }
+  </style>
   </head>
   <body>
+    <section>
     <div class="container">
       <div class="card" style="width: 90%">
         <div class="row">
@@ -146,6 +161,8 @@
         </div>
       </div>
     </div>
+  </section>
+  <section>
     <div class="container">
       <div class="card" style="width: 90%">
         <div class="row">
@@ -228,6 +245,8 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-7">
+      </section>
+      <section>
             <h4>Rendimiento diario en promedio bomba de:</h4>
           </div>
           <div class="col-3">
@@ -300,6 +319,8 @@
         </div>
       </div>
     </div>
+  </section>
+<section>
     <div class="container text-center">
       <div class="card" style="width: 90%">
         <div class="row">
