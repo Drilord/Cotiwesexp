@@ -2348,8 +2348,18 @@
          }
 
 
-     }
+     },
+ "radiacion":[
+  {"mes": "enero",
+    "radSol": 5.53,
+    "dias": 31
+  },
+  {"mes": "febrero",
+    "radSol": 6.13,
+    "dias": 29
+  }
 
+ ]
  }
 
 }

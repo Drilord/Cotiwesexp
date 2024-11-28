@@ -32,7 +32,7 @@ const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
 
 
 function mostrarTexto() {
-    a = document.getElementById('input0').value;
+    a = document.getElementById('vendSelect').value;
     alert(a);
     data = {nombre: a};
     document.getElementById('text1').textContent = data.nombre;
@@ -60,11 +60,48 @@ async function consultarTipoCambio() {
     }
 }
 
-function datosBomba(jsonData, cdt, lts) {
-/*usando cdt calcular la bomba que de la altura maxima mas cercana hacia arriba
- esta bomba se busca en el json por lt/s que los dan en los datos 
- esta funcion debe regresar elmodelo, precio, los hp de la bomba y el calibre de cable */
+async function datosBomba() {
+let datosBomba= null 
+const lts= document.getElementById("ltsSelect").value 
+const cdt= document.getElementById("input6").value 
+    try{
+        const response = await fetch('datos.json')
+        if(!response.ok){
+            console.log("sin respuesta")
+            return
+        }      
+        const data= await response.json()
+        
+        data.bomSol.bombas.forEach(bomba=>{
+          if(lts==bomba.lts){
+            bomba.modelos.forEach(model=>{
+              if(model.altMax >= cdt){
+                if(!datosBomba){
+               datosBomba= model
+                }
+              }
+              })
+          }
+        });
+        
+
+    } catch(error){
+        console.log("error de informacion json recibida:", error)
+    }
+    if(datosBomba){
+    alert(datosBomba.Modelo)
+    return datosBomba
+    }
+    else{
+      alert("No existe bomba de "+lts+" lt/s para altura de "+cdt)
+    }
 }
+
+/*function datosBomba(jsonData, cdt, lts) {
+usando cdt calcular la bomba que de la altura maxima mas cercana hacia arriba
+ esta bomba se busca en el json por lt/s que los dan en los datos 
+ esta funcion debe regresar elmodelo, precio, los hp de la bomba y el calibre de cable 
+}*/
 function equipBomb(modelo, altMax, lts, hp){
   /*esta funcion debe calcular el equipamento de la bomba de acuerdo a los lt/s se usa un diametro de tuberia y se le suman todas las piezas esta funcion debe calcular
   el precio total del equipamiento que es por metro so se calcula en base a la altura maxima de la bomba elegida, debe retornar precio, */
