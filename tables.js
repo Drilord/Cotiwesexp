@@ -1,4 +1,4 @@
-tables.js
+
 /* load data and create tables*/
 fetch('datos.json')
   .then(response => response.json())
@@ -15,8 +15,7 @@ fetch('datos.json')
   function createTables(jsonData) {
     const container = document.querySelector(".tcontainer");
   
-    // Loop through each flow rate in the "bombas" section
-    for (const flowRate in jsonData.bomSol.bombas) {
+    jsonData.bomSol.bombas.forEach(bomba => {
       const table = document.createElement("table");
       table.classList.add("table", "table-striped");
   
@@ -26,7 +25,7 @@ fetch('datos.json')
       table.appendChild(headerRow);
   
       // Loop through each pump for the current flow rate
-      jsonData.bomSol.bombas[flowRate].forEach((pump) => {
+      bomba.modelos.forEach((pump) => {
         const row = document.createElement("tr");
         row.innerHTML = `
           <td>${pump.Modelo}</td>
@@ -40,11 +39,11 @@ fetch('datos.json')
   
       // Add table caption (optional)
       const caption = document.createElement("caption");
-      caption.textContent = `Bombas - ${flowRate}`;
+      caption.textContent = `Bombas - ${bomba.lts}`;
       table.appendChild(caption);
   
       // Append the table to the container
       container.appendChild(table);
-    }
+    });
   }
   

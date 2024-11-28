@@ -1,6 +1,23 @@
 {
 "bomSol":
  {
+ "vendedores":[
+    {
+      "nombre": "Weslaco Energías Renovables",
+      "tel": "(332)8197749",
+      "mail": "info@weslaco.com.mx"
+    },
+    {
+      "nombre": "Jose Carlos Barrera Sepúlveda",
+      "tel": "(331)0418217",
+      "mail": "gerencia.ventas@weslaco.com.mx"
+    },
+    {
+      "nombre": "Edgar Pachely Godinez",
+      "tel": "(342)1011664",
+      "mail": "ingenieria@weslaco.com.mx"
+    }
+ ], 
  "bombas": [
     { "lts":0.6,
       "modelos":[
@@ -763,7 +780,7 @@
      ]
     },
     { "lts": 15,
-      "15 lt/s": [
+      "modelos": [
         {
             "Modelo": "KOR15 R20-1-1B",
             "hp": 2,
@@ -1580,7 +1597,7 @@
             "calibre": "2/0"
           }
      ]
-    },
+    }
   ],
   "motores":[
         {

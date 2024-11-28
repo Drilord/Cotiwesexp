@@ -1,9 +1,36 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 
+fetch('datos.json')
+  .then(response => response.json())
+  .then(jsonData => {
+       const ltsSelect = document.getElementById('ltsSelect');
+    const vendSelect = document.getElementById('vendSelect');
+// Populate the select options
+jsonData.bomSol.bombas.forEach(bomba => {
+  const option = document.createElement('option');
+  option.value = bomba.lts;
+  option.text = bomba.lts+" lt/s";
+  ltsSelect.appendChild(option);
+});
+jsonData.bomSol.vendedores.forEach(vend => {
+  const option = document.createElement('option');
+  option.value = vend.nombre;
+  option.text = vend.nombre;
+  vendSelect.appendChild(option);
+});
 
 
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
+
+/*consultar tipo de cambio*/
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token="
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
+
+
 function mostrarTexto() {
     a = document.getElementById('input0').value;
     alert(a);
@@ -15,7 +42,6 @@ function actualizar() {
     alert('Los datos se actualizaron correctamente!');
 }
 
-/*consultar tipo de cambio*/
 async function consultarTipoCambio() {
     try{
         const response = await fetch(banxicourl+token)
@@ -32,4 +58,23 @@ async function consultarTipoCambio() {
     } catch(error){
         console.log("error de informacion recibida:", error)
     }
+}
+
+function datosBomba(jsonData, cdt, lts) {
+/*usando cdt calcular la bomba que de la altura maxima mas cercana hacia arriba
+ esta bomba se busca en el json por lt/s que los dan en los datos 
+ esta funcion debe regresar elmodelo, precio, los hp de la bomba y el calibre de cable */
+}
+function equipBomb(modelo, altMax, lts, hp){
+  /*esta funcion debe calcular el equipamento de la bomba de acuerdo a los lt/s se usa un diametro de tuberia y se le suman todas las piezas esta funcion debe calcular
+  el precio total del equipamiento que es por metro so se calcula en base a la altura maxima de la bomba elegida, debe retornar precio, */
+}
+function motorBomba(hp,temp){
+  /*esta funcion debe elegir el motor de bomba segun los hp y si es para agua caliente o normal
+   debe retornar el motor modelo y precio*/
+}
+function datosSolar(hp, distPan){
+/*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
+  con los hp se calcula el gabinete armado y el variador normalmente el variador es el que sigue en HP ejemplo si la bomba es de 10 el variador es de 15 y asi
+  esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio, */
 }
