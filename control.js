@@ -3,8 +3,9 @@ let a, b, c, d, e, f, g, h, i, j, k, l;
 fetch('datos.json')
   .then(response => response.json())
   .then(jsonData => {
-       const ltsSelect = document.getElementById('ltsSelect');
+    const ltsSelect = document.getElementById('ltsSelect');
     const vendSelect = document.getElementById('vendSelect');
+    const input6 = document.getElementById('input6');
 // Populate the select options
 jsonData.bomSol.bombas.forEach(bomba => {
   const option = document.createElement('option');
@@ -18,6 +19,12 @@ jsonData.bomSol.vendedores.forEach(vend => {
   option.text = vend.nombre;
   vendSelect.appendChild(option);
 });
+
+input6.addEventListener('blur', () => {
+  datosBomba(jsonData);
+
+});
+
 
 
   })
@@ -60,17 +67,11 @@ async function consultarTipoCambio() {
     }
 }
 
-async function datosBomba() {
+function datosBomba(data) {
 let datosBomba= null 
 const lts= document.getElementById("ltsSelect").value 
 const cdt= document.getElementById("input6").value 
-    try{
-        const response = await fetch('datos.json')
-        if(!response.ok){
-            console.log("sin respuesta")
-            return
-        }      
-        const data= await response.json()
+
         
         data.bomSol.bombas.forEach(bomba=>{
           if(lts==bomba.lts){
@@ -83,25 +84,17 @@ const cdt= document.getElementById("input6").value
               })
           }
         });
-        
-
-    } catch(error){
-        console.log("error de informacion json recibida:", error)
-    }
     if(datosBomba){
-    alert(datosBomba.Modelo)
-    return datosBomba
+
+      alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
+      return datosBomba;
     }
     else{
       alert("No existe bomba de "+lts+" lt/s para altura de "+cdt)
     }
 }
 
-/*function datosBomba(jsonData, cdt, lts) {
-usando cdt calcular la bomba que de la altura maxima mas cercana hacia arriba
- esta bomba se busca en el json por lt/s que los dan en los datos 
- esta funcion debe regresar elmodelo, precio, los hp de la bomba y el calibre de cable 
-}*/
+
 function equipBomb(modelo, altMax, lts, hp){
   /*esta funcion debe calcular el equipamento de la bomba de acuerdo a los lt/s se usa un diametro de tuberia y se le suman todas las piezas esta funcion debe calcular
   el precio total del equipamiento que es por metro so se calcula en base a la altura maxima de la bomba elegida, debe retornar precio, */
