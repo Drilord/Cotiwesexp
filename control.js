@@ -123,3 +123,10 @@ const selectedValue = dropdown.value;
 const legendText = maxAltValues[selectedValue];
 cdtMax.textContent = `(${legendText})`;
 }
+
+/* to check session storage
+navigator.storage.estimate().then(estimate => {
+  console.log('Quota:', estimate.quota);
+  console.log('Usage:', estimate.usage);
+});
+*/
