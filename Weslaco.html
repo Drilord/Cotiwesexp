@@ -102,16 +102,18 @@
         ><input type="text" id="input3" />
       </p>
       <p>
-        <label for="input4">Volumen de agua: </label>
-        <select id="ltsSelect"></select>
+        <label for="ltsSelect">Volumen de agua: </label>
+        <select id="ltsSelect" onchange="maxCDT()"></select>
       </p>
       <p>
         <label for="input5">Profundidad del pozo(mts): </label
         ><input type="text" id="input5" />
       </p>
       <p>
-        <label for="input6">CDT(mts): </label><input onblur="datosBomba()" type="text" id="input6" />
-      </p>
+        <label for="input6">CDT(mts): </label>
+        <input onblur="datosBomba()" type="text" id="input6" />
+        <span Style="color: crimson;" id="cdtMax">(CDT Max 360mts)</span>
+        </p>
       <p>
         <label for="input7">Gastos Indirectos: </label
         ><input type="text" id="input7" />
