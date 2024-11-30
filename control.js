@@ -1,4 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
+let selPump
 
 fetch('datos.json')
   .then(response => response.json())
@@ -21,7 +22,7 @@ jsonData.bomSol.vendedores.forEach(vend => {
 });
 
 input6.addEventListener('blur', () => {
-  datosBomba(jsonData);
+selPump=datosBomba(jsonData);
 
 });
 
@@ -39,7 +40,8 @@ const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
 
 
 function mostrarTexto() {
-    a = document.getElementById('vendSelect').value;
+    console.log(selPump.Modelo)
+    a = genID()
     alert(a);
     data = {nombre: a};
     document.getElementById('text1').textContent = data.nombre;
@@ -86,11 +88,12 @@ const cdt= document.getElementById("input6").value
         });
     if(datosBomba){
 
-      alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
+     //alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
       return datosBomba;
     }
     else{
       alert("No existe bomba de "+lts+" lt/s para altura de "+cdt)
+      maxCDT();
     }
 }
 
@@ -111,17 +114,31 @@ function datosSolar(hp, distPan){
 function maxCDT(){
 const dropdown = document.getElementById('ltsSelect');
 const cdtMax = document.getElementById('cdtMax');
-if (!dropdown){ console.error("Error: Could not find dropdown element.");}
-if(!cdtMax)   { console.error("Error: Could not find cdtMax element.");}
+const cdt= document.getElementById("input6").value 
+//if (!dropdown){ console.error("Error: Could not find dropdown element.");}
+//if(!cdtMax)   { console.error("Error: Could not find cdtMax element.");}
 const maxAltValues = {
-  0.6: 'CDT Max 360mts',0.96: 'CDT Max 381mts', 1.4: 'CDT Max 356mts', 
-  2.5: 'CDT Max 422mts', 4.16: 'Altura Max 123mts', 5.33: 'Altura Max 369mts', 
-  9.33: 'Altura Max 343mts', 15: 'Altura Max 242mts', 20: 'Altura Max 182mts',
-  23.3: 'Altura Max 250mts', 30: 'Altura Max 190mts', 40: 'Altura Max 144mts',
-  53.3: 'Altura Max 119mts', 70: 'Altura Max 83mts'}
+  0.6: 360,0.96: 381, 1.4: 356, 
+  2.5: 422, 4.16:123, 5.33:369, 
+  9.33:343, 15: 242, 20:182,
+  23.3:250, 30:190, 40:144,
+  53.3:119, 70:83}
 const selectedValue = dropdown.value;
 const legendText = maxAltValues[selectedValue];
-cdtMax.textContent = `(${legendText})`;
+cdtMax.textContent = `(CDT Max ${legendText}mts)`;
+if(cdt>legendText){cdtMax.textContent = `(Elegir otro Volumen de agua, CDT Max ${legendText}mts)`;}
+else{cdtMax.textContent = `(CDT Max ${legendText}mts)`;}
+}
+
+function genID() {
+  const nom = document.getElementById('input1').value;
+  const loc = document.getElementById('input2').value;
+  const selHp = selPump.hp
+  const nom3 = nom.substring(0, 3).toUpperCase();
+  const loc3 = loc.substring(0, 3).toUpperCase();
+  const finalID = `WES-${nom3}-${loc3}-${selHp}`;
+
+  return finalID;
 }
 
 /* to check session storage
