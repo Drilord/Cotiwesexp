@@ -1,15 +1,16 @@
 /*<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=TU_CLAVE_API&libraries=places,geometry&callback=initMap">
 
-    TU_CLAVE_API se debe obtener con la cuenta de wesh podemos usar una para pruebas de expertease solo monitorear el uso 
+    TU_CLAVE_API se debe obtener con la cuenta de weslaco podemos usar una para pruebas de expertease solo monitorear el uso 
 
 </script>
 <input type="text" id="localidadInput" placeholder="Ingrese una localidad">
 <div id="resultado"></div>*/
 
+
 function initMap() {
     // Localidad guardada (ejemplo)
-    const localidadGuardada = { lat: 19.4326, lng: -99.1332 }; // Cambiar a 20.663980957136737, -103.45710300887333 weslaco energias renovables
+    const localidadGuardada = { lat: 20.6639, lng: -103.4571 }; // weslaco energias renovables
 
     const input = document.getElementById('localidadInput');
     const resultado = document.getElementById('resultado');

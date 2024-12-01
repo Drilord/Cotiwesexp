@@ -1,21 +1,46 @@
-
+let jason
 /* load data and create tables*/
+
 fetch('datos.json')
   .then(response => response.json())
   .then(jsonData => {
-    // Data is now in the 'data' variable
-    console.log(jsonData);
-       // Create tables using the fetched data
-       createTables(jsonData);
+    // Data is now in the 'jason' global variable
+    jason=jsonData
   })
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+/*modificar a que sea void y mas bien usa la variable jason y en el html poner boton de ver bombas KOR on click KOR() despues
+ hacer una funcion para cada conjunto iterativo de tablas que compartan columnas hacer que tenga un boton ocultar que cree la func como event listener para ocultarla
+ 
+ analizar para agregar boton que esconda las tablas de kor() 
+  const container = document.querySelector(".tcontainer");
 
-  function createTables(jsonData) {
+  // Create the button
+  const toggleButton = document.createElement("button");
+  toggleButton.textContent = "Hide/Show Tables";
+  toggleButton.addEventListener("click", () => {
+    const tables = container.querySelectorAll(".kor-table");
+    tables.forEach(table => {
+      table.style.display = table.style.display === "none" ? "table" : "none";
+    });
+  });
+  container.appendChild(toggleButton);
+
+  // ... rest of your table creation code ...
+
+  // Add the "kor-table" class to each table
+  const tables = container.querySelectorAll("table");
+  tables.forEach(table => {
+    table.classList.add("kor-table");
+  });
+}
+ 
+ */
+  function KOR() {
     const container = document.querySelector(".tcontainer");
   
-    jsonData.bomSol.bombas.forEach(bomba => {
+    jason.bomSol.bombas.forEach(bomba => {
       const table = document.createElement("table");
       table.classList.add("table", "table-striped");
   
@@ -39,7 +64,7 @@ fetch('datos.json')
   
       // Add table caption (optional)
       const caption = document.createElement("caption");
-      caption.textContent = `Bombas - ${bomba.lts}`;
+      caption.textContent = `Bombas de - ${bomba.lts}lt/s`;
       table.appendChild(caption);
   
       // Append the table to the container
