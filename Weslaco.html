@@ -88,6 +88,10 @@
         <h5>Por favor ingresa los datos:</h5>
       </div>
       <p>
+        <label for="idCot">Identificador: </label
+        ><input type="text" id="idCot" readonly />
+      </p>
+      <p>
         <label for="input0">Tipo de Cambio DOF: </label
         ><input type="text" id="input0" readonly />
       </p>
@@ -135,11 +139,11 @@
         <label for="input9">Vendedor: </label>
         <select id="vendSelect"></select>
       </p>
-      <a href="./cotizacion.html" target="_blank" rel="noopener noreferrer">
-        <button onclick="mostrarTexto()" type="button" class="btn btn-success">
-          Cotizar
+        <button id="validar" onclick="validar()" type="button" class="btn btn-success">
+          Validar
         </button>
-      </a>
+        
+ 
     </div>
     <div class="container text-center">
       <!-- Button trigger modal -->

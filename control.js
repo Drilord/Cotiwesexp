@@ -39,13 +39,45 @@ const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF1856
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd"
 
 
-function mostrarTexto() {
-    console.log(selPump.Modelo)
-    a = genID()
-    alert(a);
-    data = {nombre: a};
-    document.getElementById('text1').textContent = data.nombre;
+function validar() {
+ b=document.getElementById('input1')
+  if(!b.value){
+    alert("El campo nombre no puede estar vacio PUÑETAS!")
+ }
+ else{
+      // Create the new button element
+    const exiBtn = document.getElementById('cotizar'); 
+    if(!exiBtn){
+    const cotizarButton = document.createElement('a');
+    cotizarButton.href = './cotizacion.html';
+    cotizarButton.target = '_blank';
+    cotizarButton.rel = 'noopener noreferrer';
+    const buttonElement = document.createElement('button');
+    buttonElement.id = 'cotizar';
+    buttonElement.type = 'button';
+    buttonElement.classList.add('btn', 'btn-success');
+    buttonElement.textContent = 'Cotizar';
+    buttonElement.onclick = cotizar;
+    cotizarButton.appendChild(buttonElement);
+     // Append the new button to the DOM
+     const validarButton = document.getElementById('validar');
+     validarButton.parentNode.appendChild(cotizarButton);
+    }
+    
+  }
 }
+
+function cotizar(){ 
+    console.log(selPump.Modelo)
+    c = genID()
+    alert(c);
+    d=document.getElementById('idCot').value;
+    d = c;
+    saveToLocalStorage('cotData', selPump);
+    
+    //window.open('./cotizacion.html', '_blank');
+  }
+
 function actualizar() {
     a = document.getElementById('input0').value;
     alert('Los datos se actualizaron correctamente!');
@@ -132,18 +164,22 @@ else{cdtMax.textContent = `(CDT Max ${legendText}mts)`;}
 
 function genID() {
   const nom = document.getElementById('input1').value;
-  const loc = document.getElementById('input2').value;
+  const vend = document.getElementById('vendSelect').value;
   const selHp = selPump.hp
   const nom3 = nom.substring(0, 3).toUpperCase();
-  const loc3 = loc.substring(0, 3).toUpperCase();
-  const finalID = `WES-${nom3}-${loc3}-${selHp}`;
+  const vend3 = vend.substring(0, 3).toUpperCase();
+  const finalID = `BomSol-${nom3}-${vend3}-${selHp}`;
 
   return finalID;
 }
 
-/* to check session storage
-navigator.storage.estimate().then(estimate => {
-  console.log('Quota:', estimate.quota);
-  console.log('Usage:', estimate.usage);
-});
-*/
+function saveToLocalStorage(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    console.log('Object saved to local storage successfully.');
+  } catch (error) {
+    console.error('Error saving object to local storage:', error);
+  }
+}
+
+
