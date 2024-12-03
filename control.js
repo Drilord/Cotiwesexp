@@ -177,7 +177,7 @@ function datosBomba(data) {
 let datosBomba= null ;
 const lts= document.getElementById("ltsSelect").value ;
 const cdt= document.getElementById("input6").value; 
-const hpDisp= document.getElementById("hp").value; 
+const hpDisp= document.getElementById("hp"); 
       
         
         data.bomSol.bombas.forEach(bomba=>{
@@ -194,7 +194,7 @@ const hpDisp= document.getElementById("hp").value;
     if(datosBomba){
 
      //alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
-      hpDisp = datosBomba.hp ;
+      hpDisp.value = datosBomba.hp ;
 
       return datosBomba;
     }
