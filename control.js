@@ -51,11 +51,13 @@ function cotTypVal(){
          return;
       }
       if (!solar.checked && bombeo.checked) {
+        document.getElementById("hp").disabled = true;
         alert("Solo bombeo");
         cotType= 1;
       }  
       if (solar.checked && !bombeo.checked) {
-        alert("Solo Solar"); 
+        document.getElementById("hp").disabled = false;
+                alert("Solo Solar"); 
         cotType= 2; 
       }
       if (solar.checked && bombeo.checked) {
@@ -64,6 +66,7 @@ function cotTypVal(){
         element.disabled = false; });
         document.getElementById("idCot").disabled = true;
         document.getElementById("input0").disabled = true;
+        document.getElementById("hp").disabled = true;
         cotType= 3;
       }  
 }
@@ -71,6 +74,24 @@ function cotTypVal(){
 /*consultar tipo de cambio*/
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token=";
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd";
+async function consultarTipoCambio() {
+  try{
+      const response = await fetch(banxicourl+token);
+      if(!response.ok){
+          console.log("sin respuesta");
+          return;
+      }
+      const data= await response.json();
+      const series= data.bmx.series[0];
+      const tipCam = series.datos[0].dato ;
+      console.log(tipCam);
+      document.getElementById("input0").value = tipCam;;
+  
+  } catch(error){
+      console.log("error de informacion recibida:", error);
+  }
+}
+
 
 
 function validar() {
@@ -151,29 +172,13 @@ function actualizar() {
     alert('Los datos se actualizaron correctamente!');
 }
 
-async function consultarTipoCambio() {
-    try{
-        const response = await fetch(banxicourl+token);
-        if(!response.ok){
-            console.log("sin respuesta");
-            return;
-        }
-        const data= await response.json();
-        const series= data.bmx.series[0];
-        const tipCam = series.datos[0].dato ;
-        console.log(tipCam);
-        document.getElementById("input0").value = tipCam;;
-    
-    } catch(error){
-        console.log("error de informacion recibida:", error);
-    }
-}
 
 function datosBomba(data) {
 let datosBomba= null ;
 const lts= document.getElementById("ltsSelect").value ;
 const cdt= document.getElementById("input6").value; 
-
+const hpDisp= document.getElementById("hp").value; 
+      
         
         data.bomSol.bombas.forEach(bomba=>{
           if(lts==bomba.lts){
@@ -189,6 +194,8 @@ const cdt= document.getElementById("input6").value;
     if(datosBomba){
 
      //alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
+      hpDisp = datosBomba.hp ;
+
       return datosBomba;
     }
     else{
@@ -216,13 +223,13 @@ data.bomSol.motores.forEach(motor=>{
             if(hp==motor.hp){
               if(temp){
                 if(motor.serie=='X')
-                  alert('entro al if serie x Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
+                 // alert('entro al if serie x Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
                 return datosMot;
               }
               if(!temp){
               if(motor.serie=='RT'){
-                alert('entro al if serie RT Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
+                // alert('entro al if serie RT Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
                 return datosMot;
               }          
@@ -231,7 +238,7 @@ data.bomSol.motores.forEach(motor=>{
           }
         });
           if(datosMot){
-          alert('if datosMot Modelo: '+datosMot.Modelo+' Serie: '+datosMot.serie+'hp: '+datosMot.hp);
+          //alert('if datosMot Modelo: '+datosMot.Modelo+' Serie: '+datosMot.serie+'hp: '+datosMot.hp);
           return datosMot;
           }
           
