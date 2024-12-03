@@ -26,6 +26,11 @@
       .div {
         margin: 10px;
       }
+      
+      .standard-input {
+        width: 250px;
+      }
+
     </style>
   </head>
   <body>
@@ -53,7 +58,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">...</div>
+          <div class="modal-body">Todavia no sirve jaja</div>
           <div class="modal-footer">
             <button
               type="button"
@@ -77,68 +82,83 @@
 
     <!--Ventana Principal-->
     <div class="container">
-      <div class="row justify-content-center align-items-center">
-        <div class="col-9"><h2>Autocotizador</h2></div>
-        <div class="col-1 align-items-center">
+      <div class="row g-3">
+        <div class="col-4"><h2>Autocotizador</h2></div>
+        <div class="col-4 align-items-center">
           <img src="./images/LOGO-WESLACO2.png" alt="logo" />
         </div>
-        <div class="col-2"></div>
+        <div class="col-4"></div>
       </div>
       <div class="row">
         <h5>Por favor ingresa los datos:</h5>
       </div>
-      <p>
-        <label for="idCot">Identificador: </label
-        ><input type="text" id="idCot" readonly />
-      </p>
-      <p>
-        <label for="input0">Tipo de Cambio DOF: </label
-        ><input type="text" id="input0" readonly />
-      </p>
-      <p>
-        <label for="input1">Nombre del cliente: </label
-        ><input type="text" id="input1" />
-      </p>
-      <p>
-        <label for="input2">Localidad: </label><input type="text" id="input2" />
-      </p>
-      <p>
-        <label for="input3">Kilometros: </label
-        ><input type="text" id="input3" />
-      </p>
-      <p>
-        <label for="ltsSelect">Volumen de agua: </label>
-        <select id="ltsSelect" onchange="maxCDT()"></select>
-      </p>
-      <p>
-        <label for="input5">Profundidad del pozo(mts): </label
-        ><input type="text" id="input5" />
-      </p>
-      <p>
-        <label for="input6">CDT(mts): </label>
-        <input type="text" id="input6" />
-        <span Style="color: crimson;" id="cdtMax">(CDT Max 360mts)</span>
-        </p>
-      <p>
-        <label for="input7">Gastos Indirectos: </label
-        ><input type="text" id="input7" />
-      </p>
-      <p>
-        <label for="input8">Distancia de Bomba a Paneles: </label
-        ><input type="text" id="input8" />
-      </p>
-      <p>
-        <label for="check0">Agua Caliente: </label
-        ><input type="checkbox" id="check0" />
-      </p>
-      <p>
-        <label for="input9">Costo Grua: </label
-        ><input type="text" id="input9" />
-      </p>
-      <p>
-        <label for="input9">Vendedor: </label>
-        <select id="vendSelect"></select>
-      </p>
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <label for="check1">Cotizar Bombeo:</label>
+          <input type="checkbox" id="check1" checked onchange="cotTypVal()"/>
+        </div>
+        <div class="col-sm-5" >
+          <label for="check2">Cotizar Solar:</label>
+          <input type="checkbox" id="check2" checked onchange="cotTypVal()"/>
+        </div>
+        <div class="col-sm-3">
+        </div>    
+      </div>
+      <table>
+        <tr>
+          <td><label for="idCot">Identificador: </label></td>
+          <td><input class="standard-input" type="text" id="idCot" disabled value="Autogenerado" /></td>
+        </tr>  
+        <tr>
+        <td><label for="input0">Tipo de Cambio DOF: </label></td>
+        <td><input class="standard-input" type="text" id="input0" disabled /></td>
+        </tr>
+      <tr>
+        <td><label for="input1">Nombre del cliente: </label></td>
+        <td> <input class="standard-input" type="text" id="input1" /></td>
+        </tr>
+      <tr>
+        <td><label for="input2">Localidad: </label></td>
+        <td><input class="standard-input" type="text" id="input2" /></td>
+      </tr>
+      <tr>
+        <td><label for="input3">Kilometros: </label></td>
+        <td><input class="standard-input" type="text" id="input3" /></td>
+        </tr>
+      <tr>
+        <td><label for="ltsSelect">Volumen de agua: </label></td>
+        <td><select class="standard-input" id="ltsSelect" onchange="maxCDT()"></select></td>
+      </tr>
+      <tr>
+        <td><label for="input5">Profundidad del pozo(mts): </label></td>
+        <td><input class="standard-input" type="text" id="input5" /></td>
+        </tr>
+      <tr>
+        <td><label for="input6">CDT(mts): </label></td>
+        <td><input class="standard-input" type="text" id="input6" />
+        <span Style="color: crimson;" id="cdtMax">(CDT Max 360mts)</span></td>
+      </tr>
+      <tr>
+        <td><label for="input7">Gastos Indirectos: </label></td>
+        <td><input class="standard-input" type="text" id="input7" /></td>
+        </tr>
+      <tr>
+        <td><label for="input8">Distancia de Bomba a Paneles: </label></td>
+        <td><input class="standard-input" type="text" id="input8" /></td>
+        </tr>
+      <tr>
+        <td><label for="check0">Agua Caliente: </label></td>
+        <td><input class="standard-input" type="checkbox" id="check0" /></td>
+        </tr>
+      <tr>
+        <td><label for="input9">Costo Grua: </label></td>
+        <td><input class="standard-input" class="standard-input" type="text" id="input9" /></td>
+        </tr>
+      <tr>
+        <td><label for="input9">Vendedor: </label></td>
+        <td><select class="standard-input" id="vendSelect"></select></td>
+      </tr>
+    </table>
         <button id="validar" onclick="validar()" type="button" class="btn btn-success">
           Validar
         </button>

@@ -1,4 +1,4 @@
-let jason
+let jason, a=1;
 /* load data and create tables*/
 
 fetch('datos.json')
@@ -39,10 +39,14 @@ fetch('datos.json')
  */
   function KOR() {
     const container = document.querySelector(".tcontainer");
-  
+    const exiTab = document.getElementById('KOR1'); 
+    if(!exiTab){
     jason.bomSol.bombas.forEach(bomba => {
+   
       const table = document.createElement("table");
       table.classList.add("table", "table-striped");
+      table.id="KOR"+a;
+    
   
       // Create table header row
       const headerRow = document.createElement("tr");
@@ -60,8 +64,9 @@ fetch('datos.json')
           <td>${pump.calibre}</td>
         `;
         table.appendChild(row);
+
       });
-  
+      
       // Add table caption (optional)
       const caption = document.createElement("caption");
       caption.textContent = `Bombas de - ${bomba.lts}lt/s`;
@@ -69,6 +74,8 @@ fetch('datos.json')
   
       // Append the table to the container
       container.appendChild(table);
+      a=a+1;
     });
+  } 
   }
   

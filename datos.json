@@ -1604,181 +1604,211 @@
             "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 0.5,
             "precio": 442,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
             "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 1,
             "precio": 511,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
-            "Modelo": "MOTOR ALTAMIRA  3 FASES 220V 4 in",
+            "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4 in",
             "hp": 1.5,
             "precio": 589,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
-            "Modelo": "MOTOR ALTAMIRA  3 FASES 220V 4in",
+            "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 2,
             "precio": 648,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
-            "Modelo": "MOTOR ALTAMIRA  3 FASES 220V 4in",
+            "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 3,
             "precio": 887,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
-            "Modelo": "MOTOR ALTAMIRA  3 FASES 220V 4in",
+            "Modelo": "MOTOR ALTAMIRA 3 FASES 220V 4in",
             "hp": 5,
             "precio": 1466,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 220
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 7.5,
             "precio": 1753,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 7.5,
             "precio": 1944,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT3 FASES 440V 6in",
             "hp": 10,
             "precio": 1817,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X3 FASES 440V 6in",
             "hp": 10,
             "precio": 2327,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 15,
             "precio": 2176,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 15,
             "precio": 2852,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 20,
             "precio": 2362,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 20,
             "precio": 3248,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 25,
             "precio": 2747,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 25,
             "precio": 4120,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 30,
             "precio": 3297,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 30,
             "precio": 4210,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR LUBI 3 FASES 440V",
             "hp": 40,
             "precio": 2170,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 40,
             "precio": 3971,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 40,
             "precio": 4893,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR LUBI 3 FASES 440V",
             "hp": 50,
             "precio": 2423,
-            "serie": "N/A"
+            "serie": "N/A",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 50,
             "precio": 4273,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 50,
             "precio": 5294,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 60,
             "precio": 5234,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 60,
             "precio": 7681,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 75,
             "precio": 5769,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 75,
             "precio": 9062,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA RT 3 FASES 440V 6in",
             "hp": 100,
             "precio": 8272,
-            "serie": "RT"
+            "serie": "RT",
+            "volt": 440
           },
           {
             "Modelo": "MOTOR ALTAMIRA X 3 FASES 440V 6in",
             "hp": 100,
             "precio": 10885,
-            "serie": "X"
+            "serie": "X",
+            "volt": 440
           }
      ],
   "BombasKolosal":[
