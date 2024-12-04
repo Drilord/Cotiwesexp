@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const idP = document.getElementById('idProyecto');
     const nomP = document.getElementById('nomP');
     const descP = document.getElementById('descP');
-    if(Bomba && idP && nomP && descP){
+    const nomV = document.getElementById('nomV');
+    const nomVf = document.getElementById('nomvf');
+    const tel = document.getElementById('tel');
+    const mail =document.getElementById('mail');
+    const hpGraph =document.getElementById('hpGraph');
+    if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
     const myObject = getObjectFromLocalStorage    ('cotData');
     if (myObject) {
     const pumpModel= myObject.Modelo;
@@ -23,31 +28,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const mot= myObject.pyct.motor;
     const volt= myObject.pyct.motor.volt;
     const pumpCal= myObject.calibre;
-    
+    const cdt=myObject.pyct.cdtP;
+    const cantPan=myObject.pyct.cantPan
 
-    idP.innerHTML=  ` ${myObject.pyct.id} `;
-    nomP.innerHTML=  ` ${myObject.pyct.nombre} `;
-    Bomba.innerHTML = `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
+    idP.innerHTML    =  ` ${myObject.pyct.id} `;
+    nomP.innerHTML   =  ` ${myObject.pyct.nombre} `;
+    nomV.innerHTML   =  `${myObject.pyct.rep.nombre}`;
+    mail.innerHTML   =  `${myObject.pyct.rep.mail}`;
+    tel.innerHTML    =  `${myObject.pyct.rep.tel}`;
+    nomVf.innerHTML  =  `${myObject.pyct.rep.nombre}`;
+    hpGraph.innerHTML=  `${pumpHP} Hp`;
+    Bomba.innerHTML  =  `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
     if(proyT ==1){
       //poner solo la desc de bombeo
-      descP.innerHTML= ` Instalación de puru bombeu miju`
+      descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
     }  
     if(proyT ==2){
       //poner solo la desc de bombeo
-      descP.innerHTML= ` Instalación de purus panelis solaris vali`
+      descP.innerHTML= `Instalación de ${cantPan} paneles solares, en la localidad de ${loc}.`;
 
     }  
     if(proyT ==3){
-      descP.innerHTML= ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, un volumen de agua de ${lts} LT/S, Con una carga dinamica de 50 metros, en la localidad de ${loc}.`
+      descP.innerHTML= ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
 
     }  
+
   }
     else{
     console.log("error retrieving myObject")
     }
     }
     else {
-        console.error('Element with ID "bomba" not found.',error);
+        console.error('Elements not found.',error);
     }
 
 });
