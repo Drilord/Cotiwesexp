@@ -16,6 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const tel = document.getElementById('tel');
     const mail =document.getElementById('mail');
     const hpGraph =document.getElementById('hpGraph');
+    const ltsGrAgv =document.getElementById('ltsGrAgv');
+        const ctx = document.getElementById('myChart').getContext('2d');//code de la grafica
+              
     if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
     const myObject = getObjectFromLocalStorage    ('cotData');
     if (myObject) {
@@ -23,6 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const pumpHP= myObject.hp;
     const proyT= myObject.cotType;
     const lts= myObject.pyct.lts;
+    const ltsAvg = myObject.pyct.ltsAvg 
     const proPozo= myObject.pyct.proPozo;
     const loc= myObject.pyct.loc;
     const mot= myObject.pyct.motor;
@@ -30,15 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const pumpCal= myObject.calibre;
     const cdt=myObject.pyct.cdtP;
     const cantPan=myObject.pyct.cantPan
+    const graData=myObject.pyct.ltsmes
 
-    idP.innerHTML    =  ` ${myObject.pyct.id} `;
-    nomP.innerHTML   =  ` ${myObject.pyct.nombre} `;
-    nomV.innerHTML   =  `${myObject.pyct.rep.nombre}`;
-    mail.innerHTML   =  `${myObject.pyct.rep.mail}`;
-    tel.innerHTML    =  `${myObject.pyct.rep.tel}`;
-    nomVf.innerHTML  =  `${myObject.pyct.rep.nombre}`;
-    hpGraph.innerHTML=  `${pumpHP} Hp`;
-    Bomba.innerHTML  =  `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
+    idP.innerHTML      =  ` ${myObject.pyct.id} `;
+    nomP.innerHTML     =  ` ${myObject.pyct.nombre} `;
+    nomV.innerHTML     =  `${myObject.pyct.rep.nombre}`;
+    mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
+    tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
+    nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;
+    hpGraph.innerHTML  =  `${pumpHP} Hp`;
+    ltsGrAgv.innerHTML =  `${ltsAvg}`;
+    Bomba.innerHTML    =  `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
     if(proyT ==1){
       //poner solo la desc de bombeo
       descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
@@ -52,6 +58,31 @@ document.addEventListener('DOMContentLoaded', () => {
       descP.innerHTML= ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
 
     }  
+    //Grafica
+    const myChart = new Chart(ctx, {
+      type: 'bar', // Choose chart type: bar, line, pie, etc.
+      data: {
+        labels: Object.keys(graData ),
+        datasets: [{
+          label: 'Lts al dia / Promedio por mes',
+          data: Object.values(graData),
+          backgroundColor:'rgba(76, 157, 47, 1)',
+          borderColor: 'rgba(76,157,47,1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          x:{
+             grid:{display:false}
+          },
+          y: {
+            beginAtZero: true,
+            grid:{display:false}
+          }
+        }
+      }
+    });
 
   }
     else{

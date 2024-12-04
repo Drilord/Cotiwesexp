@@ -166,6 +166,22 @@ function cotizar(){
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
     pyct.lts = document.getElementById("ltsSelect").value;
+    ltsHora = document.getElementById("ltsSelect").value*60*60;
+    pyct.ltsmes = {Enero:ltsHora*5.53*0.8, Febrero:ltsHora*6.13*0.8, 
+                   Marzo:ltsHora*7.15*0.8, Abril:ltsHora*6.81*0.8,
+                   Mayo :ltsHora*6.45*0.8, Junio:ltsHora*6.08*0.8, 
+                   Julio:ltsHora*5.64*0.8, Agosto:ltsHora*5.69*0.8,
+                   Septiembre:ltsHora*5.64*0.8, Octubre:ltsHora*6.21*0.8, 
+                   Noviembre:ltsHora*6.02*0.8 ,Diciembre:ltsHora*5.42*0.8};
+                   
+      let total = 0;
+      for (const month in pyct.ltsmes) {
+        total += pyct.ltsmes[month];
+      }             
+      // Calculate the average
+      const average = total / Object.keys(pyct.ltsmes).length;;
+      pyct.ltsAvg = average.toLocaleString('en-US');
+      console.log("Average:", average);               
     pyct.proPozo = document.getElementById("input5").value;
     pyct.cdtP = document.getElementById("input6").value;
     //pyct.cantPan = var cantidad de paneles

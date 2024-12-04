@@ -233,10 +233,10 @@
         <div class="row">
           <div class="col-2"></div>
           <div class="col-2">
-            <h4>349.296</h4>
+            <h4 id="ltsGrAgv" style="align-items: end;">349.296</h4>
           </div>
           <div class="col-4">
-            <h4>LTS POR DIA PROMEDIO</h4>
+            <h4 style="align-items: start;">LTS POR DIA PROMEDIO</h4>
           </div>
           <div class="col-4">
             <h4>FUNCIONANDO 5 a 6 HR DIA</h4>
@@ -254,35 +254,8 @@
         <div class="row text-center">
           <div class="col-12" id="grafica">
             <canvas width="90%" id="myChart"></canvas>
-            <script>
-              const ctx = document.getElementById('myChart').getContext('2d');
-              const myChart = new Chart(ctx, {
-                type: 'bar', // Choose chart type: bar, line, pie, etc.
-                data: {
-                  labels: ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio','Julio', 'Agosto','Septiembre','Octubre', 'Noviembre', 'Diciembre'],
-                  datasets: [{
-                    label: 'Lts al dia / Promedio por mes',
-                    data: [120,190,30,150,120,190,30,150,120,190,30,150],
-                    backgroundColor:'rgba(76, 157, 47, 1)',
-                    borderColor: 'rgba(76,157,47,1)',
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    x:{
-                       grid:{display:false}
-                    },
-                    y: {
-                      beginAtZero: true,
-                      grid:{display:false}
-                    }
-                  }
-                }
-              });
-            </script>
           </div>
-          <div class="col-12" id=""><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="90%"></div>
+          <div class="col-12" id="vntjs"><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="90%"></div>
         </div>
         <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>  
       </div>
@@ -577,12 +550,13 @@
           </div>
         </div>
         <div class="row text-center"></div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
       </div>
-      <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
+      
     </div>
     <div class="container text-start">
       
-      <div class="card" style="width: 85%">
+      <div class="card" style="width: 90%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-1"></div>
