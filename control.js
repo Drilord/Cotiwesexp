@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, cotType=3, pyct={};
+let selPump, cotType=3, pyct={}, descValido, modalContent;
 
 
 fetch('datos.json')
@@ -9,7 +9,7 @@ fetch('datos.json')
     const vendSelect = document.getElementById('vendSelect');
     const input6 = document.getElementById('input6');
     const temp = document.getElementById('check0');
-        
+            
 // Populate the select options
 jsonData.bomSol.bombas.forEach(bomba => {
   const option = document.createElement('option');
@@ -23,18 +23,21 @@ jsonData.bomSol.vendedores.forEach(vend => {
   option.text = vend.nombre;
   vendSelect.appendChild(option);
 });
+pyct.rep= selectVend(jsonData.bomSol.vendedores);
 
 input6.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
-pyct.motor= motorBomba(jsonData,selPump.hp)
+pyct.motor= motorBomba(jsonData,selPump.hp);
 
 });
 temp.addEventListener('change', () => {
   if(selPump){
-  pyct.motor= motorBomba(jsonData,selPump.hp)
+  pyct.motor= motorBomba(jsonData,selPump.hp);
   }
   });
-
+vendSelect.addEventListener('change', () => {
+  pyct.rep= selectVend(jsonData.bomSol.vendedores);
+  });
 
   })
   .catch(error => {
@@ -97,14 +100,21 @@ async function consultarTipoCambio() {
 function validar() {
  if(!selPump){alert("Proporcione CDT");
   return;
- } 
- if(cotType == 1){alert("solo bombeo");
+} 
+/*const desc=document.getElementById('input7'); 
+ if(desc.value<40){
+   if(descValido!=1){
+    authDescuen();
+    return;
+   }
+   }*/
+ if(cotType == 1){
   selPump.cotType=1;
  } 
- if(cotType == 2){alert("solo solar");
+ if(cotType == 2){
   selPump.cotType=2;
 } 
-if(cotType == 3 || !cotType){alert("full");
+if(cotType == 3 || !cotType){
   selPump.cotType=3;
   console.log(selPump.cotType)
 } 
@@ -145,23 +155,39 @@ if(!exiBtn){
     const validarButton = document.getElementById('validar');
     validarButton.parentNode.appendChild(cotizarButton);
     }
-    
+c = genID(); 
+alert('ID generado: '+c+' puede Cotizar');
+d=document.getElementById('idCot');
+d.value = c;   
 
 }
 
 function cotizar(){ 
-    console.log(selPump.Modelo);
-    c = genID();
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
     pyct.lts = document.getElementById("ltsSelect").value;
+    ltsHora = document.getElementById("ltsSelect").value*60*60;
+    pyct.ltsmes = {Enero:ltsHora*5.53*0.8, Febrero:ltsHora*6.13*0.8, 
+                   Marzo:ltsHora*7.15*0.8, Abril:ltsHora*6.81*0.8,
+                   Mayo :ltsHora*6.45*0.8, Junio:ltsHora*6.08*0.8, 
+                   Julio:ltsHora*5.64*0.8, Agosto:ltsHora*5.69*0.8,
+                   Septiembre:ltsHora*5.64*0.8, Octubre:ltsHora*6.21*0.8, 
+                   Noviembre:ltsHora*6.02*0.8 ,Diciembre:ltsHora*5.42*0.8};
+                   
+      let total = 0;
+      for (const month in pyct.ltsmes) {
+        total += pyct.ltsmes[month];
+      }             
+      // Calculate the average
+      const average = total / Object.keys(pyct.ltsmes).length;;
+      pyct.ltsAvg = average.toLocaleString('en-US');
+      console.log("Average:", average);               
     pyct.proPozo = document.getElementById("input5").value;
+    pyct.cdtP = document.getElementById("input6").value;
+    //pyct.cantPan = var cantidad de paneles
     pyct.id = c;
     selPump.pyct = pyct;
-    console.log( 'COTIZAR() '+pyct.motor.Modelo+' serie: '+pyct.motor.serie);
-    alert(c);
-    d=document.getElementById('idCot');
-    d.value = c;
+    //console.log( 'COTIZAR() '+pyct.motor.Modelo+' serie: '+pyct.motor.serie);
     saveToLocalStorage('cotData', selPump);
     
     //window.open('./cotizacion.html', '_blank');
@@ -209,7 +235,39 @@ function equipBomb(modelo, altMax, lts, hp){
   /*esta funcion debe calcular el equipamento de la bomba de acuerdo a los lt/s se usa un diametro de tuberia y se le suman todas las piezas esta funcion debe calcular
   el precio total del equipamiento que es por metro so se calcula en base a la altura maxima de la bomba elegida, debe retornar precio, */
 }
-function motorBomba(data,hp){ //no jala la serie trae el modelo x pero la serie RT duh 
+function authDesMod(){
+  const desc=document.getElementById('input7');
+  modalContent=document.getElementById("modalCont");
+  modalTit=document.getElementById("staticBackdropLabel");
+  modalbutton=document.getElementById("btnPrim");
+  modalbutton.onclick= 'valiDesc()';
+  modalbutton.innerHTML= `Autorizar`
+  modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
+  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><inpunt id="pwd" type="password" ></inpunt>`;
+}
+function valiDesc(){
+  const desc=document.getElementById('input7');
+  const pwd=document.getElementById('pwd').value
+  if(pwd==="Weslaco123"){
+    alert("password correcto");
+    descValido=1
+    desc.disabled=true;
+    return
+  }
+  else{alert("mal puñetas"); 
+    return
+  }
+
+  
+  
+  /*esta funcion se debe llamar desde validar() si gastos ind es menor a 40  pide 
+  auth modal password este pwd se podra cambiar en la UI de admin preparar 
+  para sacarlo de datosjson por ahora solo poner un pwd  debe regresar descValido=1*/
+}
+
+
+
+function motorBomba(data,hp){  
 let datosMot= null ;
 const temp= document.getElementById('check0').checked
 data.bomSol.motores.forEach(motor=>{
@@ -243,9 +301,6 @@ data.bomSol.motores.forEach(motor=>{
           }
           
 }
-  /*esta funcion debe elegir el motor de bomba segun los hp y si es para agua caliente o normal
-   debe retornar el motor modelo y precio*/
-
 
 function datosSolar(hp, distPan){
 /*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
@@ -280,6 +335,18 @@ function genID() {
   const finalID = `BomSol-${nom3}-${vend3}-${selHp}`;
 
   return finalID;
+}
+
+function selectVend(data){
+  const vend = document.getElementById('vendSelect').value;
+ for(const rep of data){
+    if(rep.nombre == vend){
+      return rep;
+    }
+  }
+  console.error(`No matching rep found for vendor: ${vend}`);
+  return null;
+   
 }
 
 function saveToLocalStorage(key, value) {

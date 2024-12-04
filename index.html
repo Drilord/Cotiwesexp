@@ -17,7 +17,7 @@
       crossorigin="anonymous"
     ></script>
        <script src="control.js"></script>
-    <title>Autocitizador Weslaco</title>
+    <title>Autocotizador Weslaco</title>
     <style>
       .container {
         background-color: rgb(236, 245, 225);
@@ -58,7 +58,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">Todavia no sirve jaja</div>
+          <div id="modalCont" class="modal-body">...</div>
           <div class="modal-footer">
             <button
               type="button"
@@ -67,7 +67,7 @@
             >
               Cerrar
             </button>
-            <button
+            <button id="btnPrim"
               onclick="actualizar()"
               type="button"
               class="btn btn-primary"
@@ -144,7 +144,12 @@
       </tr>
       <tr>
         <td><label for="input7">Gastos Indirectos: </label></td>
-        <td><input class="standard-input" type="text" id="input7" /></td>
+        <td><select class="standard-input" id="input7" disabled>
+          <option value="50">50%</option>
+          <option value="40">40%</option>
+      <!--<option value="30">30%</option>
+          <option value="25">25%</option>-->
+        </select></td>
         </tr>
       <tr>
         <td><label for="input8">Distancia de Bomba a Paneles: </label></td>
@@ -176,6 +181,7 @@
         class="btn btn-success align-items-center"
         data-bs-toggle="modal"
         data-bs-target="#staticBackdrop"
+       
       >
         Editar Datos
       </button>

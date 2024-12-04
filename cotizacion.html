@@ -103,7 +103,7 @@
         </div>
         <div
           class="card-body"
-          style="background-color: rgb(38, 38, 138); margin: 10px"
+          style="background-color: rgb(38, 38, 138); margin: 0px"
         >
           <div class="row">
             <div class="col-2"></div>
@@ -112,17 +112,13 @@
             </div>
             <div class="col-1"></div>
             <div class="col-5">
-              <h4 class="card-text" style="color: aliceblue">
-                Wenceslao Silva
-              </h4>
+              <h4 id="nomV" class="card-text" style="color: aliceblue"></h4>
             </div>
           </div>
           <div class="row">
             <div class="col-2"></div>
             <div class="col-4">
-              <p class="card-text" style="color: aliceblue">
-                direccion@weslaco.com.mx
-              </p>
+              <p id="mail" class="card-text" style="color: aliceblue"></p>
             </div>
             <div class="col-1"></div>
             <div class="col-5">
@@ -140,7 +136,7 @@
             </div>
             <div class="col-1"></div>
             <div class="col-5">
-              <p class="card-text" style="color: aliceblue">(331)4455067</p>
+              <p id="tel" class="card-text" style="color: aliceblue"></p>
             </div>
           </div>
         </div>
@@ -148,6 +144,7 @@
     </div>
     <div class="container">
       <div class="card" style="width: 90%">
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-4"></div>
           <div class="col-8">
@@ -211,33 +208,35 @@
           </div>
           <div class="col-7">
             <p>
-              Instalación profesional por personal capacitado y certificado de
-              un sistema de bombeo solar, incluye montaje , conexiones
-              eléctricas, instalación de la bomba y logística para entrega de
+              Instalación profesional por personal capacitado y certificado,
+              incluye montaje , conexiones eléctricas, instalación y logística para entrega de
               materiales.
             </p>
           </div>
         </div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>
       </div>
     </div>
+
     <div class="container">
       <div class="card" style="width: 90%">
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-2"></div>
           <div class="col-7">
            <h4>Rendimiento diario en promedio bomba de:</h4>
           </div>
           <div class="col-3">
-            <h4>20 HP</h4>
+            <h4 id="hpGraph"></h4>
           </div>
         </div>
         <div class="row">
           <div class="col-2"></div>
           <div class="col-2">
-            <h4>349.296</h4>
+            <h4 id="ltsGrAgv" style="align-items: end;">349.296</h4>
           </div>
           <div class="col-4">
-            <h4>LTS POR DIA PROMEDIO</h4>
+            <h4 style="align-items: start;">LTS POR DIA PROMEDIO</h4>
           </div>
           <div class="col-4">
             <h4>FUNCIONANDO 5 a 6 HR DIA</h4>
@@ -255,40 +254,16 @@
         <div class="row text-center">
           <div class="col-12" id="grafica">
             <canvas width="90%" id="myChart"></canvas>
-            <script>
-              const ctx = document.getElementById('myChart').getContext('2d');
-              const myChart = new Chart(ctx, {
-                type: 'bar', // Choose chart type: bar, line, pie, etc.
-                data: {
-                  labels: ['Enero', 'Febrero', 'Marzo', 'Abril','Mayo', 'Junio','Julio', 'Agosto','Septiembre','Octubre', 'Noviembre', 'Diciembre'],
-                  datasets: [{
-                    label: 'Lts al dia / Promedio por mes',
-                    data: [120,190,30,150,120,190,30,150,120,190,30,150],
-                    backgroundColor:'rgba(76, 157, 47, 1)',
-                    borderColor: 'rgba(76,157,47,1)',
-                    borderWidth: 1
-                  }]
-                },
-                options: {
-                  scales: {
-                    x:{
-                       grid:{display:false}
-                    },
-                    y: {
-                      beginAtZero: true,
-                      grid:{display:false}
-                    }
-                  }
-                }
-              });
-            </script>
           </div>
+          <div class="col-12" id="vntjs"><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="90%"></div>
         </div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>  
       </div>
     </div>
  
     <div class="container text-center">
       <div class="card" style="width: 90%">
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <h1>Cotización</h1>
         </div>
@@ -575,10 +550,14 @@
           </div>
         </div>
         <div class="row text-center"></div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
       </div>
+      
     </div>
     <div class="container text-start">
-      <div class="card" style="width: 85%">
+      
+      <div class="card" style="width: 90%">
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-1"></div>
           <div class="col-8">
@@ -671,9 +650,10 @@
         </div>
         <div class="text-center" style="margin: 30px">
           <div class="row"><h2>Atentamente:</h2></div>
-          <div class="row"><h2>Wenceslao Silva</h2></div>
+          <div class="row"><h2 id="nomvf"></h2></div>
           <div class="row"><h2>WESLACO Energias Renovables</h2></div>
         </div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
       </div>
     </div>
   </body>
