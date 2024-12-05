@@ -1,6 +1,20 @@
 {
 "bomSol":
  {
+  "estructura":{
+            "elevada":{
+                       "material":"Acero",
+                       "precio":1400
+                      },
+            "piso":{
+                       "material":"Aluminio",
+                       "precio":850
+                      },
+            "panel":{
+                       "material":"Aluminio",
+                       "precio":700
+                      }     
+  },
  "vendedores":[
     {
       "nombre": "Weslaco Energías Renovables",
@@ -2378,18 +2392,8 @@
          }
 
 
-     },
- "radiacion":[
-  {"mes": "enero",
-    "radSol": 5.53,
-    "dias": 31
-  },
-  {"mes": "febrero",
-    "radSol": 6.13,
-    "dias": 29
-  }
-
- ]
+     }
+ 
  }
 
 }

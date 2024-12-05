@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, cotType=3, pyct={}, descValido, modalContent;
+let selPump, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent;
 
 
 fetch('datos.json')
@@ -7,9 +7,10 @@ fetch('datos.json')
   .then(jsonData => {
     const ltsSelect = document.getElementById('ltsSelect');
     const vendSelect = document.getElementById('vendSelect');
-    const input6 = document.getElementById('input6');
+    const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
-            
+    estrucSol(jsonData.bomSol.estructura);
+               
 // Populate the select options
 jsonData.bomSol.bombas.forEach(bomba => {
   const option = document.createElement('option');
@@ -25,9 +26,9 @@ jsonData.bomSol.vendedores.forEach(vend => {
 });
 pyct.rep= selectVend(jsonData.bomSol.vendedores);
 
-input6.addEventListener('blur', () => {
+CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
-pyct.motor= motorBomba(jsonData,selPump.hp);
+if(selPump){pyct.motor= motorBomba(jsonData,selPump.hp);}
 
 });
 temp.addEventListener('change', () => {
@@ -60,6 +61,16 @@ function cotTypVal(){
       }  
       if (solar.checked && !bombeo.checked) {
         document.getElementById("hp").disabled = false;
+        document.getElementById("ltsSelect").disabled = true;
+        document.getElementById("input5").disabled = true;
+        document.getElementById("input6").disabled = true; 
+        document.getElementById("check0").disabled = true; 
+        document.getElementById("check6").disabled = false; 
+        document.getElementById("check7").disabled = false; 
+        document.getElementById("input9").disabled = true; 
+        document.getElementById("check3").disabled = false; 
+        document.getElementById("check4").disabled = false; 
+        document.getElementById("check5").disabled = false; 
                 alert("Solo Solar"); 
         cotType= 2; 
       }
@@ -86,8 +97,7 @@ async function consultarTipoCambio() {
       }
       const data= await response.json();
       const series= data.bmx.series[0];
-      const tipCam = series.datos[0].dato ;
-      console.log(tipCam);
+      const tipCam = series.datos[0].dato*1.05 ;
       document.getElementById("input0").value = tipCam;;
   
   } catch(error){
@@ -96,34 +106,39 @@ async function consultarTipoCambio() {
 }
 
 
-
+// ESTAMOS MODIFICANDO PARA VALIDAR SEGUN EL TIPO DE COTIZACION revisar lo de SELPUMP cuando no lleva bomba 
 function validar() {
- if(!selPump){alert("Proporcione CDT");
-  return;
-} 
 /*const desc=document.getElementById('input7'); 
  if(desc.value<40){
    if(descValido!=1){
     authDescuen();
-    return;
-   }
-   }*/
+    return;}}*/
+  const nom=document.getElementById('input1'); 
+  const loc=document.getElementById('input2');
+  const km=document.getElementById('input3');
+  const cdt=document.getElementById('input6');  
+  const hpMan=document.getElementById('hp');   
  if(cotType == 1){
-  selPump.cotType=1;
+  pyct.cotType=1;
+  if(!selPump){alert("Proporcione CDT correcto");
+    return;
+  } 
+  if(!cdt.value){
+    alert("El campo CDT no puede estar vacio PUÑETAS!")
+    return;
+  }
+  c = genID(selPump.hp);
  } 
  if(cotType == 2){
-  selPump.cotType=2;
-} 
-if(cotType == 3 || !cotType){
-  selPump.cotType=3;
-  console.log(selPump.cotType)
-} 
-const nom=document.getElementById('input1'); 
-const loc=document.getElementById('input2');
-const km=document.getElementById('input3');
-const cdt=document.getElementById('input6');
+  pyct.cotType=2;
+ 
+  if(!hpMan.value){
+    alert("El campo HP no puede estar vacio PUÑETAS!")
+    return;
+}
+c = genID(hpMan.value);
 if(!nom.value){
-    alert("El campo nombre no puede estar vacio PUÑETAS!")
+    alert("El campo Nombre no puede estar vacio PUÑETAS!")
     return;
 }
 if(!loc.value){
@@ -134,10 +149,17 @@ if(!km.value){
   alert("El campo Kilometros no puede estar vacio PUÑETAS!")
   return;
 }
-if(!cdt.value){
-  alert("El campo CDT no puede estar vacio PUÑETAS!")
-  return;
-}
+} 
+if(cotType == 3 || !cotType){
+  if(!selPump){alert("Proporcione CDT correcto");
+    return;
+  } 
+  if(!cdt.value){
+    alert("El campo CDT no puede estar vacio PUÑETAS!")
+    return;
+  }
+  pyct.cotType=3;
+} 
 
 const exiBtn = document.getElementById('cotizar'); 
 if(!exiBtn){
@@ -155,7 +177,7 @@ if(!exiBtn){
     const validarButton = document.getElementById('validar');
     validarButton.parentNode.appendChild(cotizarButton);
     }
-c = genID(); 
+ 
 alert('ID generado: '+c+' puede Cotizar');
 d=document.getElementById('idCot');
 d.value = c;   
@@ -302,10 +324,97 @@ data.bomSol.motores.forEach(motor=>{
           
 }
 
+
+function validstruct(cual){
+  const elev = document.getElementById('check3');
+  const piso = document.getElementById('check4');
+  const plana= document.getElementById("check5") ; 
+  if (!plana.checked && !piso.checked && !elev.checked)
+  {
+    piso.checked = false;
+    plana.checked = false;
+    elev.checked = true;
+    structType=1;
+    console.log('Struct:',structType);
+  }
+  if (cual == 3) {
+    piso.checked = false;
+    plana.checked = false;
+    elev.checked = true;
+    structType=1;
+    console.log('Struct:',structType);
+  }
+  if (cual == 4) {
+    elev.checked = false;
+    plana.checked = false;
+    piso.checked = true;
+    structType=2;
+    console.log('Struct:',structType);
+  }
+  if (cual == 5) {
+    piso.checked = false;
+    elev.checked = false;
+    plana.checked = true;
+    structType=3;
+    console.log('Struct:',structType);
+  }
+}
+
+function currType(cual){
+
+    const alt = document.getElementById('check6');
+    const dir = document.getElementById('check7');
+    if (!dir.checked && !alt.checked)
+    {
+      alt.checked = true;
+      dir.checked = false;
+      pumpCurrT=1;
+      console.log('2 blank:',pumpCurrT);
+      return;
+    }
+    if (cual == 6) {
+      dir.checked = false;
+      alt.checked = true;
+      pumpCurrT=1;
+      console.log('cual 6:',pumpCurrT);
+      return;
+    }
+    if (cual == 7) {
+      dir.checked = true;
+      alt.checked = false;
+      pumpCurrT=2;
+      console.log('cual 7:',pumpCurrT);
+      return;
+    }
+}
+
+function estrucSol(data){
+  console.log(data);
+  if(structType==1){
+     
+     const precio=data.elevada.precio+data.panel.precio
+     pyct.struct= {};
+     pyct.struct.precio=precio;
+     pyct.struct.material= data.elevada.material;
+     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+  }
+  if(structType==2){
+    pyct.struct.material=data.piso.material;
+     const precio=data.piso.precio+data.panel.precio
+     pyct.struct.precio=precio;
+    console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+  }
+  if(structType==3){
+    pyct.struct=data.panel;
+    console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+  }
+}
+
 function datosSolar(hp, distPan){
 /*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
   con los hp se calcula el gabinete armado y el variador normalmente el variador es el que sigue en HP ejemplo si la bomba es de 10 el variador es de 15 y asi
-  esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio, */
+  esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio,
+  filtro de armonicos se evalua si la profundidad del pozo mas distancia a paneles  */
 }
 function maxCDT(){
 const dropdown = document.getElementById('ltsSelect');
@@ -326,10 +435,9 @@ if(cdt>legendText){cdtMax.textContent = `(Elegir otro Volumen de agua, CDT Max $
 else{cdtMax.textContent = `(CDT Max ${legendText}mts)`;}
 }
 
-function genID() {
+function genID(selHp) {
   const nom = document.getElementById('input1').value;
   const vend = document.getElementById('vendSelect').value;
-  const selHp = selPump.hp;
   const nom3 = nom.substring(0, 3).toUpperCase();
   const vend3 = vend.substring(0, 3).toUpperCase();
   const finalID = `BomSol-${nom3}-${vend3}-${selHp}`;

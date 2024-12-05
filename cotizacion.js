@@ -17,11 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const mail =document.getElementById('mail');
     const hpGraph =document.getElementById('hpGraph');
     const ltsGrAgv =document.getElementById('ltsGrAgv');
-        const ctx = document.getElementById('myChart').getContext('2d');//code de la grafica
+    const ctx = document.getElementById('myChart').getContext('2d');//code de la grafica
+    const altMaxG =document.getElementById('altMaxG');
+
               
     if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
     const myObject = getObjectFromLocalStorage    ('cotData');
     if (myObject) {
+   // console.log(myObject.pyct.struct.precio);  
     const pumpModel= myObject.Modelo;
     const pumpHP= myObject.hp;
     const proyT= myObject.cotType;
@@ -42,7 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
     tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
     nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;
-    hpGraph.innerHTML  =  `${pumpHP} Hp`;
+    altMaxG.innerHTML  =  `${myObject.altMax}mts`;
+    hpGraph.innerHTML  =  `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
     ltsGrAgv.innerHTML =  `${ltsAvg}`;
     Bomba.innerHTML    =  `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
     if(proyT ==1){
