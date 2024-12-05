@@ -130,22 +130,22 @@
         <div class="col-2"><label for="input3">Kilometros: </label></div>
         <div class="col-3"><input class="standard-input" type="text" id="input3" /></div>
         </div>
-      <div class="row">
+      <div class="row  bom full">
         <div class="col-2"><label for="ltsSelect">Volumen de agua: </label></div>
         <div class="col-3"><select class="standard-input" id="ltsSelect" onchange="maxCDT()"></select></div>
       </div>
-      <div class="row">
+      <div class="row bom full">
         <div class="col-2"><label for="input5">Profundidad del pozo(mts): </label></div>
         <div class="col-3"><input class="standard-input" type="text" id="input5" /></div>
         </div>
-      <div class="row">
+      <div class="row bom full">
         <div class="col-2"><label for="input6">CDT(mts): </label></div>
         <div class="col-3"><input onchange="maxCDT()" class="standard-input" type="text" id="input6" /></div>
       </div>
-      <div class="row">
+      <div class="row full bom">
         <div class="col-2">Corriente:</div>
         <div class="col-1"><label for="check6">Alterna</label>
-          <input type="checkbox" id="check6" checked onchange="currType(6)"/>
+          <input class="full bom" type="checkbox" id="check6" checked onchange="currType(6)"/>
         </div>
         <div class="col-1" >
           <label for="check7">Directa</label>
@@ -154,7 +154,7 @@
         <div class="col-6">
         </div>    
       </div>
-      <div class="row">  
+      <div class="row full bom">  
         <div class="col-2"></div>
         <div class="col-8"><span Style="color: crimson; align-items: start;" id="cdtMax">(CDT Max 360mts)</span></div>
       </div>
@@ -167,32 +167,44 @@
           <option value="25">25%</option>-->
         </select></div>
         </div>
-      <div class="row">
-        <div class="col-2"><label for="input8">Dist. de Bomba a Paneles(mts): </label></div>
+      <div class="row sol" style="display: none;">
+          <div class="col-2"><label for="voltaje">Voltaje: </label></div>
+          <div class="col-3"><select class="standard-input"  id="voltaje">
+            <option value="220">220v</option>
+            <option value="440">440v</option>
+          </select>
+        </div>
+          </div>  
+      <div class="row sol full">
+        <div class="col-2"><label for="input8">Dist. a Paneles(mts): </label></div>
         <div class="col-3"><input class="standard-input" type="text" id="input8" /></div>
         </div>
-      <div class="row">
+      <div class="row full bom">
         <div class="col-2"><label for="check0">Agua Caliente: </label></div>
         <div class="col-3"><input class="standard-input" type="checkbox" id="check0" /></div>
       </div>
-        <div class="row">
+        <div class="sol full row">
           <div class="col-2"><label for="check3">Estructura: </label></div>
-          <div class="col-3">Elevada  <input type="checkbox" id="check3" onchange="validstruct(3)" checked/> Nivel de piso  <input onchange="validstruct(4)"  type="checkbox" id="check4" /> Coplanar <input onchange="validstruct(5)" type="checkbox" id="check5"/></div>
+          <div class="col-3"><input class="srt" type="checkbox" id="check3" onchange="validstruct(3)" checked/>Elevada <input class="str" onchange="validstruct(4)"  type="checkbox" id="check4" />Nivel de piso <input class="str" onchange="validstruct(5)" type="checkbox" id="check5"/>Coplanar </div>
           </div>
-      <div class="row">
+      <div class="row bom full">
         <div class="col-2"><label for="input9">Costo Grua: </label></div>
-        <div class="col-3"><input class="standard-input" class="standard-input" type="text" id="input9" /></div>
+        <div class="col-3"><input class="standard-input" type="text" id="input9" /></div>
         </div>
       <div class="row">
         <div class="col-2"><label for="input9">Vendedor: </label></div>
         <div class="col-3"><select class="standard-input" id="vendSelect"></select></div>
       </div>
-      <div class="container text-start2">
+      <div class="row">
+      <div class="col-2">
         <button id="validar" onclick="validar()" type="button" class="btn btn-success">
           Validar
         </button>
         </div> 
- 
+        <div class="col 3" style="align-items: center;">
+          <a href="./cotizacion.html" id="acot" target="_blank" rel="noopener noreferrer" style="display: none;"><button id="cotizar" onclick="cotizar()" type="button" class="btn btn-success">Cotizar</button></a>
+          </div> 
+      </div>
     </div>
     <div class="container text-center">
       <!-- Button trigger modal -->

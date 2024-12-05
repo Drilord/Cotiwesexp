@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent;
+let selPump, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS;
 
 
 fetch('datos.json')
@@ -9,8 +9,10 @@ fetch('datos.json')
     const vendSelect = document.getElementById('vendSelect');
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
-    estrucSol(jsonData.bomSol.estructura);
-               
+    const str = document.querySelectorAll('.str');
+    
+    dataS=jsonData.bomSol.estructura;
+    estrucSol()          
 // Populate the select options
 jsonData.bomSol.bombas.forEach(bomba => {
   const option = document.createElement('option');
@@ -48,38 +50,37 @@ vendSelect.addEventListener('change', () => {
 function cotTypVal(){
   const bombeo = document.getElementById("check1");
   const solar = document.getElementById("check2");
-  const conditionalElements = document.querySelectorAll(".standard-input");
+  const fullBomSol = document.querySelectorAll(".full");
+  const Solar = document.querySelectorAll(".sol");
+  const Bombeo = document.querySelectorAll(".bom");
       if (!bombeo.checked && !solar.checked ) {
-          solar.checked = true;
-          bombeo.checked = true;
+          solar.checked= true;
+          bombeo.checked= true;
+          cotTypVal();
          return;
       }
       if (!solar.checked && bombeo.checked) {
-        document.getElementById("hp").disabled = true;
+        Bombeo.forEach(element => {
+        element.style.display= 'flex'; });
+        Solar.forEach(element => {
+          element.style.display= 'none'; });
+          document.getElementById("hp").disabled = true;  
         alert("Solo bombeo");
         cotType= 1;
       }  
       if (solar.checked && !bombeo.checked) {
-        document.getElementById("hp").disabled = false;
-        document.getElementById("ltsSelect").disabled = true;
-        document.getElementById("input5").disabled = true;
-        document.getElementById("input6").disabled = true; 
-        document.getElementById("check0").disabled = true; 
-        document.getElementById("check6").disabled = false; 
-        document.getElementById("check7").disabled = false; 
-        document.getElementById("input9").disabled = true; 
-        document.getElementById("check3").disabled = false; 
-        document.getElementById("check4").disabled = false; 
-        document.getElementById("check5").disabled = false; 
+        Bombeo.forEach(element => {
+          element.style.display= 'none'; });
+          Solar.forEach(element => {
+            element.style.display= 'flex'; });
+            document.getElementById("hp").disabled = false;
                 alert("Solo Solar"); 
         cotType= 2; 
       }
       if (solar.checked && bombeo.checked) {
         alert("Full Bombeo Solar");  
-        conditionalElements.forEach(element => {
-        element.disabled = false; });
-        document.getElementById("idCot").disabled = true;
-        document.getElementById("input0").disabled = true;
+        fullBomSol.forEach(element => {
+        element.style.display= 'flex'; });
         document.getElementById("hp").disabled = true;
         cotType= 3;
       }  
@@ -117,38 +118,61 @@ function validar() {
   const loc=document.getElementById('input2');
   const km=document.getElementById('input3');
   const cdt=document.getElementById('input6');  
-  const hpMan=document.getElementById('hp');   
+  const hpMan=document.getElementById('hp');  
+  const distP=document.getElementById('input8');
+  const proPozo=document.getElementById('input8');
+    
  if(cotType == 1){
   pyct.cotType=1;
   if(!selPump){alert("Proporcione CDT correcto");
     return;
   } 
   if(!cdt.value){
-    alert("El campo CDT no puede estar vacio PUÑETAS!")
+    alert("El campo CDT no puede estar vacio")
     return;
   }
+  if(!proPozo.value){
+    alert("Debe introducir la profundidad del pozo")
+    return;
+  }
+  if(!nom.value){
+    alert("El campo Nombre no puede estar vacio")
+    return;
+  }
+if(!loc.value){
+  alert("El campo Localidad no puede estar vacio")
+  return;
+}
+if(!km.value){
+  alert("El campo Kilometros no puede estar vacio")
+  return;
+}
   c = genID(selPump.hp);
  } 
  if(cotType == 2){
   pyct.cotType=2;
  
   if(!hpMan.value){
-    alert("El campo HP no puede estar vacio PUÑETAS!")
+    alert("Debe introducir los HP de la bomba existente")
     return;
 }
-c = genID(hpMan.value);
 if(!nom.value){
-    alert("El campo Nombre no puede estar vacio PUÑETAS!")
+    alert("El campo Nombre no puede estar vacio")
     return;
 }
 if(!loc.value){
-  alert("El campo Localidad no puede estar vacio PUÑETAS!")
+  alert("El campo Localidad no puede estar vacio!")
   return;
 }
 if(!km.value){
-  alert("El campo Kilometros no puede estar vacio PUÑETAS!")
+  alert("Debe poner los KM")
   return;
 }
+if(!distP.value){
+  alert("Introduzca la distancia de la bomba a los paneles")
+  return;
+}
+c = genID(hpMan.value);
 } 
 if(cotType == 3 || !cotType){
   if(!selPump){alert("Proporcione CDT correcto");
@@ -158,27 +182,29 @@ if(cotType == 3 || !cotType){
     alert("El campo CDT no puede estar vacio PUÑETAS!")
     return;
   }
+  if(!nom.value){
+    alert("El campo Nombre no puede estar vacio PUÑETAS!")
+    return;
+  }
+  if(!loc.value){
+  alert("El campo Localidad no puede estar vacio PUÑETAS!")
+  return;
+  }
+  if(!km.value){
+  alert("El campo Kilometros no puede estar vacio PUÑETAS!")
+  return;
+  }
+  if(!distP.value){
+  alert("Introduzca la distancia de la bomba a los paneles")
+  return;
+  }
   pyct.cotType=3;
+  c = genID(selPump.hp);
 } 
 
-const exiBtn = document.getElementById('cotizar'); 
-if(!exiBtn){
-    const cotizarButton = document.createElement('a');
-    cotizarButton.href = './cotizacion.html';
-    cotizarButton.target = '_blank';
-    cotizarButton.rel = 'noopener noreferrer';
-    const buttonElement = document.createElement('button');
-    buttonElement.id = 'cotizar';
-    buttonElement.type = 'button';
-    buttonElement.classList.add('btn', 'btn-success');
-    buttonElement.textContent = 'Cotizar';
-    buttonElement.onclick = cotizar;
-    cotizarButton.appendChild(buttonElement);
-    const validarButton = document.getElementById('validar');
-    validarButton.parentNode.appendChild(cotizarButton);
-    }
- 
 alert('ID generado: '+c+' puede Cotizar');
+const cotBtn=document.getElementById('acot'); 
+cotBtn.style.display= 'block';
 d=document.getElementById('idCot');
 d.value = c;   
 
@@ -208,8 +234,13 @@ function cotizar(){
     pyct.cdtP = document.getElementById("input6").value;
     //pyct.cantPan = var cantidad de paneles
     pyct.id = c;
+    if(!selPump){selPump={};}
+    if(!pyct.motor){
+      pyct.motor={};
+      pyct.motor.volt=document.getElementById("voltaje").value
+    }
+    console.log( 'COTIZAR() '+pyct.motor.volt);
     selPump.pyct = pyct;
-    //console.log( 'COTIZAR() '+pyct.motor.Modelo+' serie: '+pyct.motor.serie);
     saveToLocalStorage('cotData', selPump);
     
     //window.open('./cotizacion.html', '_blank');
@@ -335,6 +366,7 @@ function validstruct(cual){
     plana.checked = false;
     elev.checked = true;
     structType=1;
+    estrucSol()
     console.log('Struct:',structType);
   }
   if (cual == 3) {
@@ -342,6 +374,7 @@ function validstruct(cual){
     plana.checked = false;
     elev.checked = true;
     structType=1;
+    estrucSol()
     console.log('Struct:',structType);
   }
   if (cual == 4) {
@@ -349,6 +382,7 @@ function validstruct(cual){
     plana.checked = false;
     piso.checked = true;
     structType=2;
+    estrucSol()
     console.log('Struct:',structType);
   }
   if (cual == 5) {
@@ -356,6 +390,7 @@ function validstruct(cual){
     elev.checked = false;
     plana.checked = true;
     structType=3;
+    estrucSol()
     console.log('Struct:',structType);
   }
 }
@@ -388,24 +423,24 @@ function currType(cual){
     }
 }
 
-function estrucSol(data){
-  console.log(data);
+function estrucSol(){
+  //console.log(dataS);
+  pyct.struct= {};
   if(structType==1){
      
-     const precio=data.elevada.precio+data.panel.precio
-     pyct.struct= {};
+     const precio=dataS.elevada.precio+dataS.panel.precio
      pyct.struct.precio=precio;
-     pyct.struct.material= data.elevada.material;
+     pyct.struct.material= dataS.elevada.material;
      console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
   if(structType==2){
-    pyct.struct.material=data.piso.material;
-     const precio=data.piso.precio+data.panel.precio
+    pyct.struct.material=dataS.piso.material;
+     const precio=dataS.piso.precio+dataS.panel.precio
      pyct.struct.precio=precio;
     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
   if(structType==3){
-    pyct.struct=data.panel;
+    pyct.struct=dataS.panel;
     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
 }
