@@ -1825,8 +1825,85 @@
             "volt": 440
           }
      ],
-  "BombasKolosal":[
-        
+  "bombasKolosal":[
+      { "lts":0.5,
+        "modelos":[
+      
+              {
+               "Modelo": "KOLOS3-35-30-2",
+               "hp": 0.333,
+               "precio": 515,
+               "altMax": 18,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-47-40-4",
+               "hp": 0.5,
+               "precio": 548,
+               "altMax": 25,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-80-60-7",
+               "hp": 0.75,
+               "precio": 585,
+               "altMax": 40,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-95-75-11",
+               "hp": 1,
+               "precio": 637,
+               "altMax": 60,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-123-110-20",
+               "hp": 1.5,
+               "precio": 673,
+               "altMax": 80,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-155-130-20",
+               "hp": 1.75,
+               "precio": 735,
+               "altMax": 100,
+               "calibre": 10
+              },
+              {
+               "Modelo": "KOLOS3-180-150-20",
+               "hp": 2,
+               "precio": 808,
+               "altMax": 115,
+               "calibre": 10
+              }
+            ]
+    },
+    { "lts":1,
+      "modelos":[
+      
+              {
+               "Modelo": "KOLOS4-112-130-20",
+               "hp": 1.75,
+               "precio": 676,
+               "altMax": 60,
+               "calibre": 10
+              }
+          ]
+    },
+    { "lts":2,
+      "modelos":[
+              {
+               "Modelo": "KOLOS4-60-150-20",
+               "hp": 2,
+               "precio": 789,
+               "altMax": 40,
+               "calibre": 10
+              }
+          ]
+    }
+
      ],
   "equipamientoBomba":{
      "1 1/4":[

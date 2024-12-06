@@ -5,21 +5,31 @@ let selPump, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalCon
 fetch('datos.json')
   .then(response => response.json())
   .then(jsonData => {
-    const ltsSelect = document.getElementById('ltsSelect');
+    
     const vendSelect = document.getElementById('vendSelect');
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
     const str = document.querySelectorAll('.str');
-    
+    const curra = document.getElementById('check6');
+    const currd = document.getElementById('check7');
     dataS=jsonData.bomSol.estructura;
     estrucSol()          
-// Populate the select options
-jsonData.bomSol.bombas.forEach(bomba => {
-  const option = document.createElement('option');
-  option.value = bomba.lts;
-  option.text = bomba.lts+" lt/s";
-  ltsSelect.appendChild(option);
+currType(6,jsonData.bomSol.bombas);
+curra.addEventListener('change', ()=>{
+const ltscurr=jsonData.bomSol.bombas
+currType(6,ltscurr);
+maxCDT();
+console.log('en change listen de Alt',pumpCurrT);
+
 });
+currd.addEventListener('change', ()=>{
+  const ltscurr=jsonData.bomSol.bombasKolosal
+  currType(7,ltscurr);
+  maxCDT();
+  console.log('en change listen de Alt',pumpCurrT);
+  
+  });
+
 jsonData.bomSol.vendedores.forEach(vend => {
   const option = document.createElement('option');
   option.value = vend.nombre;
@@ -46,6 +56,7 @@ vendSelect.addEventListener('change', () => {
   .catch(error => {
     console.error('Error fetching data:', error);
   });
+
 
 function cotTypVal(){
   const bombeo = document.getElementById("check1");
@@ -107,7 +118,7 @@ async function consultarTipoCambio() {
 }
 
 
-// ESTAMOS MODIFICANDO PARA VALIDAR SEGUN EL TIPO DE COTIZACION revisar lo de SELPUMP cuando no lleva bomba 
+
 function validar() {
 /*const desc=document.getElementById('input7'); 
  if(desc.value<40){
@@ -175,6 +186,7 @@ if(!distP.value){
 c = genID(hpMan.value);
 } 
 if(cotType == 3 || !cotType){
+  pyct.cotType=3;
   if(!selPump){alert("Proporcione CDT correcto");
     return;
   } 
@@ -222,17 +234,18 @@ function cotizar(){
                    Septiembre:ltsHora*5.64*0.8, Octubre:ltsHora*6.21*0.8, 
                    Noviembre:ltsHora*6.02*0.8 ,Diciembre:ltsHora*5.42*0.8};
                    
-      let total = 0;
-      for (const month in pyct.ltsmes) {
+    let total = 0;
+    for (const month in pyct.ltsmes) {
         total += pyct.ltsmes[month];
-      }             
-      // Calculate the average
-      const average = total / Object.keys(pyct.ltsmes).length;;
-      pyct.ltsAvg = average.toLocaleString('en-US');
-      console.log("Average:", average);               
+    }             
+    // Calculate the average
+    const average = total / Object.keys(pyct.ltsmes).length;;
+    pyct.ltsAvg = average.toLocaleString('en-US');
+    console.log("Average:", average);               
     pyct.proPozo = document.getElementById("input5").value;
     pyct.cdtP = document.getElementById("input6").value;
     //pyct.cantPan = var cantidad de paneles
+    pyct.curr=pumpCurrT;  
     pyct.id = c;
     if(!selPump){selPump={};}
     if(!pyct.motor){
@@ -257,9 +270,14 @@ let datosBomba= null ;
 const lts= document.getElementById("ltsSelect").value ;
 const cdt= document.getElementById("input6").value; 
 const hpDisp= document.getElementById("hp"); 
-      
-        
-        data.bomSol.bombas.forEach(bomba=>{
+let tBomba;
+if(pumpCurrT==1){tBomba=data.bomSol.bombas
+  console.log('entro a if datosbomba alterna')
+}      
+if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
+  console.log('entro a if datosbomba directa')
+}        
+        tBomba.forEach(bomba=>{
           if(lts==bomba.lts){
             bomba.modelos.forEach(model=>{
               if(model.altMax >= cdt){
@@ -270,9 +288,10 @@ const hpDisp= document.getElementById("hp");
               });
           }
         });
+
     if(datosBomba){
 
-     //alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
+     alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
       hpDisp.value = datosBomba.hp ;
 
       return datosBomba;
@@ -395,16 +414,24 @@ function validstruct(cual){
   }
 }
 
-function currType(cual){
+function currType(cual,data){
 
     const alt = document.getElementById('check6');
     const dir = document.getElementById('check7');
+    const ltsSelect = document.getElementById('ltsSelect') 
+    ltsSelect.innerHTML = '';
+    data.forEach(bomba => {
+    const option = document.createElement('option');
+    option.value = bomba.lts;
+    option.text = bomba.lts+" lt/s";
+    ltsSelect.appendChild(option);
+    }); 
     if (!dir.checked && !alt.checked)
     {
       alt.checked = true;
       dir.checked = false;
       pumpCurrT=1;
-      console.log('2 blank:',pumpCurrT);
+            console.log('2 blank:',pumpCurrT);
       return;
     }
     if (cual == 6) {
@@ -421,6 +448,7 @@ function currType(cual){
       console.log('cual 7:',pumpCurrT);
       return;
     }
+       
 }
 
 function estrucSol(){
@@ -451,6 +479,7 @@ function datosSolar(hp, distPan){
   esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio,
   filtro de armonicos se evalua si la profundidad del pozo mas distancia a paneles  */
 }
+
 function maxCDT(){
 const dropdown = document.getElementById('ltsSelect');
 const cdtMax = document.getElementById('cdtMax');
@@ -458,8 +487,8 @@ const cdt= document.getElementById("input6").value ;
 //if (!dropdown){ console.error("Error: Could not find dropdown element.");}
 //if(!cdtMax)   { console.error("Error: Could not find cdtMax element.");}
 const maxAltValues = {
-  0.6: 360,0.96: 381, 1.4: 356, 
-  2.5: 422, 4.16:123, 5.33:369, 
+  0.5:115, 0.6: 360,0.96: 381, 1:60, 1.4: 356, 
+  2:40, 2.5: 422, 4.16:123, 5.33:369, 
   9.33:343, 15: 242, 20:182,
   23.3:250, 30:190, 40:144,
   53.3:119, 70:83};
@@ -475,7 +504,7 @@ function genID(selHp) {
   const vend = document.getElementById('vendSelect').value;
   const nom3 = nom.substring(0, 3).toUpperCase();
   const vend3 = vend.substring(0, 3).toUpperCase();
-  const finalID = `BomSol-${nom3}-${vend3}-${selHp}`;
+  const finalID = `BomSol${cotType}-${nom3}-${vend3}-${selHp}`;
 
   return finalID;
 }

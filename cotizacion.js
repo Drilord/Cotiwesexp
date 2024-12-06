@@ -1,4 +1,4 @@
-let a ,b,c,d,e,f,g,h,i,j,k,l;
+let a ,b,c,d,e,f,g,h,i,j,k,l, curr;
 
 /*
 navigator.storage.estimate().then(estimate => {
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
    // console.log(myObject.pyct.struct.precio);  
     const pumpModel= myObject.Modelo;
     const pumpHP= myObject.hp;
-    const proyT= myObject.cotType;
+    const proyT= myObject.pyct.cotType;
     const lts= myObject.pyct.lts;
     const ltsAvg = myObject.pyct.ltsAvg 
     const proPozo= myObject.pyct.proPozo;
@@ -38,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const cdt=myObject.pyct.cdtP;
     const cantPan=myObject.pyct.cantPan
     const graData=myObject.pyct.ltsmes
+    if(myObject.pyct.curr==1){
+      curr=''
+    }
+
 
     idP.innerHTML      =  ` ${myObject.pyct.id} `;
     nomP.innerHTML     =  ` ${myObject.pyct.nombre} `;
