@@ -9,7 +9,6 @@ fetch('datos.json')
     const vendSelect = document.getElementById('vendSelect');
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
-    const str = document.querySelectorAll('.str');
     const curra = document.getElementById('check6');
     const currd = document.getElementById('check7');
     dataS=jsonData.bomSol.estructura;
@@ -519,6 +518,21 @@ function selectVend(data){
   console.error(`No matching rep found for vendor: ${vend}`);
   return null;
    
+}
+
+function desc(){
+  const dropdown = document.getElementById('ltsSelect');
+  const descr = document.getElementById('descr');
+  const maxAltValues = {
+    0.5:"1 1/4", 0.6: "1 1/4",0.96: "1 1/4", 1:"1 1/4", 1.4:  "1 1/2", 
+    2: 2, 2.5: 2, 4.16:2, 5.33:3, 
+    9.33:3, 15: 3, 20:4,
+    23.3:6, 30:6, 40:6,
+    53.3:6, 70:6};
+  const selectedValue = dropdown.value;  
+  const legendText = maxAltValues[selectedValue];
+  descr.textContent = `Desc.: ${legendText}"`;
+  return legendText;
 }
 
 function saveToLocalStorage(key, value) {
