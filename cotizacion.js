@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     nomV.innerHTML     =  `${myObject.pyct.rep.nombre}`;
     mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
     tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
-    nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;
+    if(myObject.pyct.rep.nombre!= "Weslaco Energías Renovables"){nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;}
     altMaxG.innerHTML  =  `${myObject.altMax}mts`;
     hpGraph.innerHTML  =  `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
     ltsGrAgv.innerHTML =  `${ltsAvg}`;
