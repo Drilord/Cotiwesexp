@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS;
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba;
 
 
 fetch('datos.json')
@@ -12,7 +12,9 @@ fetch('datos.json')
     const curra = document.getElementById('check6');
     const currd = document.getElementById('check7');
     dataS=jsonData.bomSol.estructura;
-    estrucSol()          
+    dataPan=jsonData.bomSol.solar;
+    eqBomba=jsonData.bomSol.equipamientoBomba;
+    estrucSol();          ;
 currType(6,jsonData.bomSol.bombas);
 curra.addEventListener('change', ()=>{
 const ltscurr=jsonData.bomSol.bombas
@@ -108,7 +110,7 @@ async function consultarTipoCambio() {
       }
       const data= await response.json();
       const series= data.bmx.series[0];
-      const tipCam = series.datos[0].dato*1.05 ;
+      tipCam = series.datos[0].dato*1.05 ;
       document.getElementById("input0").value = tipCam;;
   
   } catch(error){
@@ -131,7 +133,7 @@ function validar() {
   const hpMan=document.getElementById('hp');  
   const distP=document.getElementById('input8');
   const proPozo=document.getElementById('input8');
-    
+ //bombeo   
  if(cotType == 1){
   pyct.cotType=1;
   if(!selPump){alert("Proporcione CDT correcto");
@@ -156,9 +158,12 @@ if(!loc.value){
 if(!km.value){
   alert("El campo Kilometros no puede estar vacio")
   return;
-}
-  c = genID(selPump.hp);
+}  
+   selPump.eqBomba=equipBomb();
+   alert('Precio equip Bomba tot:', selPump.eqBomba.precio);
+   c = genID(selPump.hp);
  } 
+ //solar
  if(cotType == 2){
   pyct.cotType=2;
  
@@ -182,8 +187,10 @@ if(!distP.value){
   alert("Introduzca la distancia de la bomba a los paneles")
   return;
 }
+pyct.solar= datosSolar(hpMan,distP)
 c = genID(hpMan.value);
 } 
+//full bomsol
 if(cotType == 3 || !cotType){
   pyct.cotType=3;
   if(!selPump){alert("Proporcione CDT correcto");
@@ -210,7 +217,11 @@ if(cotType == 3 || !cotType){
   return;
   }
   pyct.cotType=3;
+
   c = genID(selPump.hp);
+  selPump.eqBomba=equipBomb();
+  alert('Precio equip Bomba tot:'+ selPump.eqBomba[3].precioeq);
+
 } 
 
 alert('ID generado: '+c+' puede Cotizar');
@@ -302,9 +313,48 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
 }
 
 
-function equipBomb(modelo, altMax, lts, hp){
-  /*esta funcion debe calcular el equipamento de la bomba de acuerdo a los lt/s se usa un diametro de tuberia y se le suman todas las piezas esta funcion debe calcular
-  el precio total del equipamiento que es por metro so se calcula en base a la altura maxima de la bomba elegida, debe retornar precio, */
+function equipBomb(){
+ let priceeq;
+ const descarga = desc();
+ const ids=selPump.equipB;
+ const cants=selPump.eqCants
+ const accDisp = eqBomba.descarga[descarga];
+ const cals = eqBomba.cableSumergible;
+ const altPozo=document.getElementById('input5')
+ 
+ // Filtrar los accesorios según los ids proporcionados
+ const accsSel = accDisp.filter(accesorio => ids.includes(accesorio.id));
+ accsSel.forEach(accsel => {
+ if (accsel.mxn === false || accsel.mxn === undefined) { 
+    accsel.precio=((accsel.precio*tipCam*1.16)*0.48)*0.95;
+    console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.precio); 
+  }
+  });
+  console.log(accsSel);
+ // calcular el precio del cable 
+const cable = cals.find(item => item.calibre === selPump.calibre);
+cable.precioMXN=((cable.precioMXN*1.16)*0.48)*0.95;
+cable.precioMXN=cable.precioMXN*(selPump.altMax+10)
+
+console.log("cable calibre ",selPump.calibre," precio  mxn", cable.precioMXN);
+
+ // calacular el precio por metro del equipamiento  
+ const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].precio};
+ const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].precio};
+ const check={kit:accsSel[2].Accesorio, precio:accsSel[2].precio};
+ tubo.precio= selPump.altMax/cants[0]*tubo.precio;
+ kit.precio= cants[1]*kit.precio;
+ check.precio= check.precio*cants[2];
+
+ priceeq= (tubo.precio+kit.precio+check.precio+cable.precioMXN)/selPump.altMax;
+ console.log("precio por metro ", priceeq);
+//calcular el precio del equipamiento y regresar los datos para aduntar a selPump
+  priceeq=priceeq*parseInt(altPozo.value)
+  console.log("precio de equipamiento", priceeq);
+  const result=[tubo,kit,check,{precioeq:priceeq}]
+  console.log(result);
+  return result;
+
 }
 function authDesMod(){
   const desc=document.getElementById('input7');
@@ -473,8 +523,40 @@ function estrucSol(){
 }
 
 function datosSolar(hp, distPan){
+ //variador
+ const variadores=dataPan.variadorSolar;
+ const gabinetes=dataPan.gabinetesArmados;
+ let solar={};
+ if(hp>2){
+   
+   variadores.forEach(variador=>{
+      if(variador.hp==hp){
+         solar.variador=variador;
+      }
+   });
+  }else{
+    solar.variador=variadores[0];
+  }
+ 
+ //gabinete 
+ if(hp>2){
+   
+  gabinetes.forEach(gabinete=>{
+     if(gabinete.hp==hp){
+        solar.gabinete=gabinete;
+     }
+  });
+ }else{
+   solar.gabinete=gabinetes[0];
+ }
+ //cantPan
+ /*alt*/if(pumpCurrT==1){}
+ else{
+     solar.cantPan= {}
+ }
+
 /*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
-  con los hp se calcula el gabinete armado y el variador normalmente el variador es el que sigue en HP ejemplo si la bomba es de 10 el variador es de 15 y asi
+  con los hp se calcula el gabinete armado y el variador 
   esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio,
   filtro de armonicos se evalua si la profundidad del pozo mas distancia a paneles  */
 }
@@ -523,14 +605,14 @@ function selectVend(data){
 function desc(){
   const dropdown = document.getElementById('ltsSelect');
   const descr = document.getElementById('descr');
-  const maxAltValues = {
+  const descargValues = {
     0.5:"1 1/4", 0.6: "1 1/4",0.96: "1 1/4", 1:"1 1/4", 1.4:  "1 1/2", 
     2: 2, 2.5: 2, 4.16:2, 5.33:3, 
     9.33:3, 15: 3, 20:4,
     23.3:6, 30:6, 40:6,
     53.3:6, 70:6};
   const selectedValue = dropdown.value;  
-  const legendText = maxAltValues[selectedValue];
+  const legendText = descargValues[selectedValue];
   descr.textContent = `Desc.: ${legendText}"`;
   return legendText;
 }

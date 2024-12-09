@@ -34,6 +34,7 @@
  ], 
  "bombas": [
     { "lts":0.6,
+      "descarga": "1 1/4",
       "modelos":[
         
                 {
@@ -41,284 +42,374 @@
                  "hp": 0.5,
                  "precio": 231,
                  "altMax": 53,
-                 "calibre": 12
+                 "calibre": 12,
+                 "equipB":[1,6,7],
+                 "eqCants":[3,2,1]
                 },
                 {
                  "Modelo": "KOR07 R10-15",
                  "hp": 1,
                  "precio": 326,
                  "altMax": 92,
-                 "calibre": 12
+                 "calibre": 12,
+                 "equipB":[1,6,7],
+                 "eqCants":[3,3,2]
+                 
+                 
                 },
                 {
                     "Modelo": "KOR07 R15-21",
                     "hp": 1.5,
                     "precio": 431,
                     "altMax": 129,
-                    "calibre": 12
+                    "calibre": 12,
+                    "equipB":[1,6,7],
+                    "eqCants":[3,3,2]
                 },
                 {
                     "Modelo": "KOR07 R20-27",
                     "hp": 2,
                     "precio": 503,
                     "altMax": 163,
-                    "calibre": 12
+                    "calibre": 10,
+                    "equipB":[2,6,7],
+                    "eqCants":[3,4,3]
                 },
                 {
                     "Modelo": "KOR07 R30-34",
                     "hp": 3,
                     "precio": 684,
                     "altMax": 210,
-                    "calibre": 8
+                    "calibre": 8,
+                    "equipB":[2,6,7],
+                    "eqCants":[3,5,4]
                 },
                 {
                     "Modelo": "KOR07 R50-48",
                     "hp": 5,
                     "precio": 1061,
                     "altMax": 297,
-                    "calibre": 4
+                    "calibre": 4,
+                    "equipB":[4,6,7],
+                    "eqCants":[6.4,1,5]
                 },
                 { 
                   "Modelo":"KOR07 R50-58",
                   "hp":5,
                   "precio":1321,
                   "altMax": 360,
-                  "calibre":4
+                  "calibre":4,
+                  "equipB":[4,6,7],
+                  "eqCants":[6.4,1,6]
+                  
                 }
 
             ]
     },
     { "lts": 0.96,
+      "descarga": "1 1/4",
       "modelos": [
                 {
                     "Modelo": "KOR1.2 R05-5",
                     "hp": 0.5,
                     "precio": 176,
                     "altMax": 32,
-                    "calibre": 12
+                    "calibre": 12,
+                    "equipB":[1,6,7],
+                    "eqCants":[3,2,1]
                 },
                 {
                     "Modelo": "KOR1.2 R10-9",
                     "hp": 1,
                     "precio": 232,
                     "altMax": 61,
-                    "calibre": 12
+                    "calibre": 12,
+                    "equipB":[1,6,7],
+                    "eqCants":[3,2,1]
+                   
                 },
                 {
                     "Modelo": "KOR1.2 R15-13",
                     "hp": 1.5,
                     "precio": 304,
                     "altMax": 89,
-                    "calibre": 12
+                    "calibre": 12,
+                    "equipB":[1,6,7],
+                    "eqCants":[3,3,2]
+                    
                 },
                 {
                     "Modelo": "KOR1.2 R20-17",
                     "hp": 2,
                     "precio": 353,
                     "altMax": 114,
-                    "calibre": 12
+                    "calibre": 12,
+                    "equipB":[1,6,7],
+                    "eqCants":[3,3,2]
+                   
                 },
                 {
                     "Modelo": "KOR1.2 R30-23",
                     "hp": 3,
                     "precio": 445,
                     "altMax": 153,
-                    "calibre": 10
+                    "calibre": 10,
+                    "equipB":[2,6,7],
+                    "eqCants":[3,4,3]
+               
                 },
                 {
                     "Modelo": "KOR1.2 R50-31",
                     "hp": 5,
                     "precio": 636,
                     "altMax": 208,
-                    "calibre": 6
+                    "calibre": 6,
+                    "equipB":[2,6,7],
+                    "eqCants":[3,5,4]
+                   
                 },
                 {
                     "Modelo": "KOR1.2 R50-36",
                     "hp": 5,
                     "precio": 716,
                     "altMax": 241,
-                    "calibre": 6
+                    "calibre": 6,
+                    "equipB":[2,6,7],
+                    "eqCants":[3,5,4]
+                  
                 },
                 {
                     "Modelo": "KOR1.2 R75-56",
                     "hp": 7.5,
                     "precio": 1458,
                     "altMax": 381,
-                    "calibre": 8
+                    "calibre": 8,
+                    "equipB":[4,6,7],
+                    "eqCants":[6.4,1,6]
+                    
                 }
             ]
     },
     { "lts": 1.4,
+      "descarga": "1 1/2", 
       "modelos": [
         {
             "Modelo": "KOR2 R05-4",
             "hp": 0.5,
             "precio": 176,
             "altMax": 27,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,9],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR2 R10-7",
             "hp": 1,
             "precio": 226,
             "altMax": 49,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,9],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR2 R15-9",
             "hp": 1.5,
             "precio": 259,
             "altMax": 61,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,9],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR2 R20-11",
             "hp": 2,
             "precio": 279,
             "altMax": 74,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,9],
+            "eqCants":[3,3,2]
         },
         {
             "Modelo": "KOR2 R30-15",
             "hp": 3,
             "precio": 339,
             "altMax": 103,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,9],
+            "eqCants":[3,3,2]
         },
         {
             "Modelo": "KOR2 R50-21",
             "hp": 5,
             "precio": 446,
             "altMax": 141,
-            "calibre": 8
+            "calibre": 8,
+            "equipB":[3,7,9],
+            "eqCants":[3,4,3]
         },
         {
             "Modelo": "KOR2 R50-26",
             "hp": 5,
             "precio": 519,
             "altMax": 171,
-            "calibre": 8
+            "calibre": 8,
+            "equipB":[2,6,9],
+            "eqCants":[3,4,3]
         },
         {
             "Modelo": "KOR2 R75-39",
             "hp": 7.5,
             "precio": 1066,
             "altMax": 265,
-            "calibre": 10
+            "calibre": 10,
+            "equipB":[4,8,9],
+            "eqCants":[3,6,5]
         },
         {
             "Modelo": "KOR2 R100-52F",
             "hp": 10,
             "precio": 2920,
             "altMax": 356,
-            "calibre": 8
+            "calibre": 8,
+            "equipB":[5,6,9],
+            "eqCants":[6.4,1,6]
         }
      ]
     },
     { "lts":2.5,
+      "descarga": "2", 
       "modelos": [
         {
             "Modelo": "KOR3 R10-4",
             "hp": 1,
             "precio": 348,
             "altMax": 24,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,10],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR3 R15-5",
             "hp": 1.5,
             "precio": 390,
             "altMax": 31,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,10],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR3 R20-7",
             "hp": 2,
             "precio": 447,
             "altMax": 44,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,10],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR3 R30-9",
             "hp": 3,
             "precio": 538,
             "altMax": 57,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[1,6,10],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR3 R50-12",
             "hp": 5,
             "precio": 668,
             "altMax": 76,
-            "calibre": 10
+            "calibre": 10,
+            "equipB":[1,6,10],
+            "eqCants":[3,2,1]
         },
         {
             "Modelo": "KOR3 R50-15",
             "hp": 5,
             "precio": 826,
             "altMax": 94,
-            "calibre": 10
+            "calibre": 10,
+            "equipB":[1,6,10],
+            "eqCants":[3,3,2]
         },
         {
             "Modelo": "KOR3 R75-21",
             "hp": 7.5,
             "precio": 1387,
             "altMax": 132,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[3,8,10],
+            "eqCants":[3,3,2]
         },
         {
             "Modelo": "KOR3 R75-25",
             "hp": 7.5,
             "precio": 1561,
             "altMax": 156,
-            "calibre": 12
+            "calibre": 12,
+            "equipB":[2,7,10],
+            "eqCants":[3,4,3]
         },
         {
             "Modelo": "KOR3 R100-30",
             "hp": 10,
             "precio": 1902,
             "altMax": 189,
-            "calibre": 10
+            "calibre": 10,
+            "equipB":[2,7,10],
+            "eqCants":[3,4,3]
         },
         {
             "Modelo": "KOR3 R150 -37",
             "hp": 15,
             "precio": 2046,
             "altMax": 246,
-            "calibre": 8
+            "calibre": 8,
+            "equipB":[4,9,10],
+            "eqCants":[3,5,4]
         },
         {
             "Modelo": "KOR3 R150-44",
             "hp": 15,
             "precio": 2411,
             "altMax": 289,
-            "calibre": 6
+            "calibre": 6,
+            "equipB":[5,7,10],
+            "eqCants":[6.2,1,5]
         },
         {
             "Modelo": "KOR3 R200-50F",
             "hp": 20,
             "precio": 4456,
             "altMax": 329,
-            "calibre": 4
+            "calibre": 4,
+            "equipB":[5,7,10],
+            "eqCants":[6.2,1,5]
         },
         {
             "Modelo": "KOR3 R200-58F",
             "hp": 20,
             "precio": 4556,
             "altMax": 382,
-            "calibre": 4
+            "calibre": 4,
+            "equipB":[5,7,10],
+            "eqCants":[6.2,1,6]
         },
         {
             "Modelo": "KOR3 R200-66F",
             "hp": 20,
             "precio": 4556,
             "altMax": 422,
-            "calibre": 4
+            "calibre": 4,
+            "equipB":[5,7,10],
+            "eqCants":[6.2,1,7]
         }
         
        ]
      },
      { "lts": 4.16,
+      "descarga": "2",
        "modelos":[
         {
             "Modelo": "KOR4.5 R20-3",
@@ -358,6 +449,7 @@
      ]
     },
     { "lts": 5.33,
+      "descarga": "3",
       "modelos": [
         {
             "Modelo": "KOR6 R15-1",
@@ -580,6 +672,7 @@
      ]
     },
     { "lts": 9.33,
+      "descarga": "3",
       "modelos": [
         {
             "Modelo": "KOR10 R20-1",
@@ -794,6 +887,7 @@
      ]
     },
     { "lts": 15,
+      "descarga": "3",
       "modelos": [
         {
             "Modelo": "KOR15 R20-1-1B",
@@ -980,6 +1074,7 @@
      ]
     },
     { "lts": 20,
+      "descarga": "4",
       "modelos": [
           {
             "Modelo": "KOR20 R50-1",
@@ -1118,6 +1213,7 @@
      ]
     },
     { "lts": 23.3,
+      "descarga": "6",
       "modelos": [
         {
             "Modelo": "KOR25 R75-1",
@@ -1261,6 +1357,7 @@
           }
      ]},
      { "lts": 30,
+       "descarga": "6",
        "modelos": [
         {
             "Modelo": "KOR32 R75-1A",
@@ -1392,6 +1489,7 @@
      ]
     },
     { "lts": 40,
+      "descarga": "6",
       "modelos": [
         {
             "Modelo": "KOR40 R150-1A",
@@ -1487,6 +1585,7 @@
         
      ]},
      { "lts": 53.3,
+       "descarga": "6",
        "modelos": [
         {
             "Modelo": "KOR53 R200-1A",
@@ -1567,6 +1666,7 @@
           } 
      ]},
      { "lts": 70,
+       "descarga": "6",
        "modelos": [
         {
             "Modelo": "KOR70 R300-1-1",
@@ -1827,6 +1927,7 @@
      ],
   "bombasKolosal":[
       { "lts":0.5,
+        "descarga": "1 1/4",
         "modelos":[
       
               {
@@ -1835,7 +1936,10 @@
                "precio": 515,
                "altMax": 18,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 1
+
               },
               {
                "Modelo": "KOLOS3-47-40-4",
@@ -1843,7 +1947,9 @@
                "precio": 548,
                "altMax": 25,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 2
               },
               {
                "Modelo": "KOLOS3-80-60-7",
@@ -1851,7 +1957,9 @@
                "precio": 585,
                "altMax": 40,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 2
               },
               {
                "Modelo": "KOLOS3-95-75-11",
@@ -1859,7 +1967,9 @@
                "precio": 637,
                "altMax": 60,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 3
               },
               {
                "Modelo": "KOLOS3-123-110-20",
@@ -1867,7 +1977,9 @@
                "precio": 673,
                "altMax": 80,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 4               
               },
               {
                "Modelo": "KOLOS3-155-130-20",
@@ -1875,7 +1987,9 @@
                "precio": 735,
                "altMax": 100,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 4
               },
               {
                "Modelo": "KOLOS3-180-150-20",
@@ -1883,11 +1997,14 @@
                "precio": 808,
                "altMax": 115,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 4
               }
             ]
     },
     { "lts":1,
+      "descarga": "1 1/4",
       "modelos":[
       
               {
@@ -1896,11 +2013,14 @@
                "precio": 676,
                "altMax": 60,
                "calibre": 10,
-               "descarga": "1 1/4"
+               "equipB":[3,6,7],
+               "eqCants":[3,2,1],
+               "cantPan": 4
               }
           ]
     },
     { "lts":2,
+      "descarga": "2",
       "modelos":[
               {
                "Modelo": "KOLOS4-60-150-20",
@@ -1908,168 +2028,17 @@
                "precio": 789,
                "altMax": 40,
                "calibre": 10,
-               "descarga": "2"
+               "equipB":[1,6,10],
+               "eqCants":[3,2,1],
+               "cantPan": 4
+               
               }
           ]
     }
 
      ],
   "equipamientoBomba":{
-     "1 1/4":[
-        {
-        "Accesorio": "Tubo Altamira Serie 150",
-        "precio": 25 
-        },
-        {
-        "Accesorio": "Tubo Altamira Serie 250",
-        "precio": 38 
-        },
-        {
-        "Accesorio": "Tubo Acero de Conduccion",
-        "precio": 1350,
-        "MUCHOOJO":"El precio de este esta en MXN"
-        },
-        {
-        "Accesorio": "Kit Adaptador 150/250 hierro",
-        "precio": 37 
-        },
-        {
-        "Accesorio": "Check de Columna",
-        "precio": 69 
-        }
-    ],
-    "1 1/2":[
-        {
-            "Accesorio": "Tubo Altamira Serie 150 UPCV",
-            "precio": 36    
-        },
-        {
-            "Accesorio": "Tubo Altamira Serie 250 UPCV",
-            "precio": 46  
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 190",
-            "precio": 39    
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM SH 360",
-            "precio": 50    
-        },
-        {
-            "Accesorio": "Tubo Acero de Conduccion",
-            "precio": 1450,
-            "MUCHOOJO":"El precio de este esta en MXN"    
-        },
-        {
-            "Accesorio": "KIT ADAP 150/250 HIERRO",
-            "precio": 39    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 190 MEDIUM",
-            "precio": 189    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 360 SUPER HEAVY",
-            "precio": 200    
-        },
-        {
-        "Accesorio": "Check de Columna",
-        "precio": 94 
-        }
-    ],
-    "2":[
-        {
-            "Accesorio": "Tubo Altamira Serie 150 UPCV",
-            "precio": 48    
-        },
-        {
-            "Accesorio": "Tubo Altamira Serie 250 UPCV",
-            "precio": 78  
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 190",
-            "precio": 56    
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
-            "precio": 84    
-        },
-        {
-            "Accesorio": "Tubo Acero de Conduccion",
-            "precio": 2200,
-            "MUCHOOJO":"El precio de este esta en MXN"    
-        },
-        {
-            "Accesorio": "KIT ADAP 150 HIERRO",
-            "precio": 69    
-        },
-        {
-            "Accesorio": "KIT ADAP 250 ACERO INOX",
-            "precio": 391    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 190 MEDIUM",
-            "precio": 282    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 320 HEAVY",
-            "precio": 348    
-        },
-        {
-        "Accesorio": "Check de Columna",
-        "precio": 177 
-        }
-    ],
-    "3":[
-        {
-            "Accesorio": "Tubo Altamira Serie 150 UPCV",
-            "precio": 95    
-        },
-        {
-            "Accesorio": "Tubo Altamira Serie 250 UPCV",
-            "precio": 151  
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 90",
-            "precio": 63    
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 190",
-            "precio": 101    
-        },
-        {
-            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
-            "precio": 170    
-        },
-        {
-            "Accesorio": "Tubo Acero de Conduccion",
-            "precio": 4500,
-            "MUCHOOJO":"El precio de este esta en MXN"    
-        },
-        {
-            "Accesorio": "KIT ADAP 150 HIERRO",
-            "precio": 120    
-        },
-        {
-            "Accesorio": "KIT ADAP 250 ACERO INOX",
-            "precio": 717    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 190 Standard",
-            "precio": 487    
-        },
-        {
-            "Accesorio": "KIT ADAP KEM 190 MEDIUM 320 HEAVY",
-            "precio": 585    
-        },
-        {
-            "Accesorio": "Check de Columna",
-            "precio": 601 
-        }
-    ]
-
-   },
- "cableSumergible":[
+     "cableSumergible":[
     {
         "calibre":12,
         "precioMXN":70
@@ -2103,7 +2072,320 @@
         "precioMXN":1245
     }
  ],
- "solar":{
+     "descarga":{
+       "1 1/4":[
+          {
+          "id": 1,  
+          "Accesorio": "Tubo Altamira Serie 150",
+          "precio": 25 
+          },
+          {
+          "id": 2,   
+          "Accesorio": "Tubo Altamira Serie 250",
+          "precio": 38 
+          },
+          { 
+          "id": 3,  
+          "Accesorio": "Tubo UPVC 150 1.25in",
+          "precio": 25
+          },
+          { 
+          "id": 4,  
+          "Accesorio": "Tubo Acero de Conduccion",
+          "precio": 1350,
+          "mxn":true
+          },
+          {
+          "id": 6, 
+          "Accesorio": "Kit Adaptador 150/250 hierro",
+          "precio": 37 
+          },
+          {
+          "id": 7,  
+          "Accesorio": "Check de Columna",
+          "precio": 69 
+          }
+        ],
+        "1 1/2":[
+          {
+            "id": 1,
+            "Accesorio": "Tubo Altamira Serie 150 UPCV",
+            "precio": 36    
+          },
+          {
+            "id": 2,
+            "Accesorio": "Tubo Altamira Serie 250 UPCV",
+            "precio": 46  
+          },
+          { 
+            "id": 3,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 190",
+            "precio": 39    
+          },
+          { 
+            "id": 4,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM SH 360",
+            "precio": 50    
+          },
+          { 
+            "id": 5,
+            "Accesorio": "Tubo Acero de Conduccion",
+            "precio": 1450,
+            "mxn":true    
+          },
+          { 
+            "id": 6,
+            "Accesorio": "KIT ADAP 150/250 HIERRO",
+            "precio": 39    
+          },
+          { 
+            "id": 7,
+            "Accesorio": "KIT ADAP KEM 190 MEDIUM",
+            "precio": 189    
+          },
+          { 
+            "id": 8,
+            "Accesorio": "KIT ADAP KEM 360 SUPER HEAVY",
+            "precio": 200    
+          },
+          { 
+            "id": 9,
+            "Accesorio": "Check de Columna",
+            "precio": 94 
+          }  
+       ],
+       "2":[
+        {
+            "id": 1,
+            "Accesorio": "Tubo UPCV 150",
+            "precio": 48    
+        },
+        {
+            "id": 2,
+            "Accesorio": "Tubo Altamira Serie 250 UPCV",
+            "precio": 78  
+        },
+        {
+            "id": 3,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 180",
+            "precio": 56    
+        },
+        {  
+            "id": 4,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
+            "precio": 84    
+        },
+        {
+            "id": 5,
+            "Accesorio": "Tubo Acero de Conduccion",
+            "precio": 2200,
+            "mxn":true    
+        },
+        {
+            "id": 6,
+            "Accesorio": "KIT ADAP 150 HIERRO",
+            "precio": 69    
+        },
+        {
+            "id": 7, 
+            "Accesorio": "KIT ADAP 250 ACERO INOX",
+            "precio": 391    
+        },
+        {
+            "id": 8,
+            "Accesorio": "KIT ADAP KEM 190 MEDIUM",
+            "precio": 282    
+        },
+        {
+            "id": 9,
+            "Accesorio": "KIT ADAP KEM 320 HEAVY",
+            "precio": 348    
+        },
+        {
+          "id": 10,
+          "Accesorio": "Check de Columna",
+          "precio": 177 
+        }
+      ],
+      "3":[
+        {   
+            "id": 1,
+            "Accesorio": "Tubo Altamira Serie 150 UPCV",
+            "precio": 95    
+        },
+        {   
+            "id": 2,
+            "Accesorio": "Tubo Altamira Serie 250 UPCV",
+            "precio": 151  
+        },
+        {   
+            "id": 3,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 90",
+            "precio": 63    
+        },
+        {   "id": 4,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 190",
+            "precio": 101    
+        },
+        {   
+            "id": 5,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
+            "precio": 170    
+        },
+        {   
+            "id": 6,
+            "Accesorio": "Tubo Acero de Conduccion",
+            "precio": 4500,
+            "mxn":true    
+        },
+        {
+            "id": 7,
+            "Accesorio": "KIT ADAP 150 HIERRO",
+            "precio": 120    
+        },
+        {
+            "id": 8,
+            "Accesorio": "KIT ADAP 250 ACERO INOX",
+            "precio": 717    
+        },
+        {
+            "id": 9,
+            "Accesorio": "KIT ADAP KEM 190 Standard",
+            "precio": 487    
+        },
+        {   
+            "id": 10,
+            "Accesorio": "KIT ADAP KEM 190 MEDIUM 320 HEAVY",
+            "precio": 585    
+        },
+        {  
+          
+            "id": 11,
+            "Accesorio": "Check de Columna",
+            "precio": 601 
+        }
+      ],
+    "4":[
+         {  
+             "id": 1,
+            "Accesorio": "Tubo Altamira Serie 150 UPCV",
+            "precio": 143    
+         },
+         {
+            
+            "id": 2,
+            "Accesorio": "Tubo Altamira Serie 250 UPCV",
+            "precio": 248  
+         },
+         {
+            
+            "id": 3,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM M 135",
+            "precio": 115    
+         },
+         {
+            "id": 4,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 315",
+            "precio": 275    
+         },
+         {
+            "id": 5,
+            "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
+            "precio": 170    
+         },
+         {
+            "id": 6,
+            "Accesorio": "Tubo Acero de Conduccion",
+            "precio": 4500,
+            "mxn":true    
+         },
+         {
+            "id": 7,
+            "Accesorio": "KIT ADAP 150 HIERRO",
+            "precio": 120    
+         },
+         {
+            "id": 8,
+            "Accesorio": "KIT ADAP 250 ACERO INOX",
+            "precio": 717    
+         },
+         {
+            "id": 9,
+            "Accesorio": "KIT ADAP KEM 190 Standard",
+            "precio": 487    
+         },
+         {
+            "id": 10,      
+            "Accesorio": "KIT ADAP KEM 190 MEDIUM 320 HEAVY",
+            "precio": 585    
+         },
+         {  
+            "id": 11,            
+            "Accesorio": "Check de Columna",
+            "precio": 601 
+         }
+     ],
+     "6":[
+          {
+            "id": 1, 
+             "Accesorio": "Tubo Altamira Serie 150 UPCV",
+             "precio": 143    
+          },
+          {  
+             "id": 2,
+             "Accesorio": "Tubo Altamira Serie 250 UPCV",
+             "precio": 248  
+          },
+          {
+             "id": 3, 
+             "Accesorio": "TUBO ALTAMIRA SERIE KEM M 135",
+             "precio": 115    
+          },
+          {
+             "id": 4,
+             "Accesorio": "TUBO ALTAMIRA SERIE KEM H 315",
+             "precio": 275    
+          },
+          {
+             "id": 5,
+             "Accesorio": "TUBO ALTAMIRA SERIE KEM H 320",
+             "precio": 170    
+          },
+          {
+             "id": 6,
+             "Accesorio": "Tubo Acero de Conduccion",
+             "precio": 4500,
+             "mxn":true    
+          },
+          {
+             "id": 7,
+             "Accesorio": "KIT ADAP 150 HIERRO",
+             "precio": 120    
+          },
+          {
+             "id": 8,
+             "Accesorio": "KIT ADAP 250 ACERO INOX",
+             "precio": 717    
+          },
+          {
+             "id": 9,
+             "Accesorio": "KIT ADAP KEM 190 Standard",
+             "precio": 487    
+          },
+          {
+             "id": 10,
+             "Accesorio": "KIT ADAP KEM 190 MEDIUM 320 HEAVY",
+             "precio": 585    
+          },
+          {
+             "id": 11,
+             "Accesorio": "Check de Columna",
+             "precio": 601 
+          }
+      ]
+    }
+   },
+  "solar":{
     "gabinetesArmados": [
       {
         "hp": 2,
@@ -2354,123 +2636,144 @@
             {
                 "hp":1,
                 "voltaje":220,
-                "cantidadPaneles":8
+                "cantidadPaneles":8,
+                "string":[1,8]
             },
             {
                 "hp":2,
                 "voltaje":220,
-                "cantidadPaneles":8
+                "cantidadPaneles":8,
+                "string":[1,8]
             },
             {
                 "hp":3,
                 "voltaje":220,
-                "cantidadPaneles":8
+                "cantidadPaneles":8,
+                "string":[1,8]
             },
             {
                 "hp":5,
                 "voltaje":220,
-                "cantidadPaneles":14
+                "cantidadPaneles":14,
+                "string":[2,7]
             },
             {
                 "hp":7.5,
                 "voltaje":220,
-                "cantidadPaneles":16
+                "cantidadPaneles":16,
+                "string":[2,8]
             }
             ,
             {
                 "hp":7.5,
                 "voltaje":440,
-                "cantidadPaneles":16
+                "cantidadPaneles":16,
+                "string":[1,16]
             }
             ,
             {
                 "hp":10,
                 "voltaje":440,
-                "cantidadPaneles":28
+                "cantidadPaneles":28,
+                "string":[2,14]
             }
             ,
             {
                 "hp":15,
                 "voltaje":440,
-                "cantidadPaneles":32
+                "cantidadPaneles":32,
+                "string":[2,16]
             }
             ,
             {
                 "hp":20,
                 "voltaje":440,
-                "cantidadPaneles":42
+                "cantidadPaneles":42,
+                "string":[3,14]
             }
             ,
             {
                 "hp":25,
                 "voltaje":440,
-                "cantidadPaneles":56
+                "cantidadPaneles":56,
+                "string":[4,14]
             }
             ,
             {
                 "hp":30,
                 "voltaje":440,
-                "cantidadPaneles":70
+                "cantidadPaneles":70,
+                "string":[5,14]
             }
             ,
             {
                 "hp":40,
                 "voltaje":440,
-                "cantidadPaneles":84
+                "cantidadPaneles":84,
+                "string":[6,14]
             }
             ,
             {
                 "hp":50,
                 "voltaje":440,
-                "cantidadPaneles":112
+                "cantidadPaneles":112,
+                "string":[8,14]
             }
             ,
             {
                 "hp":60,
                 "voltaje":440,
-                "cantidadPaneles":140
+                "cantidadPaneles":140,
+                "string":[10,14]
             }
             ,
             {
                 "hp":75,
                 "voltaje":440,
-                "cantidadPaneles":168
+                "cantidadPaneles":168,
+                "string":[12,14]
             }
             ,
             {
                 "hp":100,
                 "voltaje":440,
-                "cantidadPaneles":224
+                "cantidadPaneles":224,
+                "string":[16,14]
             }
             ,
             {
                 "hp":125,
                 "voltaje":440,
-                "cantidadPaneles":280
+                "cantidadPaneles":280,
+                "string":[20,14]
             }
             ,
             {
                 "hp":150,
                 "voltaje":440,
-                "cantidadPaneles":322
+                "cantidadPaneles":322,
+                "string":[23,14]
             }
             ,
             {
                 "hp":175,
                 "voltaje":440,
-                "cantidadPaneles":378
+                "cantidadPaneles":378,
+                "string":[27,14]
             }
             ,
             {
                 "hp":200,
                 "voltaje":440,
-                "cantidadPaneles":434
+                "cantidadPaneles":434,
+                "string":[31,14]
             }
             ,
             {
                 "hp":250,
                 "voltaje":440,
-                "cantidadPaneles":546
+                "cantidadPaneles":546,
+                "string":[39,14]
             }
          ]
             
