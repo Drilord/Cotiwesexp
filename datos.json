@@ -2709,121 +2709,121 @@
       {
         "hp": 2,
         "voltaje": 220,
-        "Sin filtro": 4983,
-        "filtro 150": 10783,
-        "filtro 500": 15983
+        "Sinfiltro": 4983,
+        "filtro150": 10783,
+        "filtro500": 15983
       },
       {
         "hp": 3,
         "voltaje": 220,
-        "Sin filtro": 4574,
-        "filtro 150": 10374,
-        "filtro 500": 15574
+        "Sinfiltro": 4574,
+        "filtro150": 10374,
+        "filtro500": 15574
       },
       {
         "hp": 5,
         "voltaje": 220,
-        "Sin filtro": 3174,
-        "filtro 150": 8974,
-        "filtro 500": 14174
+        "Sinfiltro": 3174,
+        "filtro150": 8974,
+        "filtro500": 14174
       },
       {
         "hp": 7.5,
         "voltaje": 220,
-        "Sin filtro": 3529,
-        "filtro 150": 9329,
-        "filtro 500": 14529
+        "Sinfiltro": 3529,
+        "filtro150": 9329,
+        "filtro500": 14529
       },
       {
         "hp": 7.5,
         "voltaje": 440,
-        "Sin filtro": 4233,
-        "filtro 150": 10033,
-        "filtro 500": 15233
+        "Sinfiltro": 4233,
+        "filtro150": 10033,
+        "filtro500": 15233
       },
       {
         "hp": 10,
         "voltaje": 440,
-        "Sin filtro": 4074,
-        "filtro 150": 9874,
-        "filtro 500": 19374
+        "Sinfiltro": 4074,
+        "filtro150": 9874,
+        "filtro500": 19374
       },
       {
         "hp": 15,
         "voltaje": 440,
-        "Sin filtro": 7524,
-        "filtro 150": 13824,
-        "filtro 500": 19024
+        "Sinfiltro": 7524,
+        "filtro150": 13824,
+        "filtro500": 19024
       },
       {
         "hp": 20,
         "voltaje": 440,
-        "Sin filtro": 5345,
-        "filtro 150": 16845,
-        "filtro 500": 26345
+        "Sinfiltro": 5345,
+        "filtro150": 16845,
+        "filtro500": 26345
       },
       {
         "hp": 25,
         "voltaje": 440,
-        "Sin filtro": 8086,
-        "filtro 150": 21486,
-        "filtro 500": 29586
+        "Sinfiltro": 8086,
+        "filtro150": 21486,
+        "filtro500": 29586
       },
       {
         "hp": 30,
         "voltaje": 440,
-        "Sin filtro": 8987,
-        "filtro 150": 20987,
-        "filtro 500": 30487
+        "Sinfiltro": 8987,
+        "filtro150": 20987,
+        "filtro500": 30487
       },
       {
         "hp": 40,
         "voltaje": 440,
-        "Sin filtro": 12978,
-        "filtro 150": 25328,
-        "filtro 500": 45828
+        "Sinfiltro": 12978,
+        "filtro150": 25328,
+        "filtro500": 45828
       },
       {
         "hp": 50,
         "voltaje": 440,
-        "Sin filtro": 25120,
-        "filtro 150": 37470,
-        "filtro 500": 57970
+        "Sinfiltro": 25120,
+        "filtro150": 37470,
+        "filtro500": 57970
       },
       {
         "hp": 60,
         "voltaje": 440,
-        "Sin filtro": 16762,
-        "filtro 150": 49612,
-        "filtro 500": ""
+        "Sinfiltro": 16762,
+        "filtro150": 49612,
+        "filtro500": ""
       },
       {
         "hp": 75,
         "voltaje": 440,
-        "Sin filtro": 24604,
-        "filtro 150": 65454,
-        "filtro 500": ""
+        "Sinfiltro": 24604,
+        "filtro150": 65454,
+        "filtro500": ""
       },
       {
         "hp": 100,
         "voltaje": 440,
-        "Sin filtro": 27688,
-        "filtro 150": 79638,
-        "filtro 500": ""
+        "Sinfiltro": 27688,
+        "filtro150": 79638,
+        "filtro500": ""
       },
       {
         "hp": 150,
         "voltaje": 440,
-        "Sin filtro": 61595,
-        "filtro 150": "",
-        "filtro 500": ""
+        "Sinfiltro": 61595,
+        "filtro150": "",
+        "filtro500": ""
       },
       {
         "hp": 250,
         "voltaje": 440,
-        "Sin filtro": 103828,
-        "filtro 150": "",
-        "filtro 500": ""
+        "Sinfiltro": 103828,
+        "filtro150": "",
+        "filtro500": ""
       }
     ],
     "variadorSolar":[
@@ -2950,7 +2950,7 @@
      "paneles": {
          "tipoPaneles": "Canadian",
          "potencia": 555,
-         "recio": 99.90,
+         "precio": 99.90,
          "cantidadxHP": [
             {
                 "hp":1,

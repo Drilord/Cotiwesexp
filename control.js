@@ -132,7 +132,8 @@ function validar() {
   const cdt=document.getElementById('input6');  
   const hpMan=document.getElementById('hp');  
   const distP=document.getElementById('input8');
-  const proPozo=document.getElementById('input8');
+  const proPozo=document.getElementById('input5');
+  const marg=document.getElementById('input7');
  //bombeo   
  if(cotType == 1){
   pyct.cotType=1;
@@ -160,7 +161,7 @@ if(!km.value){
   return;
 }  
    selPump.eqBomba=equipBomb();
-   alert('Precio equip Bomba tot:', selPump.eqBomba.precio);
+   alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
    c = genID(selPump.hp);
  } 
  //solar
@@ -187,7 +188,7 @@ if(!distP.value){
   alert("Introduzca la distancia de la bomba a los paneles")
   return;
 }
-pyct.solar= datosSolar(hpMan,distP)
+pyct.solar= datosSolar(parseFloat(hpMan.value),parseInt(distP.value),parseInt(proPozo.value))
 c = genID(hpMan.value);
 } 
 //full bomsol
@@ -217,13 +218,13 @@ if(cotType == 3 || !cotType){
   return;
   }
   pyct.cotType=3;
-
+  pyct.solar= datosSolar(selPump.hp,parseInt(distP.value),parseInt(proPozo.value))
   c = genID(selPump.hp);
   selPump.eqBomba=equipBomb();
-  alert('Precio equip Bomba tot:'+ selPump.eqBomba[3].precioeq);
+  
 
 } 
-
+if(parseInt(marg.value)<35){alert('Pedir Autorizacion para Gastos indirectos menor a 35%'); return;}
 alert('ID generado: '+c+' puede Cotizar');
 const cotBtn=document.getElementById('acot'); 
 cotBtn.style.display= 'block';
@@ -301,9 +302,9 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
 
     if(datosBomba){
 
-     alert('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
+     console.log('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
       hpDisp.value = datosBomba.hp ;
-
+      datosBomba.precio=((datosBomba.precio*tipCam*1.16)*0.48)*0.95;
       return datosBomba;
     }
     else{
@@ -393,28 +394,31 @@ let datosMot= null ;
 const temp= document.getElementById('check0').checked
 data.bomSol.motores.forEach(motor=>{
           if(motor.hp<7.5){
-          if(hp==motor.hp){
+            if(hp==motor.hp){
                   datosMot= motor;
+                  datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                   return datosMot;
                 }
-          }
-          else{
-            if(hp==motor.hp){
-              if(temp){
+            }
+            else{
+              if(hp==motor.hp){
+                if(temp){
                 if(motor.serie=='X')
                  // alert('entro al if serie x Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
+                datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                 return datosMot;
-              }
-              if(!temp){
-              if(motor.serie=='RT'){
+                }
+                if(!temp){
+                if(motor.serie=='RT'){
                 // alert('entro al if serie RT Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
+                datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                 return datosMot;
-              }          
+                }          
+                }
               }
-          }
-          }
+            }
         });
           if(datosMot){
           //alert('if datosMot Modelo: '+datosMot.Modelo+' Serie: '+datosMot.serie+'hp: '+datosMot.hp);
@@ -522,11 +526,14 @@ function estrucSol(){
   }
 }
 
-function datosSolar(hp, distPan){
+function datosSolar(hp,distPan,proPozo){
+  console.log('hp recibido en datos solar',hp);
  //variador
  const variadores=dataPan.variadorSolar;
  const gabinetes=dataPan.gabinetesArmados;
- let solar={};
+ const paneles=dataPan.paneles;
+ let selGab;
+ const solar={};
  if(hp>2){
    
    variadores.forEach(variador=>{
@@ -541,20 +548,46 @@ function datosSolar(hp, distPan){
  //gabinete 
  if(hp>2){
    
-  gabinetes.forEach(gabinete=>{
+gabinetes.forEach(gabinete=>{
      if(gabinete.hp==hp){
-        solar.gabinete=gabinete;
+        selGab=gabinete;
+
      }
   });
  }else{
-   solar.gabinete=gabinetes[0];
+   selGab=gabinetes[0];
  }
+ const filtro=distPan+proPozo
+  if(filtro<150){
+       solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.Sinfiltro}
+  }
+  if(filtro>=150 && filtro<500){
+    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro150}
+  }
+  if(filtro>=500){
+    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro500}
+  }
+ console.log(solar.gabinete);
  //cantPan
- /*alt*/if(pumpCurrT==1){}
- else{
-     solar.cantPan= {}
+ /*alt*/if(pumpCurrT==1){
+  let tempHp;
+  if(hp<=1){tempHp=1}
+  if(hp>1&&hp<=2){tempHp=2}
+  if(hp>2){tempHp=hp}
+  console.log('tempHp:',tempHp);
+  solar.cantPan=paneles.cantidadxHP.filter(canpan=> canpan.hp==tempHp);
+  solar.tipPan=paneles.tipoPaneles;
+  solar.pot=paneles.potencia;
+  solar.precio=paneles.precio*tipCam;
  }
-
+ /*dir*/if(pumpCurrT==2){
+     solar.cantPan={cantidadPaneles:selPump.cantPan};
+     solar.tipPan=paneles.tipoPaneles;
+     solar.pot=paneles.potencia;
+     solar.precio=paneles.precio*tipCam;
+ }
+console.log(solar);
+return solar;
 /*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
   con los hp se calcula el gabinete armado y el variador 
   esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio,
