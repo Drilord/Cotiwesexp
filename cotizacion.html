@@ -19,16 +19,28 @@
     <script src="cotizacion.js"></script>
     <title>Cotización</title>
      </head>
+  <style>
+    @media print {
+    .page-break {
+      margin-bottom: 1cm; 
+    page-break-after: always; 
+     }
+    }
+    @page {
+    size: Letter;
+    margin: 1cm;
+  }
+  </style>   
   <body>
-     <div class="container">
-      <div class="card" style="width: 90%">
+     <div class="container-fluid page-break">
+      <div class="card" style="align-items:center; width: 100%">
         <div class="row">
           <div class="col-8"></div>
           <div class="col-4">
             <img
               src="./images/logo-WESLACO1.png"
               style="width: 100%"
-              class="card-img-top"
+              class=""
               alt="logo"
             />
           </div>
@@ -142,9 +154,9 @@
         </div>
       </div>
     </div>
-    <div class="container">
-      <div class="card" style="width: 90%">
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+    <div class="container-fluid page-break">
+      <div class="card" style="align-items:center; width: 100%">
+        <div class="card"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-4"></div>
           <div class="col-8">
@@ -218,8 +230,8 @@
       </div>
     </div>
 
-    <div class="container">
-      <div class="card" style="width: 90%">
+    <div class="container-fluid page-break">
+      <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <div class="col-2"></div>
@@ -261,8 +273,8 @@
       </div>
     </div>
  
-    <div class="container text-center">
-      <div class="card" style="width: 90%">
+    <div class="container-fluid text-center page-break">
+      <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">
           <h1>Cotización</h1>
@@ -514,8 +526,8 @@
         <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>
       </div>  
     </div>  
-    <div class="container text-start"> 
-      <div class="card" style="width: 90%">
+    <div class="container-fluid text-start page-break"> 
+      <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row text-start">
           <div class="col-1"></div>
@@ -578,8 +590,8 @@
       
     </div>
     
-     <div class="container text-start">
-      <div class="card" style="width: 90%">
+     <div class="container-fluid text-start page-break" >
+      <div class="card" style="align-items:center; width: 100%">
       
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
         <div class="row">

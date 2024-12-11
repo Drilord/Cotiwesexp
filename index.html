@@ -25,10 +25,15 @@
       }
       .div {
         margin: 10px;
+        
       }
       
       .standard-input {
-        width: 236px; ;
+        width: 100%; 
+        max-width: 236px; 
+      }
+      .row{
+        margin-top: 5px;
       }
 
     </style>
@@ -83,129 +88,157 @@
     <!--Ventana Principal-->
     <div class="container">
       <div class="row g-3">
-        <div class="col-4"><h2>Autocotizador</h2></div>
-        <div class="col-4 align-items-center">
-          <img src="./images/LOGO-WESLACO2.png" alt="logo" />
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-6 col-md-4"><h2 class="text-center text-truncate">Autocotizador</h2></div>
+        <div class="col-6 col-md-4 align-items-center">
+          <img src="./images/LOGO-WESLACO2.png" alt="logo" class="img-fluid" />
         </div>
-        <div class="col-4"></div>
+        <div class="col-2 d-md-block d-none"></div>
       </div>
       <div class="row">
-        <h5>Por favor ingresa los datos:</h5>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-8 col-md-8 text-truncate"><h5>Por favor ingresa los datos:</h5></div>
+        <div class="col-2 d-md-block d-none"></div>
       </div>
       <div class="row">
-        <div class="col-2">Cotizar:
-        </div>
-        <div class="col-2">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-2 col-md-2">Cotizar:</div>
+        <div class="col-4 col-md-2">
           <label for="check1">Bombeo</label>
           <input type="checkbox" id="check1" checked onchange="cotTypVal()"/>
         </div>
-        <div class="col-2" >
+        <div class="col-4 col-md-2">
           <label for="check2">Solar</label>
           <input type="checkbox" id="check2" checked onchange="cotTypVal()"/>
         </div>
-        <div class="col-6">
-        </div>    
+        <div class="col-4 d-md-block d-none"> 
+        </div> 
       </div>
       <div class="row">
-          <div class="col-2"><label for="idCot">Identificador: </label></div>
-          <div class="col-3"><input class="standard-input" type="text" id="idCot" disabled value="Autogenerado" /></div>
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-4 col-md-2 text-truncate"><label for="idCot" >Identificador: </label></div>
+          <div class="col-6 col-md-3"><input class="standard-input" type="text" id="idCot" disabled value="Autogenerado" /></div>
+          <div class="col-5 d-md-block d-none"></div> 
         </div> 
         <div class="row">
-        <div class="col-2"><label for="input0">Tipo de Cambio DOF: </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input0" disabled /></div>
-        </div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input0">Tipo de Cambio DOF: </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input0" disabled /></div>
+        <div class="col-5 d-md-block d-none"></div> 
+       </div>
         <div class="row">
-          <div class="col-2"><label for="hp">HP del proyecto: </label></div>
-          <div class="col-3"><input class="standard-input" type="text" id="hp" disabled /></div>
-          </div>
-      <div class="row">
-        <div class="col-2"><label for="input1">Nombre del cliente: </label></div>
-        <div class="col-3"> <input class="standard-input" type="text" id="input1" /></div>
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-4 col-md-2 text-truncate"><label for="hp">HP del proyecto: </label></div>
+          <div class="col-6 col-md-3"><input class="standard-input" type="text" id="hp" disabled /></div>
+          <div class="col-5 d-md-block d-none"></div> 
         </div>
       <div class="row">
-        <div class="col-2"><label for="input2">Localidad: </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input2" /></div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input1">Nombre del cliente: </label></div>
+        <div class="col-6 col-md-3"> <input class="standard-input" type="text" id="input1" /></div>
+        <div class="col-5 d-md-block d-none"></div> 
       </div>
       <div class="row">
-        <div class="col-2"><label for="input3">Kilometros: </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input3" /></div>
-        </div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input2">Localidad: </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input2" /></div>
+        <div class="col-5 d-md-block d-none"></div> 
+      </div>
+      <div class="row">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input3">Kilometros: </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input3" /></div>
+        <div class="col-5 d-md-block d-none"></div>  
+      </div>
         <div class="row full bom">
-          <div class="col-2">Corriente:</div>
-          <div class="col-2"><label for="check6">Alterna</label>
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-4 col-md-2 text-truncate">Corriente:</div>
+          <div class="col-4 col-md-2"><label for="check6">Alterna</label>
             <input type="checkbox" id="check6" checked/>
           </div>
-          <div class="col-2" >
+          <div class="col-4 col-md-2" >
             <label for="check7">Directa</label>
             <input type="checkbox" id="check7"/>
           </div>
-          <div class="col-6">
-          </div>    
+          <div class="col-4 d-md-block d-none"></div>    
         </div> 
       <div class="row  bom full">
-        <div class="col-2"><label for="ltsSelect">Volumen de agua: </label></div>
-        <div class="col-3"><select class="standard-input" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
-        <div class="col-2"><span Style="color: rgb(0, 0, 0); align-items: start;" id="descr">Desc: 1 1/4"</span></div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="ltsSelect">Volumen de agua: </label></div>
+        <div class="col-6 col-md-3"><select class="standard-input" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
+        <div class="col-12 col-md-3"><span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">Desc: 1 1/4"</span></div>
+        <div class="col-5 d-md-block d-none"></div>  
       </div>
       <div class="row bom full">
-        <div class="col-2"><label for="input5">Profundidad del pozo(mts): </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input5" /></div>
-        </div>
-      <div class="row bom full">
-        <div class="col-2"><label for="input6">CDT(mts): </label></div>
-        <div class="col-3"><input onchange="maxCDT()" class="standard-input" type="text" id="input6" /></div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input5">Prof. Pozo(mts): </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input5" /></div>
+        <div class="col-5 d-md-block d-none"></div> 
       </div>
-     <div class="row full bom">  
-        <div class="col-2"></div>
-        <div class="col-8"><span Style="color: crimson; align-items: start;" id="cdtMax">(CDT Max 360mts)</span></div>
+      <div class="row bom full">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input6">CDT(mts): </label></div>
+        <div class="col-6 col-md-3"><input onchange="maxCDT()" class="standard-input" type="text" id="input6" /></div>
+        <div class="col-12 col-md-3"><span Style="color: crimson; align-items: start;" id="cdtMax">(CDT Max 360mts)</span></div>
+        <div class="col-5 d-md-block d-none"></div> 
       </div>
       <div class="row">
-        <div class="col-2"><label for="input7">Gastos Indirectos: </label></div>
-        <div class="col-3"><input type="text" class="standard-input" id="input7"/>
-          <!--<select class="standard-input" id="input7">
-          <option value="50">50%</option>
-          <option value="40">40%</option>
-          <option value="35">35%</option> 
-          </select>-->
-          </div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input7">Gastos Indirectos: </label></div>
+        <div class="col-6 col-md-3"><input type="text" class="standard-input" id="input7"/></div>
+        <div class="col-5 d-md-block d-none"></div> 
         </div>
       <div class="row sol" style="display: none;">
+          <div class="col-2 d-md-block d-none"></div>
           <div class="col-2"><label for="voltaje">Voltaje: </label></div>
           <div class="col-3"><select class="standard-input"  id="voltaje">
-            <option value="220">220v</option>
-            <option value="440">440v</option>
-          </select>
-        </div>
-          </div> 
-      <div class="row sol full">
-        <div class="col-2"><label for="input8">Dist. a Paneles(mts): </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input8" /></div>
-        </div>
-      <div class="row full bom">
-        <div class="col-2"><label for="check0">Agua Caliente: </label></div>
-        <div class="col-3"><input class="standard-input" type="checkbox" id="check0" /></div>
-      </div>
-        <div class="sol full row">
-          <div class="col-2"><label for="check3">Estructura: </label></div>
-          <div class="col-3"><input class="srt" type="checkbox" id="check3" onchange="validstruct(3)" checked/>Elevada <input class="str" onchange="validstruct(4)"  type="checkbox" id="check4" />Nivel de piso <input class="str" onchange="validstruct(5)" type="checkbox" id="check5"/>Coplanar </div>
+                             <option value="220">220v</option>
+                             <option value="440">440v</option>
+                             </select>
           </div>
+          <div class="col-5 d-md-block d-none"></div> 
+      </div> 
+      <div class="row sol full">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input8">Dist. a Paneles(mts): </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input8" /></div>
+        <div class="col-5 d-md-block d-none"></div> 
+      </div>
+      <div class="row full bom">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="check0">Agua Caliente: </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="checkbox" id="check0" /></div>
+        <div class="col-5 d-md-block d-none"></div> 
+      </div>
+      <div class="sol full row">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="check3">Estructura: </label></div>
+        <div class="col-6 col-md-3"><input class="srt" type="checkbox" id="check3" onchange="validstruct(3)" checked/>Elevada <input class="str" onchange="validstruct(4)"  type="checkbox" id="check4" />Nivel de piso <input class="str" onchange="validstruct(5)" type="checkbox" id="check5"/>Coplanar </div>
+        <div class="col-5 d-md-block d-none"></div>
+      </div>
       <div class="row bom full">
-        <div class="col-2"><label for="input9">Costo Grua: </label></div>
-        <div class="col-3"><input class="standard-input" type="text" id="input9" /></div>
-        </div>
-      <div class="row">
-        <div class="col-2"><label for="input9">Vendedor: </label></div>
-        <div class="col-3"><select class="standard-input" id="vendSelect"></select></div>
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input9">Costo Grua: </label></div>
+        <div class="col-6 col-md-3"><input class="standard-input" type="text" id="input9" /></div>
+        <div class="col-5 d-md-block d-none"></div>
       </div>
       <div class="row">
-      <div class="col-2">
-        <button id="validar" onclick="validar()" type="button" class="btn btn-success">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-4 col-md-2 text-truncate"><label for="input9">Vendedor: </label></div>
+        <div class="col-6 col-md-3"><select class="standard-input" id="vendSelect"></select></div>
+        <div class="col-5 d-md-block d-none"></div>
+      </div>
+      <div class="row">
+        <div class="col-2 d-md-block d-none"></div>  
+      <div class="col-4 col-md-2">
+        <button id="validar" onclick="validar()" type="button" class="btn btn-success align-items-center">
           Validar
         </button>
         </div> 
-        <div class="col 3" style="align-items: center;">
-          <a href="./cotizacion.html" id="acot" target="_blank" rel="noopener noreferrer" style="display: none;"><button id="cotizar" onclick="cotizar()" type="button" class="btn btn-success">Cotizar</button></a>
+        <div class="col-4 col-md-2" style="align-items: center;">
+          <a href="./cotizacion.html" id="acot" target="_blank" rel="noopener noreferrer" style="display: none;"><button id="cotizar" onclick="cotizar()" type="button" class="btn btn-success align-items-center">Cotizar</button></a>
           </div> 
+          <div class="col-5 d-md-block d-none"></div>
       </div>
     </div>
     <div class="container text-center">

@@ -11,6 +11,7 @@ fetch('datos.json')
     const temp = document.getElementById('check0');
     const curra = document.getElementById('check6');
     const currd = document.getElementById('check7');
+    const ltsSelect = document.getElementById('ltsSelect');
     dataS=jsonData.bomSol.estructura;
     dataPan=jsonData.bomSol.solar;
     eqBomba=jsonData.bomSol.equipamientoBomba;
@@ -52,7 +53,10 @@ temp.addEventListener('change', () => {
 vendSelect.addEventListener('change', () => {
   pyct.rep= selectVend(jsonData.bomSol.vendedores);
   });
-
+ltsSelect.addEventListener('change', () => {
+   selPump=datosBomba(jsonData);
+   if(selPump){pyct.motor= motorBomba(jsonData,selPump.hp);}  
+  });
   })
   .catch(error => {
     console.error('Error fetching data:', error);
@@ -77,7 +81,7 @@ function cotTypVal(){
         Solar.forEach(element => {
           element.style.display= 'none'; });
           document.getElementById("hp").disabled = true;  
-        alert("Solo bombeo");
+        console.log("Solo bombeo");
         cotType= 1;
       }  
       if (solar.checked && !bombeo.checked) {
@@ -86,11 +90,11 @@ function cotTypVal(){
           Solar.forEach(element => {
             element.style.display= 'flex'; });
             document.getElementById("hp").disabled = false;
-                alert("Solo Solar"); 
+            console.log("Solo Solar"); 
         cotType= 2; 
       }
       if (solar.checked && bombeo.checked) {
-        alert("Full Bombeo Solar");  
+        console.log("Full Bombeo Solar");  
         fullBomSol.forEach(element => {
         element.style.display= 'flex'; });
         document.getElementById("hp").disabled = true;
@@ -134,34 +138,61 @@ function validar() {
   const distP=document.getElementById('input8');
   const proPozo=document.getElementById('input5');
   const marg=document.getElementById('input7');
+  const grua=document.getElementById('input9').value;
+ //campos generales
+ if(!nom.value){
+  alert("El campo Nombre no puede estar vacio")
+  return;
+}
+if(!loc.value){
+  alert("El campo Localidad no puede estar vacio");
+  return;
+}
+if(!km.value){
+  alert("El campo Kilometros no puede estar vacio");
+  return;
+}  
+if (isNaN(km.value)) {
+   alert("El campo Kilometros no es un número.");
+   return;  
+}
+/*if (Number.isInteger(km.value)) {
+  alert("Es un número entero.");
+  return;
+}*/
+if (!marg.value) {
+  alert("Los gastos indirectos no pueden estar vacios.");
+  return;  
+}
+if (isNaN(marg.value)) {
+  alert("Los gastos indirectos deben ser numero.");
+  return;  
+}
  //bombeo   
  if(cotType == 1){
   pyct.cotType=1;
+ 
   if(!selPump){alert("Proporcione CDT correcto");
     return;
   } 
   if(!cdt.value){
-    alert("El campo CDT no puede estar vacio")
+    alert("El campo CDT no puede estar vacio");
     return;
   }
   if(!proPozo.value){
-    alert("Debe introducir la profundidad del pozo")
+    alert("Debe introducir la profundidad del pozo");
     return;
   }
-  if(!nom.value){
-    alert("El campo Nombre no puede estar vacio")
-    return;
-  }
-if(!loc.value){
-  alert("El campo Localidad no puede estar vacio")
-  return;
+  if (isNaN(proPozo.value)) {
+    alert("La profundidad del pozo no es un número.");
+    return;  
+ }
+ if (isNaN(grua)) {
+  alert("El costo de grua debe ser un número.");
+  return;  
 }
-if(!km.value){
-  alert("El campo Kilometros no puede estar vacio")
-  return;
-}  
    selPump.eqBomba=equipBomb();
-   alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
+   //alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
    c = genID(selPump.hp);
  } 
  //solar
@@ -172,21 +203,17 @@ if(!km.value){
     alert("Debe introducir los HP de la bomba existente")
     return;
 }
-if(!nom.value){
-    alert("El campo Nombre no puede estar vacio")
-    return;
-}
-if(!loc.value){
-  alert("El campo Localidad no puede estar vacio!")
-  return;
-}
-if(!km.value){
-  alert("Debe poner los KM")
-  return;
+if (isNaN(hpMan.value)) {
+  alert("El campo HP no es un número.");
+  return;  
 }
 if(!distP.value){
   alert("Introduzca la distancia de la bomba a los paneles")
   return;
+}
+if (isNaN(distP.value)) {
+  alert("La distancia a Paneles no es un número.");
+  return;  
 }
 pyct.solar= datosSolar(parseFloat(hpMan.value),parseInt(distP.value),parseInt(proPozo.value))
 c = genID(hpMan.value);
@@ -201,21 +228,25 @@ if(cotType == 3 || !cotType){
     alert("El campo CDT no puede estar vacio PUÑETAS!")
     return;
   }
-  if(!nom.value){
-    alert("El campo Nombre no puede estar vacio PUÑETAS!")
+   if(!distP.value){
+     alert("Introduzca la distancia de la bomba a los paneles")
+     return;
+   }
+   if (isNaN(distP.value)) {
+    alert("La distancia a Paneles no es un número.");
+    return;  
+  }
+  if(!proPozo.value){
+    alert("Debe introducir la profundidad del pozo");
     return;
   }
-  if(!loc.value){
-  alert("El campo Localidad no puede estar vacio PUÑETAS!")
-  return;
-  }
-  if(!km.value){
-  alert("El campo Kilometros no puede estar vacio PUÑETAS!")
-  return;
-  }
-  if(!distP.value){
-  alert("Introduzca la distancia de la bomba a los paneles")
-  return;
+  if (isNaN(proPozo.value)) {
+    alert("La profundidad del pozo no es un número.");
+    return;  
+ }
+  if (isNaN(grua)) {
+    alert("El costo de grua debe ser un número.");
+    return;  
   }
   pyct.cotType=3;
   pyct.solar= datosSolar(selPump.hp,parseInt(distP.value),parseInt(proPozo.value))
@@ -224,6 +255,7 @@ if(cotType == 3 || !cotType){
   
 
 } 
+pyct.grua=parseInt(grua);
 if(parseInt(marg.value)<35){alert('Pedir Autorizacion para Gastos indirectos menor a 35%'); return;}
 alert('ID generado: '+c+' puede Cotizar');
 const cotBtn=document.getElementById('acot'); 
@@ -237,25 +269,9 @@ function cotizar(){
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
     pyct.lts = document.getElementById("ltsSelect").value;
-    ltsHora = document.getElementById("ltsSelect").value*60*60;
-    pyct.ltsmes = {Enero:ltsHora*5.53*0.8, Febrero:ltsHora*6.13*0.8, 
-                   Marzo:ltsHora*7.15*0.8, Abril:ltsHora*6.81*0.8,
-                   Mayo :ltsHora*6.45*0.8, Junio:ltsHora*6.08*0.8, 
-                   Julio:ltsHora*5.64*0.8, Agosto:ltsHora*5.69*0.8,
-                   Septiembre:ltsHora*5.64*0.8, Octubre:ltsHora*6.21*0.8, 
-                   Noviembre:ltsHora*6.02*0.8 ,Diciembre:ltsHora*5.42*0.8};
-                   
-    let total = 0;
-    for (const month in pyct.ltsmes) {
-        total += pyct.ltsmes[month];
-    }             
-    // Calculate the average
-    const average = total / Object.keys(pyct.ltsmes).length;;
-    pyct.ltsAvg = average.toLocaleString('en-US');
-    console.log("Average:", average);               
+    ltsHora = document.getElementById("ltsSelect").value*60*60;      
     pyct.proPozo = document.getElementById("input5").value;
     pyct.cdtP = document.getElementById("input6").value;
-    //pyct.cantPan = var cantidad de paneles
     pyct.curr=pumpCurrT;  
     pyct.id = c;
     if(!selPump){selPump={};}
@@ -265,6 +281,19 @@ function cotizar(){
     }
     console.log( 'COTIZAR() '+pyct.motor.volt);
     selPump.pyct = pyct;
+    pyct.ltsmes = {Enero:ltsHora*5.53*0.8, Febrero:ltsHora*6.13*0.8, 
+      Marzo:ltsHora*7.15*0.8, Abril:ltsHora*6.81*0.8,
+      Mayo :ltsHora*6.45*0.8, Junio:ltsHora*6.08*0.8, 
+      Julio:ltsHora*5.64*0.8, Agosto:ltsHora*5.69*0.8,
+      Septiembre:ltsHora*5.64*0.8, Octubre:ltsHora*6.21*0.8, 
+      Noviembre:ltsHora*6.02*0.8 ,Diciembre:ltsHora*5.42*0.8}; 
+    let total = 0;
+    for (const month in pyct.ltsmes) {
+    total += pyct.ltsmes[month];
+    }             
+    const average = total / Object.keys(pyct.ltsmes).length;;
+    pyct.ltsAvg = average.toLocaleString('en-US');
+    console.log("Average:", average); 
     saveToLocalStorage('cotData', selPump);
     
     //window.open('./cotizacion.html', '_blank');
@@ -282,6 +311,10 @@ const lts= document.getElementById("ltsSelect").value ;
 const cdt= document.getElementById("input6").value; 
 const hpDisp= document.getElementById("hp"); 
 let tBomba;
+if (isNaN(cdt)) {
+  alert("El campo CDT no es un número.");
+  return;  
+}
 if(pumpCurrT==1){tBomba=data.bomSol.bombas
   console.log('entro a if datosbomba alterna')
 }      
@@ -304,7 +337,8 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
 
      console.log('Modelo: '+datosBomba.Modelo+' Hp: '+datosBomba.hp);
       hpDisp.value = datosBomba.hp ;
-      datosBomba.precio=((datosBomba.precio*tipCam*1.16)*0.48)*0.95;
+      datosBomba.costo=((datosBomba.precio*tipCam*1.16)*0.48)*0.95;
+      console.log('Costo Bomba ', datosBomba.costo );
       return datosBomba;
     }
     else{
@@ -327,27 +361,27 @@ function equipBomb(){
  const accsSel = accDisp.filter(accesorio => ids.includes(accesorio.id));
  accsSel.forEach(accsel => {
  if (accsel.mxn === false || accsel.mxn === undefined) { 
-    accsel.precio=((accsel.precio*tipCam*1.16)*0.48)*0.95;
-    console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.precio); 
+    accsel.costo=((accsel.precio*tipCam*1.16)*0.48)*0.95;
+    console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.costo); 
   }
   });
   console.log(accsSel);
  // calcular el precio del cable 
 const cable = cals.find(item => item.calibre === selPump.calibre);
-cable.precioMXN=((cable.precioMXN*1.16)*0.48)*0.95;
-cable.precioMXN=cable.precioMXN*(selPump.altMax+10)
+cable.costo=((cable.precioMXN*1.16)*0.48)*0.95;
+cable.costo=cable.costo*(selPump.altMax+10)
 
-console.log("cable calibre ",selPump.calibre," precio  mxn", cable.precioMXN);
+console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
 
  // calacular el precio por metro del equipamiento  
- const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].precio};
- const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].precio};
- const check={kit:accsSel[2].Accesorio, precio:accsSel[2].precio};
+ const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].costo};
+ const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].costo};
+ const check={kit:accsSel[2].Accesorio, precio:accsSel[2].costo};
  tubo.precio= selPump.altMax/cants[0]*tubo.precio;
  kit.precio= cants[1]*kit.precio;
  check.precio= check.precio*cants[2];
 
- priceeq= (tubo.precio+kit.precio+check.precio+cable.precioMXN)/selPump.altMax;
+ priceeq= (tubo.precio+kit.precio+check.precio+cable.costo)/selPump.altMax;
  console.log("precio por metro ", priceeq);
 //calcular el precio del equipamiento y regresar los datos para aduntar a selPump
   priceeq=priceeq*parseInt(altPozo.value)
@@ -390,13 +424,15 @@ function valiDesc(){
 
 
 function motorBomba(data,hp){  
-let datosMot= null ;
+let datosMot={} ;
 const temp= document.getElementById('check0').checked
 data.bomSol.motores.forEach(motor=>{
           if(motor.hp<7.5){
             if(hp==motor.hp){
                   datosMot= motor;
-                  datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                  datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                  console.log('Motor: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
+                  console.log('Costo mot ', datosMot.costo );
                   return datosMot;
                 }
             }
@@ -404,27 +440,25 @@ data.bomSol.motores.forEach(motor=>{
               if(hp==motor.hp){
                 if(temp){
                 if(motor.serie=='X')
-                 // alert('entro al if serie x Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
+                  console.log('entro al if serie x Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
-                datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                console.log('Costo mot ', datosMot.costo );
                 return datosMot;
                 }
                 if(!temp){
                 if(motor.serie=='RT'){
-                // alert('entro al if serie RT Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
+                  console.log('entro al if serie RT Modelo: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                 datosMot= motor;
-                datosMot.precio=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
+                console.log('Costo mot ', datosMot.costo );
                 return datosMot;
                 }          
                 }
               }
             }
         });
-          if(datosMot){
-          //alert('if datosMot Modelo: '+datosMot.Modelo+' Serie: '+datosMot.serie+'hp: '+datosMot.hp);
-          return datosMot;
-          }
-          
+         
 }
 
 
