@@ -138,59 +138,70 @@ function validar() {
   const distP=document.getElementById('input8');
   const proPozo=document.getElementById('input5');
   const marg=document.getElementById('input7');
-  const grua=document.getElementById('input9').value;
+  const grua=document.getElementById('input9');
  //campos generales
  if(!nom.value){
   alert("El campo Nombre no puede estar vacio")
+  nom.classList.add('is-invalid');
   return;
-}
+ } else{nom.classList.remove('is-invalid');}
 if(!loc.value){
   alert("El campo Localidad no puede estar vacio");
+  loc.classList.add('is-invalid');
   return;
-}
+ } else{loc.classList.remove('is-invalid');}
 if(!km.value){
   alert("El campo Kilometros no puede estar vacio");
+  km.classList.add('is-invalid');
   return;
-}  
+}else{km.classList.remove('is-invalid');}  
 if (isNaN(km.value)) {
    alert("El campo Kilometros no es un número.");
+   km.classList.add('is-invalid');
    return;  
-}
+}else{km.classList.remove('is-invalid');} 
 /*if (Number.isInteger(km.value)) {
   alert("Es un número entero.");
   return;
 }*/
 if (!marg.value) {
   alert("Los gastos indirectos no pueden estar vacios.");
-  return;  
-}
+  marg.classList.add('is-invalid');
+    return;
+  } else{marg.classList.remove('is-invalid');}
 if (isNaN(marg.value)) {
   alert("Los gastos indirectos deben ser numero.");
-  return;  
-}
+  marg.classList.add('is-invalid');
+    return;
+  } else{marg.classList.remove('is-invalid');}
  //bombeo   
  if(cotType == 1){
   pyct.cotType=1;
  
   if(!selPump){alert("Proporcione CDT correcto");
+    cdt.classList.add('is-invalid');
     return;
-  } 
+  } else{cdt.classList.remove('is-invalid');}
   if(!cdt.value){
     alert("El campo CDT no puede estar vacio");
+    cdt.classList.add('is-invalid');
     return;
-  }
+  } else{cdt.classList.remove('is-invalid');}
   if(!proPozo.value){
     alert("Debe introducir la profundidad del pozo");
+    proPozo.classList.add('is-invalid');
     return;
-  }
+  } else{proPozo.classList.remove('is-invalid');}
   if (isNaN(proPozo.value)) {
     alert("La profundidad del pozo no es un número.");
-    return;  
- }
- if (isNaN(grua)) {
+    proPozo.classList.add('is-invalid');
+    return;
+  } else{proPozo.classList.remove('is-invalid');}
+ if (isNaN(grua.value)) {
   alert("El costo de grua debe ser un número.");
-  return;  
-}
+  grua.classList.add('is-invalid');
+    return;
+  } else{grua.classList.remove('is-invalid');}
    selPump.eqBomba=equipBomb();
    //alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
    c = genID(selPump.hp);
@@ -201,20 +212,24 @@ if (isNaN(marg.value)) {
  
   if(!hpMan.value){
     alert("Debe introducir los HP de la bomba existente")
+    hpMan.classList.add('is-invalid');
     return;
-}
+  } else{hpMan.classList.remove('is-invalid');}
 if (isNaN(hpMan.value)) {
   alert("El campo HP no es un número.");
-  return;  
-}
+  hpMan.classList.add('is-invalid');
+    return;
+  } else{hpMan.classList.remove('is-invalid');}
 if(!distP.value){
   alert("Introduzca la distancia de la bomba a los paneles")
+  distP.classList.add('is-invalid');
   return;
-}
+}else{distP.classList.remove('is-invalid');}
 if (isNaN(distP.value)) {
   alert("La distancia a Paneles no es un número.");
-  return;  
-}
+  distP.classList.add('is-invalid');
+  return;
+}else{distP.classList.remove('is-invalid');}
 pyct.solar= datosSolar(parseFloat(hpMan.value),parseInt(distP.value),parseInt(proPozo.value))
 c = genID(hpMan.value);
 } 
@@ -222,32 +237,39 @@ c = genID(hpMan.value);
 if(cotType == 3 || !cotType){
   pyct.cotType=3;
   if(!selPump){alert("Proporcione CDT correcto");
+    cdt.classList.add('is-invalid');
     return;
-  } 
+  }else{cdt.classList.remove('is-invalid');} 
   if(!cdt.value){
-    alert("El campo CDT no puede estar vacio PUÑETAS!")
+    alert("El campo CDT no puede estar vacio!")
+    cdt.classList.add('is-invalid');
     return;
-  }
+  }else{cdt.classList.remove('is-invalid');}
    if(!distP.value){
      alert("Introduzca la distancia de la bomba a los paneles")
+     distP.classList.add('is-invalid');
      return;
-   }
+   }else{distP.classList.remove('is-invalid');}
    if (isNaN(distP.value)) {
     alert("La distancia a Paneles no es un número.");
-    return;  
-  }
+    distP.classList.add('is-invalid');
+  return;
+}else{distP.classList.remove('is-invalid');}
   if(!proPozo.value){
     alert("Debe introducir la profundidad del pozo");
+    proPozo.classList.add('is-invalid');
     return;
-  }
+  } else{proPozo.classList.remove('is-invalid');}
   if (isNaN(proPozo.value)) {
     alert("La profundidad del pozo no es un número.");
-    return;  
- }
-  if (isNaN(grua)) {
+    proPozo.classList.add('is-invalid');
+    return;
+  } else{proPozo.classList.remove('is-invalid');}
+  if (isNaN(grua.value)) {
     alert("El costo de grua debe ser un número.");
-    return;  
-  }
+    grua.classList.add('is-invalid');
+    return;
+  } else{grua.classList.remove('is-invalid');}
   pyct.cotType=3;
   pyct.solar= datosSolar(selPump.hp,parseInt(distP.value),parseInt(proPozo.value))
   c = genID(selPump.hp);
@@ -255,7 +277,7 @@ if(cotType == 3 || !cotType){
   
 
 } 
-pyct.grua=parseInt(grua);
+pyct.grua=parseInt(grua.value);
 if(parseInt(marg.value)<35){alert('Pedir Autorizacion para Gastos indirectos menor a 35%'); return;}
 alert('ID generado: '+c+' puede Cotizar');
 const cotBtn=document.getElementById('acot'); 
@@ -308,13 +330,14 @@ function actualizar() {
 function datosBomba(data) {
 let datosBomba= null ;
 const lts= document.getElementById("ltsSelect").value ;
-const cdt= document.getElementById("input6").value; 
+const cdt= document.getElementById("input6"); 
 const hpDisp= document.getElementById("hp"); 
 let tBomba;
-if (isNaN(cdt)) {
+if (isNaN(cdt.value)) {
   alert("El campo CDT no es un número.");
+  cdt.classList.add('is-invalid');
   return;  
-}
+}else{cdt.classList.remove('is-invalid');}
 if(pumpCurrT==1){tBomba=data.bomSol.bombas
   console.log('entro a if datosbomba alterna')
 }      
@@ -324,7 +347,7 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
         tBomba.forEach(bomba=>{
           if(lts==bomba.lts){
             bomba.modelos.forEach(model=>{
-              if(model.altMax >= cdt){
+              if(model.altMax >= cdt.value){
                 if(!datosBomba){
                datosBomba= model;
                 }
@@ -342,7 +365,7 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
       return datosBomba;
     }
     else{
-      alert("No existe bomba de "+lts+" lt/s para altura de "+cdt);
+      alert("No existe bomba de "+lts+" lt/s para altura de "+cdt.value);
       maxCDT();
     }
 }
