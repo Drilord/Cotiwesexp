@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ltsGrAgv =document.getElementById('ltsGrAgv');
     const ctx = document.getElementById('myChart').getContext('2d');//code de la grafica
     const altMaxG =document.getElementById('altMaxG');
+    const cotType =document.getElementById('cotType');
 
               
     if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
@@ -36,12 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const volt= myObject.pyct.motor.volt;
     const pumpCal= myObject.calibre;
     const cdt=myObject.pyct.cdtP;
-    const cantPan=myObject.pyct.cantPan
+    const cantPan=myObject.pyct.solar.cantPan
     const graData=myObject.pyct.ltsmes
     if(myObject.pyct.curr==1){
       curr=''
     }
-
+    if(proyT==1){cotType.innerHTML  =  `Propuesta de Bombeo`;}
+    if(proyT==2){cotType.innerHTML  =  `Propuesta de Paneles Solares Para Bomba`;}
+    if(proyT==3){cotType.innerHTML  =  `Propuesta de Bombeo Solar`;}
+    
 
     idP.innerHTML      =  ` ${myObject.pyct.id} `;
     nomP.innerHTML     =  ` ${myObject.pyct.nombre} `;
@@ -58,8 +62,8 @@ document.addEventListener('DOMContentLoaded', () => {
       descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
     }  
     if(proyT ==2){
-      //poner solo la desc de bombeo
-      descP.innerHTML= `Instalación de ${cantPan} paneles solares, en la localidad de ${loc}.`;
+      //poner solo la desc de solar
+      descP.innerHTML= `Instalación de ${cantPan.cantidadPaneles} paneles solares, en la localidad de ${loc}.`;
 
     }  
     if(proyT ==3){

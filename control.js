@@ -290,7 +290,6 @@ d.value = c;
 
 
   // Action for the first state
-  alert('First click!');
   myButton.textContent = "Modificar"; 
   const inputs = document.querySelectorAll('.vLock');
   inputs.forEach(input => {
@@ -300,7 +299,6 @@ d.value = c;
   buttonState = 1; 
 } else if (buttonState === 1) {
   // Action for the second state
-  console.log('Second click!');
   myButton.textContent = "Validar"; 
   buttonState = 0; 
   cotBtn.style.display= 'none';
@@ -347,6 +345,14 @@ function cotizar(){
     
     //window.open('./cotizacion.html', '_blank');
   }
+  
+/*function deleteFromLocalStorage(key) {
+  try {
+    localStorage.removeItem(key); 
+  } catch (error) {
+    console.error("Error deleting from localStorage:", error);
+  }
+}*/
 
 function actualizar() {
     a = document.getElementById('input0').value;
