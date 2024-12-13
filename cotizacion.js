@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
         axisPointer: {
           type: 'cross',
           crossStyle: {
-            color: '#999'
+            color: '#4c9d2f'
           }
         }
       },
@@ -161,7 +161,10 @@ document.addEventListener('DOMContentLoaded', () => {
               return value + ' lts/día';
             }
           },
-          data: Object.values(graData)
+          data: Object.values(graData),
+          itemStyle: {
+            color: '#4c9d2f' 
+          }
         },
         {
           name: 'Radiación/Mes',
