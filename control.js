@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba;
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0; 
 
 
 fetch('datos.json')
@@ -53,6 +53,7 @@ temp.addEventListener('change', () => {
 vendSelect.addEventListener('change', () => {
   pyct.rep= selectVend(jsonData.bomSol.vendedores);
   });
+  
 ltsSelect.addEventListener('change', () => {
    selPump=datosBomba(jsonData);
    if(selPump){pyct.motor= motorBomba(jsonData,selPump.hp);}  
@@ -139,6 +140,9 @@ function validar() {
   const proPozo=document.getElementById('input5');
   const marg=document.getElementById('input7');
   const grua=document.getElementById('input9');
+  const myButton = document.getElementById('validar');
+  const cotBtn=document.getElementById('acot'); 
+if (buttonState === 0) {
  //campos generales
  if(!nom.value){
   alert("El campo Nombre no puede estar vacio")
@@ -280,10 +284,33 @@ if(cotType == 3 || !cotType){
 pyct.grua=parseInt(grua.value);
 if(parseInt(marg.value)<35){alert('Pedir Autorizacion para Gastos indirectos menor a 35%'); return;}
 alert('ID generado: '+c+' puede Cotizar');
-const cotBtn=document.getElementById('acot'); 
 cotBtn.style.display= 'block';
 d=document.getElementById('idCot');
 d.value = c;   
+
+
+  // Action for the first state
+  alert('First click!');
+  myButton.textContent = "Modificar"; 
+  const inputs = document.querySelectorAll('.vLock');
+  inputs.forEach(input => {
+  input.disabled = true; 
+  });
+  if(cotType==2){hpMan.disabled=true;}
+  buttonState = 1; 
+} else if (buttonState === 1) {
+  // Action for the second state
+  console.log('Second click!');
+  myButton.textContent = "Validar"; 
+  buttonState = 0; 
+  cotBtn.style.display= 'none';
+  const inputs = document.querySelectorAll('.vLock');
+  inputs.forEach(input => {
+  input.disabled = false; 
+  });
+  if(cotType==2){hpMan.disabled=false;}
+  
+}
 
 }
 

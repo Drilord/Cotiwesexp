@@ -144,7 +144,7 @@
         <div class="col-2 d-md-block d-none"></div>
      
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input1" placeholder="Nombre" />
+          <input class="form-control vLock" type="text" id="input1" placeholder="Nombre" />
           <label for="input1">Nombre del cliente:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
@@ -152,7 +152,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input2" placeholder="Localidad" />
+          <input class="form-control vLock" type="text" id="input2" placeholder="Localidad" />
           <label for="input2">Localidad:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
@@ -160,7 +160,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input3" placeholder="Kilometros" />
+          <input class="form-control vLock" type="text" id="input3" placeholder="Kilometros" />
           <label for="input3">Kilometros:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div>  
@@ -169,11 +169,11 @@
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-4 col-md-2 text-truncate">Corriente:</div>
           <div class="col-4 col-md-2 form-switch">
-            <input class="form-check-input" type="checkbox" id="check6" checked/>
+            <input class="form-check-input vLock" type="checkbox" id="check6" checked/>
             <label class="form-check-label" for="check6">Alterna</label>
           </div>
           <div class="col-4 col-md-2 form-switch" >
-            <input class="form-check-input" type="checkbox" id="check7"/>
+            <input class="form-check-input vLock" type="checkbox" id="check7"/>
             <label class="form-check-label" for="check7">Directa</label>
           </div>
           <div class="col-4 d-md-block d-none"></div>    
@@ -185,14 +185,14 @@
       </div>  
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
+        <div class="col-10 col-md-5"><select class="form-select vLock" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
         <div class="col-12 col-md-2"><span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">Descarga: 1 1/4"</span></div>
         <div class="col-3 d-md-block d-none"></div>  
       </div>
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input5" placeholder="profpozo"/>
+          <input class="form-control vLock" type="text" id="input5" placeholder="profpozo"/>
           <label for="input5">Profundidad del Pozo(mts): </label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
@@ -200,7 +200,7 @@
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input onchange="maxCDT()" class="form-control" type="text" id="input6" placeholder="cdtmts"  />
+          <input onchange="maxCDT()" class="form-control vLock" type="text" id="input6" placeholder="cdtmts"  />
           <label for="input6">CDT(mts):</label>
         </div>
         <div class="col-12 col-md-2"><span Style="color: crimson; align-items: start;" id="cdtMax">(CDT Max 360mts)</span></div>
@@ -209,7 +209,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input type="text" class="form-control" id="input7" placeholder="gastosind"/>
+          <input type="text" class="form-control vLock" id="input7" placeholder="gastosind"/>
           <label for="input7">Gastos Indirectos:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
@@ -217,11 +217,12 @@
       <div class="row sol" style="display: none;">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-12 col-md-7"><label for="voltaje">Voltaje: </label></div>
-          <div class="col-5 d-md-block d-none"></div>
+          <div class="col-3 d-md-block d-none"></div>
       </div>    
-      <div class="row sol" style="display: none;">    
+      <div class="row sol" style="display: none;">   
+          <div class="col-2 d-md-block d-none"></div> 
           <div class="col-10 col-md-5">
-            <select class="form-select"  id="voltaje">
+            <select class="form-select vLock"  id="voltaje">
                              <option value="220">220v</option>
                              <option value="440">440v</option>
             </select>
@@ -231,14 +232,14 @@
       <div class="row sol full">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input8" placeholder="distpanels"/>
+          <input class="form-control vLock" type="text" id="input8" placeholder="distpanels"/>
           <label for="input8">Distancia a Paneles(mts)</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
       </div>
       <div class="row full bom">
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-6 form-switch"><input class="form-check-input" type="checkbox" id="check0" /><label class="form-check-label" for="check0">Agua Caliente</label></div>
+        <div class="col-10 col-md-6 form-switch"><input class="form-check-input vLock" type="checkbox" id="check0" /><label class="form-check-label" for="check0">Agua Caliente</label></div>
         <div class="col-4 d-md-block d-none"></div> 
       </div>
       <div class="sol full row">
@@ -249,15 +250,15 @@
       <div class="sol full row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-12 col-md-2 form-switch">
-          <input class="str form-check-input" type="checkbox" id="check3" onchange="validstruct(3)" checked/>
+          <input class="str form-check-input vLock" type="checkbox" id="check3" onchange="validstruct(3)" checked/>
           <label class="form-check-label" for="check3">Elevada</label>
         </div>  
         <div class="col-12 col-md-2 form-switch">  
-          <input class="str form-check-input" onchange="validstruct(4)"  type="checkbox" id="check4" />
+          <input class="str form-check-input vLock" onchange="validstruct(4)"  type="checkbox" id="check4" />
           <label class="form-check-label" for="check4">Nivel de piso</label>
         </div>
         <div class="col-12 col-md-2 form-switch">
-          <input class="str form-check-input" onchange="validstruct(5)" type="checkbox" id="check5"/>
+          <input class="str form-check-input vLock" onchange="validstruct(5)" type="checkbox" id="check5"/>
           <label class="form-check-label" for="check4">Coplanar</label>
         </div> 
         <div class="col-4 d-md-block d-none"></div>
@@ -265,7 +266,7 @@
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control" type="text" id="input9" placeholder="grua" />
+          <input class="form-control vLock" type="text" id="input9" placeholder="grua" />
           <label for="input9">Costo Grua: </label>
         </div>
         <div class="col-5 d-md-block d-none"></div>
@@ -277,7 +278,7 @@
       </div>
       <div class="row">   
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select" id="vendSelect"></select></div>
+        <div class="col-10 col-md-5"><select class="form-select vLock" id="vendSelect"></select></div>
         <div class="col-5 d-md-block d-none"></div>
       </div>
       <div class="row">
