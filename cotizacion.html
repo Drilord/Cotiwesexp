@@ -15,11 +15,19 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
     <script src="cotizacion.js"></script>
     <title>Cotización</title>
      </head>
   <style>
+    .row{
+     width: 100%;
+    }
+    .card-body{
+      width: 100%;
+    }
+
     @media print {
     .page-break {
       margin-bottom: 1cm; 
@@ -35,7 +43,7 @@
   <body>
      <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
-        <div class="row" style="width: 100%;">
+        <div class="row">
           <div class="col-9"></div>
           <div class="col-3">
             <img
@@ -46,7 +54,7 @@
             />
           </div>
         </div>
-        <div class="card-body" style="width: 100%;">
+        <div class="card-body">
           <div class="row">
             <div class="col-3"></div>
             <div class="col-9">
@@ -61,7 +69,7 @@
               <h4 style="color: #4c9d2f">Información del proyecto:</h4>
             </div>
           </div>
-          <div class="row" style="width: 100%;">
+          <div class="row">
             <div class="col-2"></div>
             <div class="col-3">
               <p class="card-text">Departamento emisor:</p>
@@ -70,7 +78,7 @@
               <p class="card-text">Ingeniería</p>
             </div>
           </div>
-          <div class="row" style="width: 100%;">
+          <div class="row">
             <div class="col-2"></div>
             <div class="col-3">
               <p class="card-text">Código:</p>
@@ -79,7 +87,7 @@
               <p id="idProyecto" class="card-text"></p>
             </div>
           </div>
-          <div class="row" style="width: 100%;">
+          <div class="row">
             <div class="col-2"></div>
             <div class="col-3">
               <p class="card-text">Nombre:</p>
@@ -88,13 +96,13 @@
               <p id="nomP" class="card-text"></p>
             </div>
           </div>
-          <div class="row" style="width: 100%;">
+          <div class="row">
             <div class="col-2"></div>
             <div class="col-4">
               <p class="card-text">Descripción del proyecto:</p>
             </div>
           </div>
-          <div class="row" style="width: 100%;">
+          <div class="row">
             <div class="col-2"></div>
             <div class="col-9">
               <p id="descP" class="card-text">
@@ -103,7 +111,7 @@
             </div>
           </div>
         </div>
-        <div class="row" style="width: 100%;">
+        <div class="row">
           <div class="col-2"></div>
           <div class="col-8">
             <img
@@ -158,7 +166,7 @@
     </div>
     <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
-        <div class="card"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+        <div class="card"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <div class="col-4"></div>
           <div class="col-8">
@@ -176,7 +184,7 @@
         </div>
         <div class="row" id="energia" style="margin: 5px">
           <div class="col-3">
-            <img src="./images/energia.png" alt="energia" width="90%" />
+            <img src="./images/energia.png" alt="energia" width="100%" />
           </div>
           <div class="col-2">
             <h3>Energía</h3>
@@ -202,7 +210,7 @@
         </div>
         <div class="row" id="hidraulica" style="margin: 5px">
           <div class="col-3">
-            <img src="./images/hidraulica.png" alt="hidraulica" width="90%" />
+            <img src="./images/hidraulica.png" alt="hidraulica" width="100%" />
           </div>
           <div class="col-2">
             <h3>Hidráulica</h3>
@@ -215,7 +223,7 @@
         </div>
         <div class="row" id="servicios" style="margin: 5px">
           <div class="col-3">
-            <img src="./images/servicios.png" alt="servicios" width="90%" />
+            <img src="./images/servicios.png" alt="servicios" width="100%" />
           </div>
           <div class="col-2">
             <h3>Servicios</h3>
@@ -228,13 +236,13 @@
             </p>
           </div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>
     </div>
 
     <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <div class="col-2"></div>
           <div class="col-7">
@@ -266,18 +274,24 @@
           </div>
         </div>
         <div class="row text-center">
-          <div class="col-11" id="grafica">
-            <canvas style="width: 90%; align-items: center; display: flex;" id="myChart"></canvas>
+          <div class="col-1"></div>
+          <div class="col-10" id="grafica">
+            <div style="width: 100%; min-height: 55vh;  align-items: center; display: flex;" id="myChart"></div>
           </div>
-          <div class="col-12" id="vntjs"><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="90%"></div>
+          <div class="col-1"></div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>  
+        <div class="row text-center">  
+          <div class="col-1"></div>
+          <div class="col-10" id="vntjs"><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="100%"></div>
+          <div class="col-1"></div>
+        </div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag"/></div>  
       </div>
     </div>
  
     <div class="container-fluid text-center page-break">
       <div class="card" style="align-items:center; width: 100%">
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <h1>Cotización</h1>
         </div>
@@ -525,12 +539,12 @@
             </ul>
           </div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div>
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>  
     </div>  
     <div class="container-fluid text-start page-break"> 
       <div class="card" style="align-items:center; width: 100%">
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row text-start">
           <div class="col-1"></div>
           <div class="col-8">
@@ -556,7 +570,7 @@
               </li>
             </ul>
           </div>
-          <div class="col-2"><img src="./images/hanshk.jpg" alt="handshake" width="90%"/></div>
+          <div class="col-2"><img src="./images/hanshk.jpg" alt="handshake" width="100%"/></div>
         </div>
         <div class="row text-center">
           <div class="col-1"></div>
@@ -587,7 +601,7 @@
           <div class="col-1"></div>
         </div>
         <div class="row text-center"></div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
       
     </div>
@@ -595,7 +609,7 @@
      <div class="container-fluid text-start page-break" >
       <div class="card" style="align-items:center; width: 100%">
       
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="90%" /></div>
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <div class="col-1"></div>
           <div class="col-8">
@@ -691,7 +705,7 @@
           <div class="row"><h2 id="nomvf"></h2></div>
           <div class="row"><h2>Weslaco Energías Renovables</h2></div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="90%" /></div> 
+        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
     </div>
   </body>

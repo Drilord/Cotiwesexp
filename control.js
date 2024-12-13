@@ -42,12 +42,13 @@ pyct.rep= selectVend(jsonData.bomSol.vendedores);
 
 CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
-if(selPump){pyct.motor= motorBomba(jsonData,selPump.hp);}
+if(selPump){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
 
 });
 temp.addEventListener('change', () => {
   if(selPump){
-  pyct.motor= motorBomba(jsonData,selPump.hp);
+  motorBomba(jsonData,selPump.hp);
+  console.log(pyct.motor);
   }
   });
 vendSelect.addEventListener('change', () => {
@@ -56,7 +57,8 @@ vendSelect.addEventListener('change', () => {
   
 ltsSelect.addEventListener('change', () => {
    selPump=datosBomba(jsonData);
-   if(selPump){pyct.motor= motorBomba(jsonData,selPump.hp);}  
+   if(selPump){motorBomba(jsonData,selPump.hp);} 
+   console.log(pyct.motor); 
   });
   })
   .catch(error => {
@@ -99,6 +101,7 @@ function cotTypVal(){
         fullBomSol.forEach(element => {
         element.style.display= 'flex'; });
         document.getElementById("hp").disabled = true;
+        document.getElementById('voltrow').style.display= 'none';
         cotType= 3;
       }  
 }
@@ -319,6 +322,7 @@ function cotizar(){
     ltsHora = document.getElementById("ltsSelect").value*60*60;      
     pyct.proPozo = document.getElementById("input5").value;
     pyct.cdtP = document.getElementById("input6").value;
+    pyct.desc = desc();
     pyct.curr=pumpCurrT;  
     pyct.id = c;
     if(!selPump){selPump={};}
@@ -341,6 +345,11 @@ function cotizar(){
     const average = total / Object.keys(pyct.ltsmes).length;;
     pyct.ltsAvg = average.toLocaleString('en-US');
     console.log("Average:", average); 
+    try {
+      localStorage.removeItem('cotData'); 
+    } catch (error) {
+      console.error("Error deleting from localStorage:", error);
+    }
     saveToLocalStorage('cotData', selPump);
     
     //window.open('./cotizacion.html', '_blank');
@@ -489,7 +498,8 @@ data.bomSol.motores.forEach(motor=>{
                   datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                   console.log('Motor: '+motor.Modelo+' Serie: '+motor.serie+'hp: '+motor.hp);
                   console.log('Costo mot ', datosMot.costo );
-                  return datosMot;
+                  pyct.motor=datosMot;
+                  return;
                 }
             }
             else{
@@ -500,7 +510,8 @@ data.bomSol.motores.forEach(motor=>{
                 datosMot= motor;
                 datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                 console.log('Costo mot ', datosMot.costo );
-                return datosMot;
+                pyct.motor=datosMot;
+                return;
                 }
                 if(!temp){
                 if(motor.serie=='RT'){
@@ -508,7 +519,8 @@ data.bomSol.motores.forEach(motor=>{
                 datosMot= motor;
                 datosMot.costo=((datosMot.precio*tipCam*1.16)*0.48)*0.95;
                 console.log('Costo mot ', datosMot.costo );
-                return datosMot;
+                pyct.motor=datosMot;
+                return;
                 }          
                 }
               }
@@ -622,6 +634,7 @@ function datosSolar(hp,distPan,proPozo){
  const variadores=dataPan.variadorSolar;
  const gabinetes=dataPan.gabinetesArmados;
  const paneles=dataPan.paneles;
+ const volt=document.getElementById('voltaje');
  let selGab;
  const solar={};
  if(hp>2){
@@ -665,7 +678,11 @@ gabinetes.forEach(gabinete=>{
   if(hp>1&&hp<=2){tempHp=2}
   if(hp>2){tempHp=hp}
   console.log('tempHp:',tempHp);
-  solar.cantPan=paneles.cantidadxHP.filter(canpan=> canpan.hp==tempHp);
+  if(!selPump){solar.cantPan=paneles.cantidadxHP.find(canpan=> canpan.hp==tempHp && canpan.voltaje==volt.value);}
+  else{
+    console.log(pyct.motor);
+    console.log('pyct.motor.volt:',pyct.motor.volt);
+    solar.cantPan=paneles.cantidadxHP.find(canpan=> canpan.hp==tempHp && canpan.voltaje==pyct.motor.volt);}
   solar.tipPan=paneles.tipoPaneles;
   solar.pot=paneles.potencia;
   solar.precio=paneles.precio*tipCam;
