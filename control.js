@@ -329,7 +329,10 @@ function cotizar(){
     pyct.desc = desc();
     pyct.curr=pumpCurrT;  
     pyct.id = c;
-    if(!selPump){selPump={};}
+    if(!selPump){selPump={};
+    selPump.hp=hpMan;
+
+    }
     if(!pyct.motor){
       pyct.motor={};
       pyct.motor.volt=document.getElementById("voltaje").value
