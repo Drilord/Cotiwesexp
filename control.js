@@ -285,7 +285,11 @@ if(cotType == 3 || !cotType){
 
 } 
 pyct.grua=parseInt(grua.value);
-if(parseInt(marg.value)<35){alert('Pedir Autorizacion para Gastos indirectos menor a 35%'); return;}
+if(parseInt(marg.value)<35){
+alert('Pedir Autorizacion para Gastos indirectos menor a 35%');
+marg.classList.add('is-invalid');
+    return;
+  } else{marg.classList.remove('is-invalid');}
 alert('ID generado: '+c+' puede Cotizar');
 cotBtn.style.display= 'block';
 d=document.getElementById('idCot');
