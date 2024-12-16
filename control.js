@@ -118,12 +118,16 @@ async function consultarTipoCambio() {
       }
       const data= await response.json();
       const series= data.bmx.series[0];
+      tipCam=21
       tipCam = series.datos[0].dato*1.05 ;
       document.getElementById("input0").value = tipCam;;
   
   } catch(error){
       console.log("error de informacion recibida:", error);
   }
+  /*tipCam=21
+  window.addEventListener('load', () => {
+  document.getElementById("input0").value = tipCam;;});*/
 }
 
 
@@ -145,8 +149,14 @@ function validar() {
   const grua=document.getElementById('input9');
   const myButton = document.getElementById('validar');
   const cotBtn=document.getElementById('acot'); 
+  const tipCambio=document.getElementById('input0'); 
 if (buttonState === 0) {
  //campos generales
+ if(!tipCambio.value || isNaN(tipCambio.value)){
+  alert("ERROR CON EL TIPO DE CAMBIO")
+  tipCambio.classList.add('is-invalid');
+  return;
+ }
  if(!nom.value){
   alert("El campo Nombre no puede estar vacio")
   nom.classList.add('is-invalid');
@@ -448,7 +458,7 @@ console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
  // calacular el precio por metro del equipamiento  
  const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].costo};
  const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].costo};
- const check={kit:accsSel[2].Accesorio, precio:accsSel[2].costo};
+ const check={check:accsSel[2].Accesorio, precio:accsSel[2].costo};
  tubo.precio= selPump.altMax/cants[0]*tubo.precio;
  kit.precio= cants[1]*kit.precio;
  check.precio= check.precio*cants[2];
@@ -621,16 +631,19 @@ function estrucSol(){
      const precio=dataS.elevada.precio+dataS.panel.precio
      pyct.struct.precio=precio;
      pyct.struct.material= dataS.elevada.material;
+     pyct.struct.type=structType;
      console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
   if(structType==2){
     pyct.struct.material=dataS.piso.material;
      const precio=dataS.piso.precio+dataS.panel.precio
      pyct.struct.precio=precio;
+     pyct.struct.type=structType;
     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
   if(structType==3){
     pyct.struct=dataS.panel;
+    pyct.struct.type=structType;
     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
   }
 }
@@ -669,13 +682,13 @@ gabinetes.forEach(gabinete=>{
  }
  const filtro=distPan+proPozo
   if(filtro<150){
-       solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.Sinfiltro}
+       solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.Sinfiltro,desc:'sin filtro de armonicos'}
   }
   if(filtro>=150 && filtro<500){
-    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro150}
+    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro150,desc:'con filtro de armonicos para 150mts'}
   }
   if(filtro>=500){
-    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro500}
+    solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro500,desc:'con filtro de armonicos para 500mts'}
   }
  console.log(solar.gabinete);
  //cantPan

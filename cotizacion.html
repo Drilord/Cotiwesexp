@@ -21,6 +21,9 @@
     <title>Cotización</title>
      </head>
   <style>
+    html {
+  font-size: 2vw; 
+}
     .row{
      width: 100%;
     }
@@ -39,6 +42,20 @@
     size: Letter;
     margin: 1cm;
   }
+ 
+  .card-title { font-size: 1.2rem; } 
+  h4 { font-size: 0.9rem; }
+  p { font-size: 0.7rem; }
+  h1 { font-size: 2.5rem; }
+  h2 { font-size: 2rem; }
+  h3 { font-size: 1.4rem; }
+  h5 { font-size: 1.1rem;}
+  span { font-size: 0.8rem; }
+  li {font-size: 0.7rem;}
+  tr{ font-size: 0.7rem; }
+  td{ font-size: 0.7rem; }
+
+
   </style>   
   <body>
      <div class="container-fluid page-break">
@@ -64,7 +81,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-1"></div>
+            <div class="col-2"></div>
             <div class="col-5">
               <h4 style="color: #4c9d2f">Información del proyecto:</h4>
             </div>
@@ -104,11 +121,12 @@
           </div>
           <div class="row">
             <div class="col-2"></div>
-            <div class="col-9">
+            <div class="col-8">
               <p id="descP" class="card-text">
                
               </p>
             </div>
+            <div class="col-2"></div>
           </div>
         </div>
         <div class="row">
@@ -116,13 +134,14 @@
           <div class="col-8">
             <img
               src="./images/Cot1.png"
-              style="width: 100%; margin: 15px"
+              style="width: 100%; margin: 0px"
               class="card-img-top"
               alt="logo"
             />
           </div>
           <div class="col-2"></div>
         </div>
+        <div class="row"><div class="col-12"><br></div></div>
         <div
           class="card-body"
           style="background-color: rgb(38, 38, 138); margin: 0px; width: 100%;"
@@ -174,9 +193,8 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-1"></div>
-          <div class="col-10">
-            <h3>
+           <div class="col-12">
+            <h3 style="text-align: center;">
               Nuestro análisis técnico sugiere un sistema integrado con las
               siguientes caracteristicas:
             </h3>
@@ -241,7 +259,7 @@
     </div>
 
     <div class="container-fluid page-break">
-      <div class="card" style="align-items:center; width: 100%">
+      <div class="card text-wrap" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <div class="col-2"></div>
@@ -264,7 +282,7 @@
             <h4>Funcionando 5 a 6 Horas Por Dia</h4>
           </div>
         </div>
-        <div class="row">
+        <div class="row ">
           <div class="col-2"></div>
           <div class="col-4">
             <h4>Altura Máxima Recomendada:</h4>
@@ -276,7 +294,7 @@
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10" id="grafica">
-            <div style="width: 100%; min-height: 55vh;  align-items: center; display: flex;" id="myChart"></div>
+            <div style="width: 100%; min-height: 40vh;  align-items: center; display: flex;" id="myChart"></div>
           </div>
           <div class="col-1"></div>
         </div>
@@ -572,6 +590,7 @@
           </div>
           <div class="col-2"><img src="./images/hanshk.jpg" alt="handshake" width="100%"/></div>
         </div>
+        <div class="row text-center"><br><br><br></div>
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10">
@@ -586,6 +605,7 @@
           <div class="col-1"></div>
         </div>
         <div class="row text-center"></div>
+        <div class="row text-center"><br><br><br></div>
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10">
@@ -600,7 +620,7 @@
           </div>
           <div class="col-1"></div>
         </div>
-        <div class="row text-center"></div>
+        <div class="row text-center"><br><br><br></div>
         <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
       
@@ -701,9 +721,9 @@
           </div>
         </div>
         <div class="text-center" style="margin: 30px">
-          <div class="row"><h2>Atentamente:</h2></div>
-          <div class="row"><h2 id="nomvf"></h2></div>
-          <div class="row"><h2>Weslaco Energías Renovables</h2></div>
+          <div class="row"><h3>Atentamente:</h3></div>
+          <div class="row"><h3 id="nomvf"></h3></div>
+          <div class="row"><h3>Weslaco Energías Renovables</h3></div>
         </div>
         <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>

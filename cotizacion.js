@@ -17,9 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const mail =document.getElementById('mail');
     const hpGraph =document.getElementById('hpGraph');
     const ltsGrAgv =document.getElementById('ltsGrAgv');
-    //const ctx = document.getElementById('myChart').getContext('2d');//code de la grafica
     const altMaxG =document.getElementById('altMaxG');
     const cotType =document.getElementById('cotType');
+    const descEnerg =document.getElementById('descEner')
 
               
     if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
@@ -37,27 +37,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const volt= myObject.pyct.motor.volt;
     const pumpCal= myObject.calibre;
     const cdt=myObject.pyct.cdtP;
-    const cantPan=myObject.pyct.solar.cantPan
-    const graData=myObject.pyct.ltsmes
-    const desc= myObject.pyct.desc;
-    if(myObject.pyct.curr==1){
-      curr=''
-    }
-    if(proyT==1){cotType.innerHTML  =  `Propuesta de Bombeo`;}
-    if(proyT==2){cotType.innerHTML  =  `Propuesta de Paneles Solares Para Bomba`;}
-    if(proyT==3){cotType.innerHTML  =  `Propuesta de Bombeo Solar`;}
-    
+    const cantPan=myObject.pyct.solar.cantPan;
+    const tipPan=myObject.pyct.solar.tipPan;
+    const potPan=myObject.pyct.solar.pot;
+    const precioPan=myObject.pyct.solar.precio;
+    const variador=myObject.pyct.solar.variador;
+    const potVariador=volt*variador.amp/1000;
+    const gabinete=myObject.pyct.solar.gabinete;
+    const strType=myObject.pyct.struct.type;
+    const strMat=myObject.pyct.struct.material;
+    const strPrice=myObject.pyct.struct.precio;
+    const tubo=myObject.eqBomba[0].tubo;
+    const kit=myObject.eqBomba[1].kit;
+    const chk=myObject.eqBomba[2].check;
+    const precioEq=myObject.eqBomba[3].precioeq;
+    const graData=myObject.pyct.ltsmes;
+    const currT= myObject.pyct.curr;
 
+    const desc= myObject.pyct.desc;
+  
+    cotType.innerHTML  =  `Propuesta de ${proyT===1 ? 'Bombeo': proyT==2 ? 'Paneles Solares Para Bomba': proyT==3 ? 'Bombeo Solar':''}`;
     idP.innerHTML      =  ` ${myObject.pyct.id} `;
     nomP.innerHTML     =  ` ${myObject.pyct.nombre} `;
     nomV.innerHTML     =  `${myObject.pyct.rep.nombre}`;
+
     mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
     tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
     if(myObject.pyct.rep.nombre!= "Weslaco Energías Renovables"){nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;}
     altMaxG.innerHTML  =  `${myObject.altMax}mts`;
     hpGraph.innerHTML  =  `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
     ltsGrAgv.innerHTML =  `${ltsAvg}`;
-    Bomba.innerHTML    =  `Bomba de ${pumpHP} HP marca Altamira trifasico ${volt}v con bomba ${pumpModel}, ${mot.Modelo}  Serie ${mot.serie}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, tubo, kit adaptador y check de columna `;
+    Bomba.innerHTML    =  `Bomba de ${pumpHP}HP ${currT=== 1 ? `marca Altamira trifasico a ${volt}v`: currT=== 2 ? 'marca Kolosal de corriente directa':''} modelo ${pumpModel}, ${currT===1 ? `${mot.Modelo}  serie ${mot.serie}`:''}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, ${tubo}, ${kit} y ${chk} `;
     if(proyT ==1){
       //poner solo la desc de bombeo
       descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
@@ -68,34 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }  
     if(proyT ==3){
-      descP.innerHTML= ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
-
+      descP.innerHTML    = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} Modulos Fotovoltaicos policristalinos tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil. 
+      Gabinete armado para bomba de ${pumpHP} HP, ${gabinete.desc} con variador de frecuencia solar de ${variador.descripcion}v, potencia de ${potVariador}kW con supresores de picos. 
+    ${strType === 1 ? 'Fabricación de estructura de acero elevada y reforzada de 2.5 mts de altura, pintada con esmalte anticorrosivo' : strType === 2 ? 'Fabricación de estructura de aluminio a nivel de piso reforzada a nivel de piso' : ''} para ${cantPan.cantidadPaneles} módulos. 
+    Estructura de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${cantPan.cantidadPaneles} módulos fotovoltaicos. 
+    Material eléctrico para la conexión de DC y AC, incluye conectores, ducteria galvanizada, coples, conectores, condulet, terminales bimetálicas, cableado para DC, cableado para AC, poliducto naranja subterráneo, protección de tierras fisca, varilla tipo rehilete para asegurar una resistencia menor a los 25 Ohms como lo indica la NOM-001-SEDE-2012.`;
     }  
-    /*Grafica cartjs
-    const myChart = new Chart(ctx, {
-      type: 'bar', // Choose chart type: bar, line, pie, etc.
-      data: {
-        labels: Object.keys(graData ),
-        datasets: [{
-          label: 'Lts al dia / Promedio por mes',
-          data: Object.values(graData),
-          backgroundColor:'rgba(76, 157, 47, 1)',
-          borderColor: 'rgba(76,157,47,1)',
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          x:{
-             grid:{display:false}
-          },
-          y: {
-            beginAtZero: true,
-            grid:{display:false}
-          }
-        }
-      }
-    });*/
+    
     window.addEventListener('load', () => {
     const myChart = echarts.init(document.getElementById('myChart'));
     const valores = Object.values(graData);
