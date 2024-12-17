@@ -15,17 +15,25 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
+
     <script src="cotizacion.js"></script>
     <title>Cotización</title>
      </head>
   <style>
-    html {
-  font-size: 2vw; 
+   /* html {
+  font-size: 16px; 
+}*/
+body {
+    
+    min-width: 576px;
+    overflow-x: auto; 
+    max-width: 1080px;
+    margin: 0 auto;
 }
     .row{
      width: 100%;
+     box-sizing: border-box;
     }
     .card-body{
       width: 100%;
@@ -33,9 +41,16 @@
 
     @media print {
     .page-break {
-      margin-bottom: 1cm; 
-      margin-top: 1cm;
-    page-break-after: always; 
+        page-break-after: always; 
+        
+       /* Center the container horizontally */
+       /*border: 1px solid black;  Optional: Add a border for visual reference */
+     }
+     .page-break:last-child {
+    page-break-after: avoid; /* Avoid extra page after the last one */
+}
+      .hidden-print {
+        display: none; 
      }
     }
     @page {
@@ -43,21 +58,53 @@
     margin: 1cm;
   }
  
-  .card-title { font-size: 1.2rem; } 
-  h4 { font-size: 0.9rem; }
-  p { font-size: 0.7rem; }
-  h1 { font-size: 2.5rem; }
-  h2 { font-size: 2rem; }
-  h3 { font-size: 1.4rem; }
+ /* 
+  h4 { font-size:clamp(1rem,2vw,1.1rem); }*/ 
+  p { font-size: 0.8rem; }/*
+  h1 { font-size: clamp(1.9rem,2.5vw,2.3rem); } 
+  h2 { font-size: clamp(1.7rem,1.9vw,2.1rem); }
+  h3 { font-size: clamp(1rem,1.2vw,1.3rem); }
   h5 { font-size: 1.1rem;}
-  span { font-size: 0.8rem; }
-  li {font-size: 0.7rem;}
-  tr{ font-size: 0.7rem; }
-  td{ font-size: 0.7rem; }
+  span { font-size: 0.5rem; }*/
+  li {font-size: 0.8rem;}/*
+  tr{ font-size: 0.9rem;}
+  td{ font-size: 0.9rem; }*/
+  .print-button {
+      position: fixed; 
+      bottom: 20px; 
+      right: 20px; 
+      background-color: #4c9d2f; 
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      z-index: 9999; 
+    }
+    .page-break{
+      width: 8.5in; 
+      height: 11in;
+      box-sizing: border-box;
+      margin: 0 auto;
 
-
+    }
+    .page-break:last-child {
+    page-break-after: avoid; /* Avoid extra page after the last one */
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    box-sizing: border-box; /* Important to keep the card within the page dimensions */
+}
+  .pie{
+     margin-bottom: 0px;
+  }
   </style>   
   <body>
+    <button class="print-button hidden-print" onclick="window.print()">PDF</button>
+    
+
      <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
         <div class="row">
@@ -75,7 +122,7 @@
           <div class="row">
             <div class="col-3"></div>
             <div class="col-9">
-              <h2 class="card-title" style="color:#4c9d2f" id="cotType">
+              <h2 style="color:#4c9d2f" id="cotType">
                 Propuesta de Bombeo Solar
               </h2>
             </div>
@@ -185,27 +232,27 @@
     </div>
     <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
-        <div class="card"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
+        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <div class="col-4"></div>
           <div class="col-8">
-            <h2>Tecnología Propuesta</h2>
+            <h3>Tecnología Propuesta</h3>
           </div>
         </div>
         <div class="row">
            <div class="col-12">
-            <h3 style="text-align: center;">
+            <h4 style="text-align: center;">
               Nuestro análisis técnico sugiere un sistema integrado con las
               siguientes caracteristicas:
-            </h3>
+            </h4>
           </div>
         </div>
-        <div class="row" id="energia" style="margin: 5px">
+        <div class="row" id="energia" style="margin: auto; order: 1;">
           <div class="col-3">
             <img src="./images/energia.png" alt="energia" width="100%" />
           </div>
           <div class="col-2">
-            <h3>Energía</h3>
+            <h5>Energía</h5>
           </div>
           <div class="col-7">
             <p id="descEner">
@@ -226,12 +273,12 @@
             </p>
           </div>
         </div>
-        <div class="row" id="hidraulica" style="margin: 5px">
+        <div class="row" id="hidraulica" style="margin: auto; order: 1;">
           <div class="col-3">
             <img src="./images/hidraulica.png" alt="hidraulica" width="100%" />
           </div>
           <div class="col-2">
-            <h3>Hidráulica</h3>
+            <h5>Hidráulica</h5>
           </div>
           <div class="col-7">
             <p id="bomba">
@@ -239,12 +286,12 @@
             </p>
           </div>
         </div>
-        <div class="row" id="servicios" style="margin: 5px">
+        <div class="row" id="servicios" style="margin: auto; order: 1;">
           <div class="col-3">
             <img src="./images/servicios.png" alt="servicios" width="100%" />
           </div>
           <div class="col-2">
-            <h3>Servicios</h3>
+            <h5>Servicios</h5>
           </div>
           <div class="col-7">
             <p>
@@ -254,57 +301,53 @@
             </p>
           </div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
+        <div class="row pie" style="order: 4;"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>
     </div>
 
-    <div class="container-fluid page-break">
-      <div class="card text-wrap" style="align-items:center; width: 100%">
-        <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
-        <div class="row">
+    <div class="container-fluid page-break" id="grafiCont">
+      
+       <div class="card text-wrap" style="display: flex; flex-direction: column; height: 100%;">
+        <div class="row" style="margin-top: 0px;"><div class="col-12"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div></div>
+        <div class="row sol">
           <div class="col-2"></div>
-          <div class="col-7">
-           <h4 id="hpGraph"></h4>
+          <div class="col-8 fw-bold">
+           <h5 id="hpGraph"></h5>
+          </div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row text-start sol">
+          <div class="col-2"></div>
+          <div class="col-4">
+            <h6 id="ltsGrAgv">349.296</h6>
+          </div>
+          <div class="col-4"><h6>Funcionando 5 a 6 Horas Por Dia</h6></div>
+          <div class="col-2"></div>
+        </div>
+        <div class="row sol">
+          <div class="col-2"></div>
+          <div class="col-5">
+            <h6>Altura Máxima Recomendada:</h6>
           </div>
           <div class="col-3">
-            <h4 ></h4>
+            <h6 id="altMaxG"></h6>
           </div>
         </div>
-        <div class="row">
-          <div class="col-2"></div>
-          <div class="col-2" style="text-align: end;">
-            <h4 id="ltsGrAgv">349.296</h4>
-          </div>
-          <div class="col-4" style="padding-left: 0%;">
-            <h4 style="text-align: start;">Lts Por Dia Promedio</h4>
-          </div>
-          <div class="col-4">
-            <h4>Funcionando 5 a 6 Horas Por Dia</h4>
-          </div>
-        </div>
-        <div class="row ">
-          <div class="col-2"></div>
-          <div class="col-4">
-            <h4>Altura Máxima Recomendada:</h4>
-          </div>
-          <div class="col-4">
-            <h4 id="altMaxG"></h4>
-          </div>
-        </div>
-        <div class="row text-center">
+        <div class="row text-center sol">
           <div class="col-1"></div>
           <div class="col-10" id="grafica">
-            <div style="width: 100%; min-height: 40vh;  align-items: center; display: flex;" id="myChart"></div>
+            <div style="width: 100%; min-height: 350px; align-items: center; " id="myChart"></div>
           </div>
           <div class="col-1"></div>
         </div>
-        <div class="row text-center">  
-          <div class="col-1"></div>
-          <div class="col-10" id="vntjs"><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="100%"></div>
-          <div class="col-1"></div>
+        <div class="row text-center" style="margin: auto;" id="vntjs">  
+          <div class="col-1 sol"></div>
+          <div class="col-10" id="imgvntjs" ><img src="./images/advtgbomsol.jpg" alt="Ventajas Solar" width="100%" ></div>
+          <div class="col-1 sol"></div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag"/></div>  
+        <div class="row pie" id="pipagGraf" ><div class="col-12"><img src="./images/piew.jpg" width="100%" alt="piepag"/></div></div> 
       </div>
+      
     </div>
  
     <div class="container-fluid text-center page-break">
@@ -313,7 +356,7 @@
         <div class="row">
           <h1>Cotización</h1>
         </div>
-        <div id="tabla" style="margin: 15px">
+        <div id="tabla" style="margin: auto">
           <table>
             <tr>
               <th
@@ -557,7 +600,7 @@
             </ul>
           </div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
+        <div class="row pie"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>  
     </div>  
     <div class="container-fluid text-start page-break"> 
@@ -566,7 +609,7 @@
         <div class="row text-start">
           <div class="col-1"></div>
           <div class="col-8">
-            <h2>¿Por qué comprar con nosotros?</h2>
+            <h3>¿Por qué comprar con nosotros?</h3>
           </div>
         </div>
         <div class="row text-start" style="display: flex; align-items: stretch;">
@@ -594,7 +637,7 @@
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10">
-            <h2>Nuestras Certificaciones</h2>
+            <h3>Nuestras Certificaciones</h3>
           </div>
         </div>
         <div class="row text-center">
@@ -609,10 +652,11 @@
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10">
-            <h2>Distribuimos y Vendemos las Mejores Marcas</h2>
+            <h3>Distribuimos y Vendemos las Mejores Marcas</h3>
           </div>
           <div class="col-1"></div>
         </div>
+        <div class="row text-center"><br></div>
         <div class="row text-center">
           <div class="col-1"></div>
           <div class="col-10">
@@ -621,7 +665,7 @@
           <div class="col-1"></div>
         </div>
         <div class="row text-center"><br><br><br></div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
+        <div class="row pie"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
       
     </div>
@@ -633,7 +677,7 @@
         <div class="row">
           <div class="col-1"></div>
           <div class="col-8">
-            <h3>Consideraciones de proyecto</h3>
+            <h5>Consideraciones de proyecto</h5>
           </div>
         </div>
         <div class="row text-start">
@@ -658,13 +702,13 @@
             </ol>
           </div>
         </div>
-        <div class="row" style="margin: 15px">
+        <div class="row" style="margin: 5px">
           <div class="col-1"></div>
           <div class="col-8">
-            <h3>Garantias</h3>
+            <h5>Garantias</h5>
           </div>
         </div>
-        <div class="row text-start" style="margin: 15px">
+        <div class="row text-start" style="margin: 0px">
           <div class="col-1"></div>
           <div class="col-8">
             <ol>
@@ -677,19 +721,19 @@
             </ol>
           </div>
         </div>
-        <div class="row text-center" style="margin: 15px">
-          <h3>
+        <div class="row text-center" style="margin: 0px">
+          <p style="font-weight: bolder;">
             Garantias no validas para fallas ocasionadas por efectos
             climatológicos y/o mal uso del sistema
-          </h3>
+          </p>
         </div>
         <div class="class text-center">
-          <h5>
+          <p style="font-weight: bolder;">
             En caso de cambiar alguno de los supuestos anteriores el precio se
             vera afectado
-          </h5>
+          </p>
         </div>
-        <div class="row text-center" style="margin: 10px">
+        <div class="row text-center" style="margin: 0px">
           <p>
             El sistema de bombeo incluye viáticos de instalación, mano de obra,
             gruas o trabajos para sumergir de la bomba, protecciones electricas
@@ -700,32 +744,32 @@
             funcionando el proyecto.
           </p>
         </div>
-        <div class="text-center" style="margin: 20px">
-          <div class="row">
-            <h5>BANORTE</h5>
+        <div class="row text-center" style="margin: 0px">
+          <div class="row fw-bold">
+            <p style="margin: 0px">BANORTE</p>
           </div>
-          <div class="row">
-            <h5>CUENTA 0887466566</h5>
+          <div class="row fw-bold">
+            <p style="margin: 0px">CUENTA 0887466566</p>
           </div>
-          <div class="row">
-            <h5>CLABE 072320008874665666</h5>
+          <div class="row fw-bold">
+            <p style="margin: 0px">CLABE 072320008874665666</p>
+          </div> 
+          <div class="row fw-bold">
+            <p style="margin: 0px">Wenceslao Silva Valle</p>
           </div>
-          <div class="row">
-            <h5>WENCESLAO SILVA VALLE</h5>
-          </div>
-          <div class="row">
-            <h5>
+          <div class="row fw-bold">
+            <p style="margin: 0px">
               Esperando poder cubrir sus expectativas, quedo a sus órdenes para
               cualquier duda y/o aclaración.
-            </h5>
+            </p>
           </div>
         </div>
-        <div class="text-center" style="margin: 30px">
-          <div class="row"><h3>Atentamente:</h3></div>
-          <div class="row"><h3 id="nomvf"></h3></div>
-          <div class="row"><h3>Weslaco Energías Renovables</h3></div>
+        <div class="row text-center" style="margin: auto">
+          <div class="row"><h5>Atentamente:</h5></div>
+          <div class="row"><h5 id="nomvf"></h5></div>
+          <div class="row"><h5>Weslaco Energías Renovables</h5></div>
         </div>
-        <div class="row"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
+        <div class="row pie"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
     </div>
   </body>

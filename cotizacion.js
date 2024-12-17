@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const altMaxG =document.getElementById('altMaxG');
     const cotType =document.getElementById('cotType');
     const descEnerg =document.getElementById('descEner')
-
+    const grafiCont =document.getElementById('grafiCont')
               
     if(Bomba && idP && nomP && descP && nomV && tel && mail && nomVf ){
     const myObject = getObjectFromLocalStorage    ('cotData');
@@ -65,16 +65,37 @@ document.addEventListener('DOMContentLoaded', () => {
     tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
     if(myObject.pyct.rep.nombre!= "Weslaco Energías Renovables"){nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;}
     altMaxG.innerHTML  =  `${myObject.altMax}mts`;
+     
+
     hpGraph.innerHTML  =  `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
-    ltsGrAgv.innerHTML =  `${ltsAvg}`;
+    ltsGrAgv.innerHTML =  `${ltsAvg} Lts Por Dia Promedio`;
     Bomba.innerHTML    =  `Bomba de ${pumpHP}HP ${currT=== 1 ? `marca Altamira trifasico a ${volt}v`: currT=== 2 ? 'marca Kolosal de corriente directa':''} modelo ${pumpModel}, ${currT===1 ? `${mot.Modelo}  serie ${mot.serie}`:''}.<br> EquipamientoBomba: Cableado sumergible Calibre ${pumpCal}, ${tubo}, ${kit} y ${chk} `;
     if(proyT ==1){
-      //poner solo la desc de bombeo
+      //poner solo  bombeo
+      document.getElementById("energia").style.visibility = "hidden";
+      document.getElementById("energia").style.order = "3"; 
+      grafiCont.style.display='none';
       descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
     }  
     if(proyT ==2){
-      //poner solo la desc de solar
+      //poner solo solar
+      document.getElementById("hidraulica").style.visibility = "hidden";
+      document.getElementById("hidraulica").style.order = "3"; 
+      document.getElementById('myChart').style.display= 'none';
+      document.getElementById('imgvntjs').classList.remove('col-10')
+      document.getElementById('imgvntjs').classList.add('col-12')
+      const solOnly = document.querySelectorAll(".sol");
+      solOnly.forEach(elmt=>{
+        elmt.style.display= 'none';
+      });
+
+
       descP.innerHTML= `Instalación de ${cantPan.cantidadPaneles} paneles solares, en la localidad de ${loc}.`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} Modulos Fotovoltaicos policristalinos tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil. 
+      Gabinete armado para bomba de ${pumpHP} HP, ${gabinete.desc} con variador de frecuencia solar de ${variador.descripcion}v, potencia de ${potVariador}kW con supresores de picos. 
+    ${strType === 1 ? 'Fabricación de estructura de acero elevada y reforzada de 2.5 mts de altura, pintada con esmalte anticorrosivo' : strType === 2 ? 'Fabricación de estructura de aluminio a nivel de piso reforzada a nivel de piso' : ''} para ${cantPan.cantidadPaneles} módulos. 
+    Estructura de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${cantPan.cantidadPaneles} módulos fotovoltaicos. 
+    Material eléctrico para la conexión de DC y AC, incluye conectores, ducteria galvanizada, coples, conectores, condulet, terminales bimetálicas, cableado para DC, cableado para AC, poliducto naranja subterráneo, protección de tierras fisca, varilla tipo rehilete para asegurar una resistencia menor a los 25 Ohms como lo indica la NOM-001-SEDE-2012.`;
 
     }  
     if(proyT ==3){
@@ -85,7 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
     Estructura de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${cantPan.cantidadPaneles} módulos fotovoltaicos. 
     Material eléctrico para la conexión de DC y AC, incluye conectores, ducteria galvanizada, coples, conectores, condulet, terminales bimetálicas, cableado para DC, cableado para AC, poliducto naranja subterráneo, protección de tierras fisca, varilla tipo rehilete para asegurar una resistencia menor a los 25 Ohms como lo indica la NOM-001-SEDE-2012.`;
     }  
-    
+   
+
+
+
     window.addEventListener('load', () => {
     const myChart = echarts.init(document.getElementById('myChart'));
     const valores = Object.values(graData);
