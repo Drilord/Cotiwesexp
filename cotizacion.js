@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
     //Inner HTML dinamico
     cotType.innerHTML  =  `Propuesta de ${proyT===1 ? 'Bombeo': proyT==2 ? 'Paneles Solares Para Bomba': proyT==3 ? 'Bombeo Solar':''}`;
     idP.innerHTML      =  ` ${myObject.pyct.id} `;
-    nomP.innerHTML     =  ` ${myObject.pyct.nombre} `;
+    nomP.innerText     =  ` ${myObject.pyct.nombre} `;
     nomV.innerHTML     =  `${myObject.pyct.rep.nombre}`;
     desServ.innerHTML  =  `${desManObr}`;
     mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bomOnly.forEach(elmt=>{
         elmt.style.display= 'none';
       });
-      descP.innerHTML= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
+      descP.innerText= ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
     }  
     if(proyT ==2){
       //poner solo solar
@@ -186,12 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
 
-      descP.innerHTML= `Instalación de ${cantPan.cantidadPaneles} paneles solares, en la localidad de ${loc}.`;
+      descP.innerText= `Instalación de ${cantPan.cantidadPaneles} paneles solares, en la localidad de ${loc}.`;
       descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}<br>${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
 
     }  
     if(proyT ==3){
-      descP.innerHTML    = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
+      descP.innerText    = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
       descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}<br>${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
     }  
    
