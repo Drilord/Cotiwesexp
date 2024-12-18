@@ -120,8 +120,11 @@ async function consultarTipoCambio() {
       }
       const data= await response.json();
       const series= data.bmx.series[0];
-      tipCam=21
-      tipCam = series.datos[0].dato*1.05 ;
+      console.log('tipcam banxico: ',series.datos[0].dato);
+      const margTC=series.datos[0].dato*1.01;
+      console.log('tipcam margen: ',margTC);
+      tipCam = Math.trunc(margTC*10)/10;
+
       document.getElementById("input0").value = tipCam;;
   
   } catch(error){
@@ -358,6 +361,7 @@ function cotizar(){
     pyct.preKm = srvcs.preKm;
     pyct.hosp3per = srvcs.hosp3per;
     pyct.com3per = srvcs.com3per;
+    pyct.km = parseInt(document.getElementById('input3').value);
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
     pyct.lts = document.getElementById("ltsSelect").value;
@@ -477,7 +481,7 @@ console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
  kit.precio= cants[1]*kit.precio;
  check.precio= check.precio*cants[2];
 
- priceeq= (tubo.precio+kit.precio+check.precio+cable.costo)/selPump.altMax;
+ priceeq= Math.round((tubo.precio+kit.precio+check.precio+cable.costo)/selPump.altMax);
  console.log("precio por metro ", priceeq);
 //calcular el precio del equipamiento y regresar los datos para aduntar a selPump
   priceeq=priceeq*parseInt(altPozo.value)

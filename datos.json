@@ -3104,7 +3104,7 @@
   "servicios":{
     "manObr":700,
     "matElec":500,
-    "precKm": 40,
+    "preKm": 40,
     "hpDia": 0.5,
     "hosp3per": 1300,
     "com3per": 1200
