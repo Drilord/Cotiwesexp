@@ -100,6 +100,13 @@ body {
   .pie{
      margin-bottom: 0px;
   }
+  .cotiTab{
+    border: solid; 
+    border-top-color: #98cc53;
+    border-right-color: rgb(152, 204, 83);
+    border-bottom-color: rgb(152, 204, 83);
+    border-left-color: rgb(152, 204, 83);
+  }
   </style>   
   <body>
     <button class="print-button hidden-print" onclick="window.print()">PDF</button>
@@ -118,75 +125,76 @@ body {
             />
           </div>
         </div>
-        <div class="card-body">
+        <div class="card-body" style="padding: 0px;">
           <div class="row">
             <div class="col-3"></div>
             <div class="col-9">
               <h2 style="color:#4c9d2f" id="cotType">
-                Propuesta de Bombeo Solar
+                Propuesta de Bombeo Solar<br>
               </h2>
             </div>
           </div>
+          <div class="row"><div class="col-12"><br></div></div>
           <div class="row">
-            <div class="col-2"></div>
-            <div class="col-5">
+            <div class="col-1"></div>
+            <div class="col-6">
               <h4 style="color: #4c9d2f">Información del proyecto:</h4>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             <div class="col-3">
               <p class="card-text">Departamento emisor:</p>
             </div>
-            <div class="col-4">
+            <div class="col-5">
               <p class="card-text">Ingeniería</p>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             <div class="col-3">
               <p class="card-text">Código:</p>
             </div>
-            <div class="col-4">
+            <div class="col-5">
               <p id="idProyecto" class="card-text"></p>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             <div class="col-3">
               <p class="card-text">Nombre:</p>
             </div>
-            <div class="col-4">
+            <div class="col-5">
               <p id="nomP" class="card-text"></p>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
+            <div class="col-1"></div>
             <div class="col-4">
               <p class="card-text">Descripción del proyecto:</p>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
-            <div class="col-8">
+            <div class="col-1"></div>
+            <div class="col-10">
               <p id="descP" class="card-text">
                
               </p>
             </div>
-            <div class="col-2"></div>
+            <div class="col-1"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-2"></div>
-          <div class="col-8">
+          <div class="col-1"></div>
+          <div class="col-10">
             <img
               src="./images/Cot1.png"
-              style="width: 100%; margin: 0px"
+              style="width: 90%; margin: 0px"
               class="card-img-top"
               alt="logo"
             />
           </div>
-          <div class="col-2"></div>
+          <div class="col-1"></div>
         </div>
         <div class="row"><div class="col-12"><br></div></div>
         <div
@@ -194,36 +202,35 @@ body {
           style="background-color: rgb(38, 38, 138); margin: 0px; width: 100%;"
         >
           <div class="row">
-            <div class="col-2"></div>
-            <div class="col-4">
-              <h4 class="card-text" style="color: aliceblue">Contacto</h4>
-            </div>
             <div class="col-1"></div>
             <div class="col-5">
+              <h4 class="card-text" style="color: aliceblue">Contacto</h4>
+            </div>
+            <div class="col-6">
               <h4 id="nomV" class="card-text" style="color: aliceblue"></h4>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
-            <div class="col-4">
-              <p id="mail" class="card-text" style="color: aliceblue"></p>
-            </div>
             <div class="col-1"></div>
             <div class="col-5">
+              <p id="mail" class="card-text" style="color: aliceblue"></p>
+            </div>
+            
+            <div class="col-6">
               <p class="card-text" style="color: aliceblue">
                 www.weslaco.com.mx
               </p>
             </div>
           </div>
           <div class="row">
-            <div class="col-2"></div>
-            <div class="col-4">
+            <div class="col-1"></div>
+            <div class="col-5">
               <p class="card-text" style="color: aliceblue">
                 Mirto #64 col. Volcan del Colli
               </p>
             </div>
-            <div class="col-1"></div>
-            <div class="col-5">
+            
+            <div class="col-6">
               <p id="tel" class="card-text" style="color: aliceblue"></p>
             </div>
           </div>
@@ -255,22 +262,7 @@ body {
             <h5>Energía</h5>
           </div>
           <div class="col-7">
-            <p id="descEner">
-              42 Modulos Fotovoltaicos policristalinos de 555w , con 12 años de
-              garantía y 25 años de vida útil. Gabinete armado para bomba de 20
-              HP Sin Filtro de Armonicos con variador de frecuencia solar, 3
-              fases a 440 volts, potencia de 14,08kW con supresores de picos .
-              Fabricación de estructura de acero elevada y reforzada de 2.5 mts
-              de altura, pintada con esmalte anticorrosivo para 42 módulos.
-              Estructura de aluminio anodizado para aplicación solar, fijada con
-              tornillería de acero inoxidable 304 para 42 módulos fotovoltaicos.
-              Material eléctrico para la conexión de DC y AC, incluye
-              conectores, ducteria galvanizada, coples, conectores, condulet,
-              terminales bimetálicas, cableado para DC, cableado para AC,
-              poliducto naranja subterráneo, protección de tierras fisca,
-              varilla tipo rehilete para asegurar una resistencia menor a los 25
-              Ohms como lo indica la NOM-001-SEDE-2012.
-            </p>
+            <p id="descEner"></p>
           </div>
         </div>
         <div class="row" id="hidraulica" style="margin: auto; order: 1;">
@@ -294,10 +286,7 @@ body {
             <h5>Servicios</h5>
           </div>
           <div class="col-7">
-            <p>
-              Instalación profesional por personal capacitado y certificado,
-              incluye montaje , conexiones eléctricas, instalación y logística para entrega de
-              materiales.
+            <p id="desServ">
             </p>
           </div>
         </div>
@@ -319,7 +308,7 @@ body {
         <div class="row text-start sol">
           <div class="col-2"></div>
           <div class="col-4">
-            <h6 id="ltsGrAgv">349.296</h6>
+            <h6 id="ltsGrAgv"></h6>
           </div>
           <div class="col-4"><h6>Funcionando 5 a 6 Horas Por Dia</h6></div>
           <div class="col-2"></div>
@@ -390,197 +379,21 @@ body {
                 Precio
               </th>
             </tr>
+            <tr class="bom" id="panels"></tr>
+            <tr class="bom" id="gabi"></tr>
+            <tr class="sol" id="pumpD"></tr>
+            <tr class="sol" id="pumpEq"></tr>
+            <tr id="matElec"></tr>
+            <tr class="bom" id="strElev"></tr>
+            <tr class="bom" id="strPan"></tr>
+            <tr id="manObr"></tr>
             <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                42
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Modulos Fotovoltaicos policristalino de 555w , con 12 años de
-                garantía y 25 años de vida útil, modelo: Canadian 555w.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $122,727
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Gabinete armado para bomba de 20 HP Sin Filtro de Armonicos con
-                variador de frecuencia solar a 3 fases a 440 volts, potencia de
-                14,08kW con supresores de picos .
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $55,718
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Bomba de 20 HP marca Altamira trifasico 440v con bomba KOR20
-                R200-5, MOTOR ALTAMIRA RT 3 FASES 440V 6"Serie RT.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $55,777
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Equipamiento Bomba: Cableado sumergible Calibre 10, tubo, kit
-                adaptador y check de columna
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $67,650
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Material eléctrico para la conexión de DC y AC, incluye
-                conectores, ducteria galvanizada, coples, conectores, condulet,
-                terminales bimetálicas, cableado para DC, cableado para AC,
-                poliducto naranja subterráneo, protección de tierras fisca,
-                varilla tipo rehilete para asegurar una resistencia menor a los
-                25 Ohms como lo indica la NOM-001-SEDE-2012.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $15,000
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Fabricación de estructura de acero elevada y reforzada de 2.5
-                mts de altura, pintada con esmalte anticorrosivo para 42
-                módulos.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $88,200
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Estructura de aluminio anodizado para aplicación solar, fijada
-                con tornillería de acero inoxidable 304 para 42 módulos
-                fotovoltaicos.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $34,650
-              </td>
-            </tr>
-            <tr>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                1
-              </td>
-              <td
-                class="col-10"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                Mano de Obra para la instalación de un sistema de bombeo solar,
-                incluye montaje de estructura de aluminio, montaje de paneles,
-                conexiones eléctricas,Instalación de la bomba, entrega de
-                materiales, todo lo necesario para su correcto funcionamiento y
-                gastos operativos.
-              </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                $99,807
-              </td>
-            </tr>
-            <tr>
-              <td class="col-1"></td>
-              <td
-                class="col-10 text-end"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
+              <td class="col-1 cotiTab"></td>
+              <td class="col-10 text-end  cotiTab">
                 <b>Total:</b>
               </td>
-              <td
-                class="col-1"
-                style="border: solid; border-color: rgb(152, 204, 83)"
-              >
-                <b>$539,528</b>
+              <td class="col-1 cotiTab">
+                <b id="coTotal"></b>
               </td>
             </tr>
           </table>

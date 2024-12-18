@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0; 
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0;; 
 
 
 fetch('datos.json')
@@ -12,10 +12,12 @@ fetch('datos.json')
     const curra = document.getElementById('check6');
     const currd = document.getElementById('check7');
     const ltsSelect = document.getElementById('ltsSelect');
+    const gasIndhtm = document.getElementById('input7');
+    srvcs=jsonData.bomSol.servicios;
     dataS=jsonData.bomSol.estructura;
     dataPan=jsonData.bomSol.solar;
     eqBomba=jsonData.bomSol.equipamientoBomba;
-    estrucSol();          ;
+    estrucSol();          
 currType(6,jsonData.bomSol.bombas);
 curra.addEventListener('change', ()=>{
 const ltscurr=jsonData.bomSol.bombas
@@ -31,7 +33,7 @@ currd.addEventListener('change', ()=>{
   console.log('en change listen de Alt',pumpCurrT);
   
   });
-
+gasIndhtm.addEventListener('change',()=>{descValido=null;});
 jsonData.bomSol.vendedores.forEach(vend => {
   const option = document.createElement('option');
   option.value = vend.nombre;
@@ -150,6 +152,13 @@ function validar() {
   const myButton = document.getElementById('validar');
   const cotBtn=document.getElementById('acot'); 
   const tipCambio=document.getElementById('input0'); 
+  const ltsS=document.getElementById('ltsSelect');
+if(cdtFlg==1){
+  alert('Combinacion de CDT y Volumen de Agua incorrecto!');
+  cdt.classList.add('is-invalid');
+  ltsS.classList.add('is-invalid');
+  return;}  
+  else{cdt.classList.remove('is-invalid');ltsS.classList.remove('is-invalid');}
 if (buttonState === 0) {
  //campos generales
  if(!tipCambio.value || isNaN(tipCambio.value)){
@@ -295,18 +304,27 @@ if(cotType == 3 || !cotType){
 
 } 
 pyct.grua=parseInt(grua.value);
+
 if(parseInt(marg.value)<35){
-alert('Pedir Autorizacion para Gastos indirectos menor a 35%');
-marg.classList.add('is-invalid');
-    return;
-  } else{marg.classList.remove('is-invalid');}
+ if(!descValido){authDesMod(); return;}
+ if(descValido==0){   
+  alert('No puede continuar sin autorizacion para Gastos indirectos menor a 35%');
+  marg.classList.add('is-invalid');
+  authDesMod();
+  return;
+  }
+if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
+}else{pyct.gasInd=parseInt(marg.value)}
 alert('ID generado: '+c+' puede Cotizar');
 cotBtn.style.display= 'block';
 d=document.getElementById('idCot');
 d.value = c;   
-
-
-  // Action for the first state
+try {
+  localStorage.removeItem('cotData'); 
+} catch (error) {
+  console.error("Error deleting from localStorage:", error);
+}
+//button control
   myButton.textContent = "Modificar"; 
   const inputs = document.querySelectorAll('.vLock');
   inputs.forEach(input => {
@@ -315,7 +333,7 @@ d.value = c;
   if(cotType==2){hpMan.disabled=true;}
   buttonState = 1; 
 } else if (buttonState === 1) {
-  // Action for the second state
+  
   myButton.textContent = "Validar"; 
   buttonState = 0; 
   cotBtn.style.display= 'none';
@@ -326,10 +344,20 @@ d.value = c;
   if(cotType==2){hpMan.disabled=false;}
   
 }
+// end btn cont
+
+
 
 }
 
 function cotizar(){ 
+    
+    pyct.manObr = srvcs.manObr;
+    pyct.matElec = srvcs.matElec;
+    pyct.hpDia = srvcs.hpDia;
+    pyct.preKm = srvcs.preKm;
+    pyct.hosp3per = srvcs.hosp3per;
+    pyct.com3per = srvcs.com3per;
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
     pyct.lts = document.getElementById("ltsSelect").value;
@@ -362,24 +390,10 @@ function cotizar(){
     const average = total / Object.keys(pyct.ltsmes).length;;
     pyct.ltsAvg = average.toLocaleString('en-US');
     console.log("Average:", average); 
-    try {
-      localStorage.removeItem('cotData'); 
-    } catch (error) {
-      console.error("Error deleting from localStorage:", error);
-    }
     saveToLocalStorage('cotData', selPump);
     
-    //window.open('./cotizacion.html', '_blank');
   }
   
-/*function deleteFromLocalStorage(key) {
-  try {
-    localStorage.removeItem(key); 
-  } catch (error) {
-    console.error("Error deleting from localStorage:", error);
-  }
-}*/
-
 function actualizar() {
     a = document.getElementById('input0').value;
     alert('Los datos se actualizaron correctamente!');
@@ -450,9 +464,9 @@ function equipBomb(){
   console.log(accsSel);
  // calcular el precio del cable 
 const cable = cals.find(item => item.calibre === selPump.calibre);
-cable.costo=((cable.precioMXN*1.16)*0.48)*0.95;
-cable.costo=cable.costo*(selPump.altMax+10)
-
+const costo=((cable.precioMXN*1.16)*0.48)*0.95;
+const costoF=costo*(selPump.altMax+10)
+cable.costo=costoF
 console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
 
  // calacular el precio por metro del equipamiento  
@@ -478,21 +492,27 @@ function authDesMod(){
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
   modalbutton=document.getElementById("btnPrim");
-  modalbutton.onclick= 'valiDesc()';
+  
+  modalbutton.onclick= valiDesc;
   modalbutton.innerHTML= `Autorizar`
   modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
-  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><inpunt id="pwd" type="password" ></inpunt>`;
+  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" id="inputPassword6" class="form-control"></inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
+  myModal.show(); // Show the modal programmatically
 }
 function valiDesc(){
   const desc=document.getElementById('input7');
-  const pwd=document.getElementById('pwd').value
+  const pwd=document.getElementById('pwd').value;
   if(pwd==="Weslaco123"){
     alert("password correcto");
-    descValido=1
+    descValido=1;
     desc.disabled=true;
+    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+    myModal.hide();
     return
   }
   else{alert("mal puñetas"); 
+    descValido=0;
     return
   }
 
@@ -628,23 +648,24 @@ function estrucSol(){
   pyct.struct= {};
   if(structType==1){
      
-     const precio=dataS.elevada.precio+dataS.panel.precio
-     pyct.struct.precio=precio;
+    pyct.struct.precioP=dataS.panel.precio
+     pyct.struct.precioE=dataS.elevada.precio;
      pyct.struct.material= dataS.elevada.material;
      pyct.struct.type=structType;
-     console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+     console.log(pyct.struct.material,  'precioE: $',pyct.struct.precioE,' precioP: $',pyct.struct.precioP)
   }
   if(structType==2){
     pyct.struct.material=dataS.piso.material;
-     const precio=dataS.piso.precio+dataS.panel.precio
-     pyct.struct.precio=precio;
-     pyct.struct.type=structType;
-    console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+    pyct.struct.precioE=dataS.piso.precio;
+    pyct.struct.precioP=dataS.panel.precio;
+    pyct.struct.type=structType;
+    console.log(pyct.struct.material, 'precioE: $',pyct.struct.precioE,' precioP: $',pyct.struct.precioP)
   }
   if(structType==3){
-    pyct.struct=dataS.panel;
+    pyct.struct.material=dataS.panel.material;
+    pyct.struct.precioP=dataS.panel.precio;
     pyct.struct.type=structType;
-    console.log(pyct.struct.material, 'precio: $',pyct.struct.precio)
+    console.log(pyct.struct.material, 'precioP: $',pyct.struct.precioP)
   }
 }
 
@@ -669,6 +690,8 @@ function datosSolar(hp,distPan,proPozo){
   }
  
  //gabinete 
+ //alt
+ if(pumpCurrT==1){
  if(hp>2){
    
 gabinetes.forEach(gabinete=>{
@@ -691,8 +714,15 @@ gabinetes.forEach(gabinete=>{
     solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.filtro500,desc:'con filtro de armonicos para 500mts'}
   }
  console.log(solar.gabinete);
+ }
+ //dir
+ if(pumpCurrT==2){
+   solar.gabinete={precio:4200, desc:'de corriente directa, controlador de bomba Kolosal'};
+ }
+
  //cantPan
- /*alt*/if(pumpCurrT==1){
+ //alt
+  if(pumpCurrT==1){
   let tempHp;
   if(hp<=1){tempHp=1}
   if(hp>1&&hp<=2){tempHp=2}
@@ -707,7 +737,8 @@ gabinetes.forEach(gabinete=>{
   solar.pot=paneles.potencia;
   solar.precio=paneles.precio*tipCam;
  }
- /*dir*/if(pumpCurrT==2){
+ //dir
+   if(pumpCurrT==2){
      solar.cantPan={cantidadPaneles:selPump.cantPan};
      solar.tipPan=paneles.tipoPaneles;
      solar.pot=paneles.potencia;
@@ -715,10 +746,6 @@ gabinetes.forEach(gabinete=>{
  }
 console.log(solar);
 return solar;
-/*esta funcion usando los hp ya sea que vengan de la funcion datosBomba o ingresados manualmente en el caso que no se este cotizando bomba
-  con los hp se calcula el gabinete armado y el variador 
-  esta funcion debe retornar el tipo de panel, cantidad de paneles, precio, gabinete armado precio,
-  filtro de armonicos se evalua si la profundidad del pozo mas distancia a paneles  */
 }
 
 function maxCDT(){
@@ -736,8 +763,8 @@ const maxAltValues = {
 const selectedValue = dropdown.value;
 const legendText = maxAltValues[selectedValue];
 cdtMax.textContent = `(CDT Max ${legendText}mts)`;
-if(cdt>legendText){cdtMax.textContent = `(Elegir otro Volumen de agua, CDT Max ${legendText}mts)`;}
-else{cdtMax.textContent = `(CDT Max ${legendText}mts)`;}
+if(cdt>legendText){cdtMax.textContent = `(Elegir otro Volumen de agua, CDT Max ${legendText}mts)`; cdtFlg=1;}
+else{cdtMax.textContent = `(CDT Max ${legendText}mts)`; cdtFlg=0; }
 }
 
 function genID(selHp) {
