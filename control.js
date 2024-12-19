@@ -44,11 +44,11 @@ pyct.rep= selectVend(jsonData.bomSol.vendedores);
 
 CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
-if(selPump){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
+if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
 
 });
 temp.addEventListener('change', () => {
-  if(selPump){
+  if(selPump && pumpCurrT==1){
   motorBomba(jsonData,selPump.hp);
   console.log(pyct.motor);
   }
@@ -59,7 +59,7 @@ vendSelect.addEventListener('change', () => {
   
 ltsSelect.addEventListener('change', () => {
    selPump=datosBomba(jsonData);
-   if(selPump){motorBomba(jsonData,selPump.hp);} 
+   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
    console.log(pyct.motor); 
   });
   })
@@ -189,10 +189,6 @@ if (isNaN(km.value)) {
    km.classList.add('is-invalid');
    return;  
 }else{km.classList.remove('is-invalid');} 
-/*if (Number.isInteger(km.value)) {
-  alert("Es un número entero.");
-  return;
-}*/
 if (!marg.value) {
   alert("Los gastos indirectos no pueden estar vacios.");
   marg.classList.add('is-invalid');
@@ -305,7 +301,7 @@ if(cotType == 3 || !cotType){
   selPump.eqBomba=equipBomb();
   
 
-} 
+}//end if full 
 pyct.grua=parseInt(grua.value);
 
 if(parseInt(marg.value)<35){
@@ -372,14 +368,13 @@ function cotizar(){
     pyct.curr=pumpCurrT;  
     pyct.id = c;
     if(!selPump){selPump={};
-    selPump.hp=hpMan;
+    selPump.hp=document.getElementById('hp').value;
 
     }
     if(!pyct.motor){
       pyct.motor={};
       pyct.motor.volt=document.getElementById("voltaje").value
     }
-    console.log( 'COTIZAR() '+pyct.motor.volt);
     selPump.pyct = pyct;
     pyct.ltsmes = {Enero:ltsHora*5.53*0.8, Febrero:ltsHora*6.13*0.8, 
       Marzo:ltsHora*7.15*0.8, Abril:ltsHora*6.81*0.8,
@@ -419,7 +414,7 @@ if(pumpCurrT==1){tBomba=data.bomSol.bombas
   console.log('entro a if datosbomba alterna')
 }      
 if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
-  console.log('entro a if datosbomba directa')
+   console.log('entro a if datosbomba directa')
 }        
         tBomba.forEach(bomba=>{
           if(lts==bomba.lts){
@@ -707,7 +702,7 @@ gabinetes.forEach(gabinete=>{
  }else{
    selGab=gabinetes[0];
  }
- const filtro=distPan+proPozo
+ const filtro=distPan+(isNaN(proPozo) ? 0 : proPozo ?? 0);
   if(filtro<150){
        solar.gabinete={hp:selGab.hp,volt:selGab.voltaje,precio:selGab.Sinfiltro,desc:'sin filtro de armonicos'}
   }

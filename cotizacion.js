@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
    // console.log(myObject.pyct.struct.precio);  
     const pumpModel= myObject.Modelo;
     const pumpHP= myObject.hp;
+    const venddr=myObject.pyct.rep;
     const proyT= myObject.pyct.cotType;
     const lts= myObject.pyct.lts;
     const ltsAvg = myObject.pyct.ltsAvg ;
@@ -58,9 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gabinete=myObject.pyct.solar.gabinete;
     const strType=myObject.pyct.struct.type;
     const strMat=myObject.pyct.struct.material;
-    const tubo=myObject.eqBomba[0].tubo;
-    const kit=myObject.eqBomba[1].kit;
-    const chk=myObject.eqBomba[2].check;
+    const eqBombaP = myObject?.eqBomba?.[3]?.precioeq ?? 0;
+    const tubo=myObject?.eqBomba?.[0]?.tubo??'';
+    const kit=myObject?.eqBomba?.[1]?.kit??'';
+    const chk=myObject?.eqBomba?.[2]?.check??'';
     const graData=myObject.pyct.ltsmes;
     const currT= myObject.pyct.curr;
     const desc= myObject.pyct.desc;
@@ -87,11 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const SprecioPan=precioPan.toLocaleString('en-US');
     const preGabi=Math.round((gabinete.precio+variador.precio)*gasInd);
     const SpreGabi=preGabi.toLocaleString('en-US');   
-    const precioEq=Math.round((myObject.eqBomba[3].precioeq)*gasInd); 
+    const precioEq=Math.round((eqBombaP)*gasInd); 
     const SprecioEq=precioEq.toLocaleString('en-US');
     const precioBom=Math.round((myObject.costo)*gasInd);
-    const precMotor=Math.round((mot.costo)*gasInd); 
-    const precioPump=Math.round(precioBom+(precMotor ?? 0));
+    const precMotor=Math.round((mot.costo ?? 0)*gasInd); 
+    const precioPump=Math.round(precioBom+precMotor);
     const SprecioPump=precioPump.toLocaleString('en-US'); 
     const servPrice= Math.round(((myObject.pyct.manObr*cantPan.cantidadPaneles)*gasInd)+viat+grua);
     const SservPrice=servPrice.toLocaleString('en-US');  
@@ -116,19 +118,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const modFotV    = `Modulos Fotovoltaicos policristalinos tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil.`;
     const strDesc    = `Fabricación de estructura de ${strMat} ${strType === 1 ? ' elevada y reforzada de 2.5 mts de altura, pintada con esmalte anticorrosivo' : strType === 2 ? ' reforzada a nivel de piso' : ''} para ${cantPan.cantidadPaneles} módulos.`;
     const strPaDes   = `Fabricación de estructura ${strType==3 ? `coplanar`:``} de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${cantPan.cantidadPaneles} módulos fotovoltaicos.`;
-    const pumpDesc   = `Bomba de ${pumpHP}HP ${currT=== 1 ? `marca Altamira trifasico a ${volt}v`: currT=== 2 ? 'marca Kolosal de corriente directa':''} modelo ${pumpModel} ${currT===1 ? `, ${mot.Modelo}, serie ${mot.serie}.`:'.'}`
+    const pumpDesc   = `Bomba de ${pumpHP}HP ${currT=== 1 ? `marca Altamira trifasico a ${volt}v`: currT=== 2 ? 'marca Kolosal de corriente directa':''} modelo ${pumpModel} ${currT===1 ? `, ${mot.Modelo}${mot.serie=='N/A' ? ``:`, serie ${mot.serie}`}.`:'.'}`
     const eqBoDesc   = `EquipamientoBomba: Cableado sumergible calibre ${pumpCal}, ${tubo}, ${kit} y ${chk}.`; 
     const desMatElec = `Material eléctrico para la conexión de DC ${currT=== 1 ? ` y AC`:``}, incluye conectores, ducteria galvanizada, coples, conectores, condulet, terminales bimetálicas, cableado para DC,${currT=== 1 ? ` cableado para AC,`:``} poliducto naranja subterráneo, protección de tierras fisca, varilla tipo rehilete para asegurar una resistencia menor a los 25 Ohms como lo indica la NOM-001-SEDE-2012.`;
     const desManObr  = `Servicios para la instalación por personal capacitado y certificado de un sistema ${proyT=== 3 ? `de bombeo solar incluye montaje de estructura, montaje de paneles,`:proyT=== 2 ? `paneles solares para alimentación de bomba, incluye montaje de estructura, montaje de paneles,`:`de bombeo, incluye`} conexiones eléctricas,${proyT==2 ? ``:`instalación de la bomba,`} entrega de materiales, todo lo necesario para su funcionamiento correcto y gastos operativos.`;
     //Inner HTML dinamico
-    cotType.innerHTML  =  `Propuesta de ${proyT===1 ? 'Bombeo': proyT==2 ? 'Paneles Solares Para Bomba': proyT==3 ? 'Bombeo Solar':''}`;
-    idP.innerHTML      =  ` ${myObject.pyct.id} `;
+    cotType.innerHTML  =  `${proyT===1 ? 'Propuesta de Bombeo': proyT==2 ? 'Energía Solar Para Bomba': proyT==3 ? 'Propuesta de Bombeo Solar':''}`;
+    idP.innerText      =  ` ${myObject.pyct.id} `;
     nomP.innerText     =  ` ${myObject.pyct.nombre} `;
-    nomV.innerHTML     =  `${myObject.pyct.rep.nombre}`;
+    nomV.innerHTML     =  `${venddr.nombre}`;
     desServ.innerHTML  =  `${desManObr}`;
-    mail.innerHTML     =  `${myObject.pyct.rep.mail}`;
-    tel.innerHTML      =  `${myObject.pyct.rep.tel}`;
-    if(myObject.pyct.rep.nombre!= "Weslaco Energías Renovables"){nomVf.innerHTML    =  `${myObject.pyct.rep.nombre}`;}
+    mail.innerText     =  `${venddr.mail}`;
+    tel.innerText      =  `${venddr.tel}`;
+    nomVf.innerText    =  `${venddr.nombre!= "Weslaco Energías Renovables"?venddr.nombre:''}`;
     altMaxG.innerHTML  =  `${myObject.altMax}mts`;
     hpGraph.innerHTML  =  `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
     ltsGrAgv.innerHTML =  `${ltsAvg} Lts Por Dia Promedio`;
@@ -186,13 +188,13 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       
 
-      descP.innerText= `Instalación de ${cantPan.cantidadPaneles} paneles solares, en la localidad de ${loc}.`;
-      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}<br>${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
+      descP.innerText= `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en la localidad de ${loc}.`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
 
     }  
     if(proyT ==3){
       descP.innerText    = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
-      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}<br>${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
     }  
    
 
