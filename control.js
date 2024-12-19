@@ -22,6 +22,8 @@ currType(6,jsonData.bomSol.bombas);
 curra.addEventListener('change', ()=>{
 const ltscurr=jsonData.bomSol.bombas
 currType(6,ltscurr);
+selPump=datosBomba(jsonData);
+if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
 maxCDT();
 console.log('en change listen de Alt',pumpCurrT);
 
@@ -29,6 +31,8 @@ console.log('en change listen de Alt',pumpCurrT);
 currd.addEventListener('change', ()=>{
   const ltscurr=jsonData.bomSol.bombasKolosal
   currType(7,ltscurr);
+  selPump=datosBomba(jsonData);
+  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
   maxCDT();
   console.log('en change listen de Alt',pumpCurrT);
   
