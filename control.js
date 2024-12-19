@@ -677,7 +677,7 @@ function datosSolar(hp,distPan,proPozo){
  const volt=document.getElementById('voltaje');
  let selGab;
  const solar={};
- if(hp>2){
+ if(hp>2 && pumpCurrT==1){
    
    variadores.forEach(variador=>{
       if(variador.hp==hp){
@@ -685,8 +685,9 @@ function datosSolar(hp,distPan,proPozo){
       }
    });
   }else{
+    if(pumpCurrT==1){
     solar.variador=variadores[0];
-  }
+  }}
  
  //gabinete 
  //alt

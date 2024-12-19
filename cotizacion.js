@@ -48,14 +48,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const proPozo= myObject.pyct.proPozo;
     const loc= myObject.pyct.loc;
     const mot= myObject.pyct.motor;
-    const volt= myObject.pyct.motor.volt;
+    const volt= (myObject.pyct.motor.volt??0);
     const pumpCal= myObject.calibre;
     const cdt=myObject.pyct.cdtP;
     const cantPan=myObject.pyct.solar.cantPan;
     const tipPan=myObject.pyct.solar.tipPan;
     const potPan=myObject.pyct.solar.pot;
     const variador=myObject.pyct.solar.variador;
-    const potVariador=volt*variador.amp/1000;
+    const potVariador=volt*(variador?.amp??0)/1000;
     const gabinete=myObject.pyct.solar.gabinete;
     const strType=myObject.pyct.struct.type;
     const strMat=myObject.pyct.struct.material;
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const SstrPPrice=strPPrice.toLocaleString('en-US');
     const precioPan=Math.round((myObject.pyct.solar.precio*cantPan.cantidadPaneles)*gasInd);
     const SprecioPan=precioPan.toLocaleString('en-US');
-    const preGabi=Math.round((gabinete.precio+variador.precio)*gasInd);
+    const preGabi=Math.round((gabinete.precio+(variador?.precio??0))*gasInd);
     const SpreGabi=preGabi.toLocaleString('en-US');   
     const precioEq=Math.round((eqBombaP)*gasInd); 
     const SprecioEq=precioEq.toLocaleString('en-US');
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         cotTot =cotTot.toLocaleString('en-US');
     //descripciones repetidas
     const gabiArma   = `Gabinete armado para bomba de ${pumpHP} HP, ${currT=== 1 ? ` ${gabinete.desc} con variador de frecuencia solar de ${variador.descripcion}v, potencia de ${potVariador}kW `: `${gabinete.desc} `}con supresores de picos.`;
-    const modFotV    = `Modulos Fotovoltaicos policristalinos tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil.`;
+    const modFotV    = `${cantPan.cantidadPaneles==1?`Modulo fotovoltaico policristalino`:`Modulos fotovoltaicos policristalinos`} tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil.`;
     const strDesc    = `Fabricación de estructura de ${strMat} ${strType === 1 ? ' elevada y reforzada de 2.5 mts de altura, pintada con esmalte anticorrosivo' : strType === 2 ? ' reforzada a nivel de piso' : ''} para ${cantPan.cantidadPaneles} módulos.`;
     const strPaDes   = `Fabricación de estructura ${strType==3 ? `coplanar`:``} de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${cantPan.cantidadPaneles} módulos fotovoltaicos.`;
     const pumpDesc   = `Bomba de ${pumpHP}HP ${currT=== 1 ? `marca Altamira trifasico a ${volt}v`: currT=== 2 ? 'marca Kolosal de corriente directa':''} modelo ${pumpModel} ${currT===1 ? `, ${mot.Modelo}${mot.serie=='N/A' ? ``:`, serie ${mot.serie}`}.`:'.'}`
@@ -189,12 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
       
 
       descP.innerText= `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en la localidad de ${loc}.`;
-      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV} ${gabiArma}<br>${strType===3 ? ``:`${strDesc}<br>`}${strPaDes}<br>${desMatElec}`;
 
     }  
     if(proyT ==3){
       descP.innerText    = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
-      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV}${gabiArma}<br>${strType===3 ? ``:`${strDesc}`}<br>${strPaDes}<br>${desMatElec}`;
+      descEnerg.innerHTML= `${cantPan.cantidadPaneles} ${modFotV} ${gabiArma}<br>${strType===3 ? ``:`${strDesc}<br>`}${strPaDes}<br>${desMatElec}`;
     }  
    
 
