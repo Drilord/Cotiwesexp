@@ -39,7 +39,12 @@
     </style>
   </head>
   <body>
-    <script>window.onload = consultarTipoCambio()</script>
+    <script>
+      window.onload = function() {
+        consultarTipoCambio();
+        auth();
+      };
+      </script>
     <!--Ventana modal-->
     <div
       class="modal fade"
@@ -119,7 +124,8 @@
       <div class="row">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-10 col-md-5 form-floating">
-            <input class="form-control" type="text" id="idCot" disabled placeholder="Identificador" value="Autogenerado" />
+            <input class="form-control" type="text" id="idCot" disabled placeholder="Identificador" 
+            value="Autogenerado" />
             <label for="idCot" >Identificador:</label>
           </div>
           <div class="col-5 d-md-block d-none"></div> 
@@ -185,8 +191,13 @@
       </div>  
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select vLock" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
-        <div class="col-12 col-md-2"><span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">Descarga: 1 1/4"</span></div>
+        <div class="col-10 col-md-5">
+          <select class="form-select vLock" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
+        <div class="col-12 col-md-2">
+          <span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">
+            Descarga: 1 1/4"
+          </span>
+        </div>
         <div class="col-3 d-md-block d-none"></div>  
       </div>
       <div class="row bom full">

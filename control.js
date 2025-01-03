@@ -1,8 +1,46 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0;; 
 
+/*
+async function authMain(){
+   
+   modalContent=document.getElementById("modalCont");
+  modalTit=document.getElementById("staticBackdropLabel");
+  modalbutton=document.getElementById("btnPrim");
+  
+  modalbutton.onclick= valLogin;
+  modalbutton.innerHTML= `Ingresar`
+  modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
+  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" id="inputPassword6" class="form-control"></inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
+  myModal.show(); // Show the modal programmatically
+}
+function valLogin(){
+  const usr=document.getElementById('usr').value;
+  const pwd=document.getElementById('pwd').value;
+  const apiParam = 
+  if(pwd==="Weslaco123"){
+    alert("password correcto");
+    descValido=1;
+    desc.disabled=true;
+    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+    myModal.hide();
+    return
+  }
+  else{alert("mal puñetas"); 
+    descValido=0;
+    return
+  }
 
-fetch('http://172.31.3.233:3000/bombSol/')
+  
+  
+  
+}
+*/ 
+
+
+//fetch('http://172.31.3.233:3000/bombSol/') //for linux pc
+fetch('localhost:3000/bombSol/')// lap
   .then(response => response.json())
   .then(jsonData => {
     

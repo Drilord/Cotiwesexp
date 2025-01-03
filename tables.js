@@ -1,7 +1,8 @@
 let jason, cotis, a=1;
 /* load data and create tables*/
-
-fetch('http://172.31.3.233:3000/bombSol/')
+      //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+const url= "http://localhost:3000/bombSol/"; /*/ "http://172.31.3.233:3000/bombSol/"; //*/
+fetch(url)
   .then(response => response.json())
   .then(jsonData => {
     // Data is now in the 'jason' global variable
