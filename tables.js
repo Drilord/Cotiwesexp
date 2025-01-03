@@ -10,10 +10,10 @@ fetch('http://172.31.3.233:3000/bombSol/')
   .catch(error => {
     console.error('Error fetching data:', error);
   });
-  fetch('http://172.31.3.233:3000/cots/')
+ /* fetch('cotizacionesapiurl')
   .then(response => response.json())
   .then(jsonData => {
-    // Data is now in the 'jason' global variable
+    // Data is now in the 'json' global variable
     cotis=jsonData
   })
   .catch(error => {
