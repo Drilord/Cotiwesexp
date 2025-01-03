@@ -1,7 +1,16 @@
 let jason, a=1;
 /* load data and create tables*/
 
-fetch('datos.json')
+fetch('http://172.31.3.233:3000/bombSol/')
+  .then(response => response.json())
+  .then(jsonData => {
+    // Data is now in the 'jason' global variable
+    jason=jsonData
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+  fetch('http://172.31.3.233:3000/cots/')
   .then(response => response.json())
   .then(jsonData => {
     // Data is now in the 'jason' global variable
