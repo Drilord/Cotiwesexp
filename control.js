@@ -2,7 +2,7 @@ let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0;; 
 
 
-fetch('http://172.31.3.233:3000/bombSol/')
+fetch('datos.json')
   .then(response => response.json())
   .then(jsonData => {
     

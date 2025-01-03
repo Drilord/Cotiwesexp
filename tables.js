@@ -1,7 +1,7 @@
-let jason, a=1;
+let jason, cotis, a=1;
 /* load data and create tables*/
 
-fetch('http://172.31.3.233:3000/bombSol/')
+fetch('datos.json')
   .then(response => response.json())
   .then(jsonData => {
     // Data is now in the 'jason' global variable
@@ -10,11 +10,11 @@ fetch('http://172.31.3.233:3000/bombSol/')
   .catch(error => {
     console.error('Error fetching data:', error);
   });
-  fetch('http://172.31.3.233:3000/cots/')
+ /* fetch('cotizacionesapiurl')
   .then(response => response.json())
   .then(jsonData => {
-    // Data is now in the 'jason' global variable
-    jason=jsonData
+    // Data is now in the 'json' global variable
+    cotis=jsonData
   })
   .catch(error => {
     console.error('Error fetching data:', error);
