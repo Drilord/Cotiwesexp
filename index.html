@@ -16,7 +16,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-       <script src="control.js"></script>
+    <script src="control.js"></script>
     <title>Autocotizador Weslaco</title>
     <style>
       .container {
@@ -42,7 +42,7 @@
     <script>
       window.onload = function() {
         consultarTipoCambio();
-        auth();
+        authMain();
       };
       </script>
     <!--Ventana modal-->
@@ -61,7 +61,8 @@
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
               Modal title
             </h1>
-            <button
+            <button style="display: none;"
+              id="xBtn"
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
@@ -70,7 +71,9 @@
           </div>
           <div id="modalCont" class="modal-body">...</div>
           <div class="modal-footer">
-            <button
+            <button 
+              id="2aryBtn"
+              style="display: none;"
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
@@ -289,7 +292,7 @@
       </div>
       <div class="row">   
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select vLock" id="vendSelect"></select></div>
+        <div class="col-10 col-md-5"><input type="text" class="form-control" id="vendSelect" disabled></div>
         <div class="col-5 d-md-block d-none"></div>
       </div>
       <div class="row">

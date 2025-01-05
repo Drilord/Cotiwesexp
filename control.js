@@ -1,50 +1,88 @@
-let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0;; 
+let a, b, c, d, e, f, g, h, i, j, k=1, l;
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 
-/*
-async function authMain(){
+
+function authMain(){
    
-   modalContent=document.getElementById("modalCont");
+  modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
   modalbutton=document.getElementById("btnPrim");
-  
   modalbutton.onclick= valLogin;
   modalbutton.innerHTML= `Ingresar`
-  modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
-  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" id="inputPassword6" class="form-control"></inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
+  modalTit.innerHTML=`Ingreso a cotizador`;
+  modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control" placeholder="Usr">
+                       </inpunt>
+                       <label for="pwdA">
+                       Introduce la contraseña de autorización:
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control">
+                       </inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
   myModal.show(); // Show the modal programmatically
-}
-function valLogin(){
-  const usr=document.getElementById('usr').value;
-  const pwd=document.getElementById('pwd').value;
-  const apiParam = 
-  if(pwd==="Weslaco123"){
-    alert("password correcto");
-    descValido=1;
-    desc.disabled=true;
-    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
-    myModal.hide();
-    return
-  }
-  else{alert("mal puñetas"); 
-    descValido=0;
-    return
-  }
-
-  
-  
   
 }
-*/ 
+async function valLogin(){
+  let usr=document.getElementById('usr').value.trim();
+  let pwd=document.getElementById('pwdA').value.trim();
+  usr = usr === '' ? null : usr;  
+  pwd = pwd === '' ? null : pwd;
+  const apiParamsUrl = `http://172.31.3.233:3000/vende/${usr}/${pwd}`; 
+  console.log('api url:',apiParamsUrl);
+  fetch(apiParamsUrl)
+  .then(response => response.json())
+  .then(auth => {
+
+   console.log('auth:',auth);
+  if(auth.token==='invalid'){
+    if(k>=3){
+      modalContent.innerHTML=`<span style="color: red;">limite de intentos</span>`;
+      modalbutton.style.display='none';  
+    }else{
+    modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control is-invalid" placeholder="Usr">
+                       </inpunt>
+                       <label for="pwdA">
+                       Datos incorrectos
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control is-invalid">
+                       </inpunt>`;
+    k=k+1;
+    console.log('k:',k);
+   }
+  }
+  else if(auth.token!='invalid'&& auth.id!=null){  
+    
+   console.log('vend Id', auth.id); 
+   repId=auth.id
+   const vendSelect = selectVend(reps,repId);
+   const salesRep = document.getElementById('vendSelect');
+   salesRep.value= vendSelect?.nombre
+   pyct.rep= vendSelect;
+   const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+   myModal.hide();
+
+  } 
+
+  });
+
+    
+  
+}
+ 
 
 
-//fetch('http://172.31.3.233:3000/bombSol/') //for linux pc
-fetch('localhost:3000/bombSol/')// lap
+fetch('http://172.31.3.233:3000/bombSol/') //for linux pc
+//fetch('localhost:3000/bombSol/')// lap
   .then(response => response.json())
   .then(jsonData => {
-    
-    const vendSelect = document.getElementById('vendSelect');
+    reps=jsonData.bomSol.vendedores;
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
     const curra = document.getElementById('check6');
@@ -76,13 +114,15 @@ currd.addEventListener('change', ()=>{
   
   });
 gasIndhtm.addEventListener('change',()=>{descValido=null;});
-jsonData.bomSol.vendedores.forEach(vend => {
+
+/*jsonData.bomSol.vendedores.forEach(vend => {
   const option = document.createElement('option');
   option.value = vend.nombre;
   option.text = vend.nombre;
   vendSelect.appendChild(option);
 });
-pyct.rep= selectVend(jsonData.bomSol.vendedores);
+   
+   pyct.rep= vendSelect;*/
 
 CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
@@ -95,9 +135,9 @@ temp.addEventListener('change', () => {
   console.log(pyct.motor);
   }
   });
-vendSelect.addEventListener('change', () => {
+/*vendSelect.addEventListener('change', () => {
   pyct.rep= selectVend(jsonData.bomSol.vendedores);
-  });
+  });*/
   
 ltsSelect.addEventListener('change', () => {
    selPump=datosBomba(jsonData);
@@ -533,11 +573,14 @@ function authDesMod(){
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
   modalbutton=document.getElementById("btnPrim");
-  
+  modal2button=document.getElementById("2aryBtn");
+  xBtn=document.getElementById("xBtn");
   modalbutton.onclick= valiDesc;
-  modalbutton.innerHTML= `Autorizar`
-  modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
-  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" id="inputPassword6" class="form-control"></inpunt>`;
+  modalbutton.innerHTML= `Autorizar`;
+  modal2button.style.display='block';
+  xBtn.style.display='block';
+  modalTit.innerHTML=`Authorizar descuento de ${desc.value}%`;
+  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" class="form-control"></inpunt>`;
   const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
   myModal.show(); // Show the modal programmatically
 }
@@ -819,14 +862,14 @@ function genID(selHp) {
   return finalID;
 }
 
-function selectVend(data){
-  const vend = document.getElementById('vendSelect').value;
+function selectVend(data,id){
+
  for(const rep of data){
-    if(rep.nombre == vend){
+    if(rep.id == id){
       return rep;
     }
   }
-  console.error(`No matching rep found for vendor: ${vend}`);
+  console.error(`No existe el vendedor con id: ${id}`);
   return null;
    
 }
