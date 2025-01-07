@@ -1,5 +1,6 @@
 let jason, cotis, a=1, buttonState = 0, k;
-
+//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
 /*Login*/
 /*
 function authMain(){
@@ -46,7 +47,7 @@ async function valLogin(){
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-  const apiParamsUrl = `http://172.31.3.233:3000/vende/${usr}/${pwd}`; 
+  const apiParamsUrl = `http://${hostUrl}:3000/vende/${usr}/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
@@ -91,12 +92,11 @@ async function valLogin(){
     
   
 }*/
-      //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
-const url=/* "http://localhost:3000/bombSol/"; /*/ "http://172.31.3.233:3000/bombSol/"; //*/
-fetch(url)
+      
+const url=`http://${hostUrl}:3000/bombSol/`;
+   fetch(url)
   .then(response => response.json())
-  .then(jsonData => {
-    // Data en 'jason' 
+  .then(jsonData => { 
     jason=jsonData
   })
   .catch(error => {
@@ -167,7 +167,7 @@ fetch(url)
   }
   
 async function genpass(){
-  fetch('http://172.31.3.233:3000/disc')
+  fetch(`http://${hostUrl}:3000/disc`)
   .then(response => response.json())
   .then(auth => {
 

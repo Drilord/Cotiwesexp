@@ -1,6 +1,7 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
-
+//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
 
 function authMain(){
   k=1
@@ -46,7 +47,8 @@ async function valLogin(){
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-  const apiParamsUrl = `http://172.31.3.233:3000/vende/${usr}/${pwd}`; 
+
+  const apiParamsUrl = `http://${hostUrl}:3000/vende/${usr}/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
@@ -94,7 +96,7 @@ async function valLogin(){
  
 
 
-fetch('http://172.31.3.233:3000/bombSol/') //for linux pc
+fetch(`http://${hostUrl}:3000/bombSol/`) //for linux pc
 //fetch('localhost:3000/bombSol/')// lap
   .then(response => response.json())
   .then(jsonData => {
@@ -611,7 +613,7 @@ async function valiDesc(){
       alert('El campo contraseña de autorización no puede estar vacio!')
       return;
     }
-  const apiParamsUrl = `http://172.31.3.233:3000/disc/${pwd}`; 
+  const apiParamsUrl = `http://${hostUrl}:3000/disc/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
