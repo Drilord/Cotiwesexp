@@ -198,3 +198,22 @@ async function genpass(){
   });
 
 }
+
+/*
+async function createUsr(){
+ 
+debe postear la data en node y al json 
+Access the vendedores array
+const vendedores = jsonData.vendedores;
+
+Get the length of the vendedores array
+const vendedoresLength = vendedores.length; 
+
+validar que el usr este asociado a un vendedor para hacer match con los ids aunque puede ser 
+mejor que cada user tenga su propio id y un sales red asociado o puede no tenerlo
+pero lo de arriba servira parra asignar el siguiente ID de user y puede ser que en el form pongamos un switch de
+asociar vendedor si esta apagado lee bombsol vendedores y postea uno nuevo con un  id y asociado a un user si no pues pasan bye
+
+
+}
+*/
