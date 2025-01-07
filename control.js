@@ -1,12 +1,16 @@
-let a, b, c, d, e, f, g, h, i, j, k=1, l;
+let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 
 
 function authMain(){
-   
+  k=1
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
   modalbutton=document.getElementById("btnPrim");
+  modalX=document.getElementById('xBtn');
+  modalClsBtn=document.getElementById('2aryBtn');
+  modalX.style.display='none';
+  modalClsBtn.style.display='none';
   modalbutton.onclick= valLogin;
   modalbutton.innerHTML= `Ingresar`
   modalTit.innerHTML=`Ingreso a cotizador`;
@@ -14,22 +18,34 @@ function authMain(){
                       <label for="usr">
                        Usuario:
                        </label>
-                       <input id="usr" type="text"  class="form-control" placeholder="Usr">
+                       <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
                        </inpunt>
                        <label for="pwdA">
                        Introduce la contraseña de autorización:
                        </label>
-                       <input id="pwdA" type="password"  class="form-control">
+                       <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
                        </inpunt>`;
   const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
   myModal.show(); // Show the modal programmatically
   
 }
 async function valLogin(){
-  let usr=document.getElementById('usr').value.trim();
-  let pwd=document.getElementById('pwdA').value.trim();
+  const usrHtm=document.getElementById('usr');
+  const pwdHtm=document.getElementById('pwdA');
+  let usr=usrHtm.value.trim();
+  let pwd=pwdHtm.value.trim();
   usr = usr === '' ? null : usr;  
   pwd = pwd === '' ? null : pwd;
+  if(usr==null){
+    ifusrHtm.classList.add('is-invalid')
+    alert('EL campo Usuario no puede estar vacio')
+    return;
+  }
+  if(pwd==null){
+    ifusrHtm.classList.add('is-invalid')
+    alert('EL campo Contraseña no puede estar vacio')
+    return;
+  }
   const apiParamsUrl = `http://172.31.3.233:3000/vende/${usr}/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
@@ -54,7 +70,7 @@ async function valLogin(){
                        <input id="pwdA" type="password"  class="form-control is-invalid">
                        </inpunt>`;
     k=k+1;
-    console.log('k:',k);
+    console.log('auth try:',k);
    }
   }
   else if(auth.token!='invalid'&& auth.id!=null){  
@@ -569,6 +585,7 @@ console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
 
 }
 function authDesMod(){
+  j=1;
   const desc=document.getElementById('input7');
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
@@ -579,29 +596,54 @@ function authDesMod(){
   modalbutton.innerHTML= `Autorizar`;
   modal2button.style.display='block';
   xBtn.style.display='block';
-  modalTit.innerHTML=`Authorizar descuento de ${desc.value}%`;
+  modalTit.innerHTML=`Autorizar descuento de ${desc.value}%`;
   modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" class="form-control"></inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
-  myModal.show(); // Show the modal programmatically
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+  myModal.show(); // Show modal
 }
-function valiDesc(){
+
+async function valiDesc(){
   const desc=document.getElementById('input7');
-  const pwd=document.getElementById('pwd').value;
-  if(pwd==="Weslaco123"){
-    alert("password correcto");
+  const pwdHtm=document.getElementById('pwd');
+  const pwd=pwdHtm.value.trim();
+    if(pwd===''){
+      pwdHtm.classList.add('is-invalid');
+      alert('El campo contraseña de autorización no puede estar vacio!')
+      return;
+    }
+  const apiParamsUrl = `http://172.31.3.233:3000/disc/${pwd}`; 
+  console.log('api url:',apiParamsUrl);
+  fetch(apiParamsUrl)
+  .then(response => response.json())
+  .then(auth => {
+
+   console.log('auth:',auth.token);
+  if(auth.token==='invalid'){
+    if(j>=3){
+      modalContent.innerHTML=`<span style="color: red;">limite de intentos regargue la pagina</span>`;
+      modalbutton.style.display='none';
+      modal2button.style.display='none';
+      xBtn.style.display='none';
+      
+    }else{
+    pwdHtm.classList.add('is-invalid');
+    descValido=0;
+    j=j+1;
+    console.log('intento desc:',j);
+   }
+  }
+  else if(auth.token==='valid'){  
+    
+    alert("Descuento Autorizado");
     descValido=1;
     desc.disabled=true;
     const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
     myModal.hide();
-    return
-  }
-  else{alert("mal puñetas"); 
-    descValido=0;
-    return
-  }
-
-  
-  
+    
+   
+  } 
+  });
+ 
   /*esta funcion se debe llamar desde validar() si gastos ind es menor a 40  pide 
   auth modal password este pwd se podra cambiar en la UI de admin preparar 
   para sacarlo de datosjson por ahora solo poner un pwd  debe regresar descValido=1*/
