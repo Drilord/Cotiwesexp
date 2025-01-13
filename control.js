@@ -2,7 +2,7 @@ let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
 
-/*function authMain(){
+function authMain(){
   k=1
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
@@ -91,7 +91,7 @@ async function valLogin(){
 
     
   
-}*/
+}
  
 
 
