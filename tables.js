@@ -47,7 +47,7 @@ async function valLogin(){
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-  const apiParamsUrl = `http://${hostUrl}:3000/vende/${usr}/${pwd}`; 
+  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
@@ -87,20 +87,22 @@ async function valLogin(){
 
   } 
 
+  }).catch(error => {
+    console.error('Error en auth de usuario:', error);
   });
 
     
   
 }*/
       
-const url=`http://${hostUrl}:3000/bombSol/`;
+const url=`api/bombSol/`;
    fetch(url)
   .then(response => response.json())
   .then(jsonData => { 
     jason=jsonData
   })
   .catch(error => {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data bomSol:', error);
   });
 
   function KOR() {
@@ -167,7 +169,7 @@ const url=`http://${hostUrl}:3000/bombSol/`;
   }
   
 async function genpass(){
-  fetch(`http://${hostUrl}:3000/disc`)
+  fetch(`api/disc`)
   .then(response => response.json())
   .then(auth => {
 

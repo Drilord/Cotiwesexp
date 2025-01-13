@@ -42,7 +42,7 @@
     <script>
       window.onload = function() {
         consultarTipoCambio();
-        authMain();
+        //authMain();
       };
       </script>
     <!--Ventana modal-->
@@ -174,6 +174,19 @@
         </div>
         <div class="col-5 d-md-block d-none"></div>  
       </div>
+      <div class="row">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-10 col-md-6 form-switch"><input class="form-check-input vLock" type="checkbox" id="checkDesA" /><label class="form-check-label" for="checkDesA">Descripcion Adicional?</label></div>
+        <div class="col-4 d-md-block d-none"></div> 
+      </div>
+      <div class="row descA">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-10 col-md-5 form-floating">
+          <textarea class="form-control vLock" id="descAdd" placeholder="Descripcion Adicional" style="display: none;" ></textarea>
+          
+        </div>
+        <div class="col-5 d-md-block d-none"></div> 
+      </div>
         <div class="row full bom">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-4 col-md-2 text-truncate">Corriente:</div>
@@ -223,7 +236,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input type="text" class="form-control vLock" id="input7" placeholder="gastosind"/>
+          <input type="text" class="form-control" id="input7" placeholder="gastosind"/>
           <label for="input7">Gastos Indirectos:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 

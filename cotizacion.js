@@ -1,4 +1,4 @@
-let a, b, c, d, e, f, g, h, i, j, k, l, curr;
+let a, b, c, d, e, f, g, h, i, j, k, l, curr, nomPyct, idPyct ;
 
 /*
 navigator.storage.estimate().then(estimate => {
@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const idP = document.getElementById("idProyecto");
   const nomP = document.getElementById("nomP");
   const descP = document.getElementById("descP");
+  const descAdd = document.getElementById("descAdd");
   const nomV = document.getElementById("nomV");
   const nomVf = document.getElementById("nomvf");
   const tel = document.getElementById("tel");
@@ -33,15 +34,18 @@ document.addEventListener("DOMContentLoaded", () => {
   const coTotalHTM = document.getElementById("coTotal");
   const imgEner = document.getElementById("imgEner");
   const imgHidr = document.getElementById("imgHidr");
-  const imgServ = document.getElementById("imgServ");
-
+ 
   if (Bomba && idP && nomP && descP && nomV && tel && mail && nomVf) {
     const myObject = getObjectFromLocalStorage("cotData");
     if (myObject) {
       // console.log(myObject.pyct.struct.precio);
+      nomPyct=myObject.pyct.nombre;
+      idPyct=myObject.pyct.id;
       const pumpModel = myObject.Modelo;
       const pumpHP = myObject.hp;
       const venddr = myObject.pyct.rep;
+      const descAddT = myObject.pyct.descAdd?.text
+      const descFlag = myObject.pyct.descAdd?.flag
       const proyT = myObject.pyct.cotType;
       const lts = myObject.pyct.lts;
       const ltsAvg = myObject.pyct.ltsAvg;
@@ -73,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const grua = myObject.pyct.grua ?? 0;
       const viat = hosp + comidas + gasTras;
       const gasInd = myObject.pyct.gasInd / 100 + 1;
+      
       console.log("grua ", grua);
       console.log("viat ", viat);
       console.log("comidas ", comidas);
@@ -210,12 +215,13 @@ document.addEventListener("DOMContentLoaded", () => {
       }`;
       idP.innerText = ` ${myObject.pyct.id} `;
       nomP.innerText = ` ${myObject.pyct.nombre} `;
-      nomV.innerHTML = `${venddr.nombre}`;
+      descAdd.innerText = ``;
+      nomV.innerHTML = `${venddr?.nombre}`;
       desServ.innerHTML = `${desManObr}`;
-      mail.innerText = `${venddr.mail}`;
-      tel.innerText = `${venddr.tel}`;
+      mail.innerText = `${venddr?.mail}`;
+      tel.innerText = `${venddr?.tel}`;
       nomVf.innerText = `${
-        venddr.nombre != "Weslaco Energías Renovables" ? venddr.nombre : ""
+        venddr?.nombre != "Weslaco Energías Renovables" ? venddr?.nombre : ""
       }`;
       altMaxG.innerHTML = `${myObject.altMax}mts`;
       hpGraph.innerHTML = `Rendimiento diario en promedio bomba de: ${pumpHP} Hp`;
@@ -237,32 +243,32 @@ document.addEventListener("DOMContentLoaded", () => {
       }`;
       //Tabla cotizacion
       panels.innerHTML = `<td class="col-1 cotiTab">${cantPan.cantidadPaneles}</td>
-                           <td class="col-10 cotiTab">${modFotV}</td>
+                           <td class="col-8 cotiTab">${modFotV}</td>
                            <td class="col-1 cotiTab">$${SprecioPan}</td>`;
       gabi.innerHTML = `<td class="col-1 cotiTab">1</td>
-                           <td class="col-10 cotiTab">${gabiArma}</td>
-                           <td class="col-1 cotiTab">${SpreGabi}</td>`;
+                           <td class="col-8 cotiTab">${gabiArma}</td>
+                           <td class="col-1 cotiTab">$${SpreGabi}</td>`;
       pumpD.innerHTML = `<td class="col-1 cotiTab">1</td>
-                           <td class="col-10 cotiTab">${pumpDesc}</td>
-                           <td class="col-1 cotiTab">${SprecioPump}</td>`;
+                           <td class="col-8 cotiTab">${pumpDesc}</td>
+                           <td class="col-1 cotiTab">$${SprecioPump}</td>`;
       pumpEq.innerHTML = `<td class="col-1 cotiTab">1</td>
-                           <td class="col-10 cotiTab">${eqBoDesc}</td>
-                           <td class="col-1 cotiTab">${SprecioEq}</td> `;
+                           <td class="col-8 cotiTab">${eqBoDesc}</td>
+                           <td class="col-1 cotiTab">$${SprecioEq}</td> `;
       matElec.innerHTML = `<td class="col-1 cotiTab">1</td>
-                           <td class="col-10 cotiTab">${desMatElec}</td>
-                           <td class="col-1 cotiTab">${SpreMatElec}</td>`;
+                           <td class="col-8 cotiTab">${desMatElec}</td>
+                           <td class="col-1 cotiTab">$${SpreMatElec}</td>`;
       if (strType != 3) {
         strElev.innerHTML = `<td class="col-1 cotiTab">1</td>
-                           <td class="col-10 cotiTab">${strDesc}</td>
-                           <td class="col-1 cotiTab">${SstrEPrice}</td>`;
+                           <td class="col-8 cotiTab">${strDesc}</td>
+                           <td class="col-1 cotiTab">$${SstrEPrice}</td>`;
       }
       strPan.innerHTML = `<td class="col-1 cotiTab">1</td>
-                            <td class="col-10 cotiTab">${strPaDes}</td>
-                            <td class="col-1 cotiTab">${SstrPPrice}</td>`;
+                            <td class="col-8 cotiTab">${strPaDes}</td>
+                            <td class="col-1 cotiTab">$${SstrPPrice}</td>`;
       manObr.innerHTML = `<td class="col-1 cotiTab">1</td>
-                            <td class="col-10 cotiTab">${desManObr}</td>
-                            <td class="col-1 cotiTab">${SservPrice}</td>`;
-      coTotalHTM.innerText = `${cotTot}`;
+                            <td class="col-8 cotiTab">${desManObr}</td>
+                            <td class="col-1 cotiTab">$${SservPrice}</td>`;
+      coTotalHTM.innerText = `$${cotTot}`;
       if (proyT == 1) {
         //poner solo  bombeo
 
@@ -273,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bomOnly.forEach((elmt) => {
           elmt.style.display = "none";
         });
-        descP.innerText = ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
+        descP.innerText = ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
       }
       if (proyT == 2) {
         //poner solo solar
@@ -287,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
           elmt.style.display = "none";
         });
 
-        descP.innerText = `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en la localidad de ${loc}.`;
+        descP.innerText = `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
           cantPan.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
@@ -295,13 +301,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }${strPaDes}<br>${desMatElec}`;
       }
       if (proyT == 3) {
-        descP.innerText = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}.`;
+        descP.innerText = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
           cantPan.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
           strType === 3 ? `` : `${strDesc}<br>`
         }${strPaDes}<br>${desMatElec}`;
       }
+        
 
       window.addEventListener("load", () => {
         const myChart = echarts.init(document.getElementById("myChart"));
@@ -418,3 +425,4 @@ function getObjectFromLocalStorage(key) {
     return null;
   }
 }
+

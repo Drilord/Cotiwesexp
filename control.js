@@ -1,9 +1,8 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
-const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
 
-function authMain(){
+/*function authMain(){
   k=1
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
@@ -48,7 +47,7 @@ async function valLogin(){
     return;
   }
 
-  const apiParamsUrl = `http://${hostUrl}:3000/vende/${usr}/${pwd}`; 
+  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
@@ -92,12 +91,11 @@ async function valLogin(){
 
     
   
-}
+}*/
  
 
 
-fetch(`http://${hostUrl}:3000/bombSol/`) //for linux pc
-//fetch('localhost:3000/bombSol/')// lap
+fetch(`api/bombSol/`) 
   .then(response => response.json())
   .then(jsonData => {
     reps=jsonData.bomSol.vendedores;
@@ -107,6 +105,8 @@ fetch(`http://${hostUrl}:3000/bombSol/`) //for linux pc
     const currd = document.getElementById('check7');
     const ltsSelect = document.getElementById('ltsSelect');
     const gasIndhtm = document.getElementById('input7');
+    const chkDesA = document.getElementById('checkDesA');
+    const DescAdd = document.getElementById('descAdd');
     srvcs=jsonData.bomSol.servicios;
     dataS=jsonData.bomSol.estructura;
     dataPan=jsonData.bomSol.solar;
@@ -141,6 +141,15 @@ gasIndhtm.addEventListener('change',()=>{descValido=null;});
 });
    
    pyct.rep= vendSelect;*/
+chkDesA.addEventListener('change', () => {
+  if(chkDesA.checked==true){
+        pyct.descAdd={flag:1,text:''};
+        DescAdd.style.display= 'block';    
+  }else{DescAdd.style.display= 'none';
+    pyct.descAdd={flag:0};
+  }
+  console.log(pyct.descAdd.flag);
+});
 
 CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
@@ -238,11 +247,6 @@ async function consultarTipoCambio() {
 
 
 function validar() {
-/*const desc=document.getElementById('input7'); 
- if(desc.value<40){
-   if(descValido!=1){
-    authDescuen();
-    return;}}*/
   const nom=document.getElementById('input1'); 
   const loc=document.getElementById('input2');
   const km=document.getElementById('input3');
@@ -256,6 +260,8 @@ function validar() {
   const cotBtn=document.getElementById('acot'); 
   const tipCambio=document.getElementById('input0'); 
   const ltsS=document.getElementById('ltsSelect');
+  const descAdd=document.getElementById('descAdd');
+  
 if(cdtFlg==1){
   alert('Combinacion de CDT y Volumen de Agua incorrecto!');
   cdt.classList.add('is-invalid');
@@ -264,6 +270,14 @@ if(cdtFlg==1){
   else{cdt.classList.remove('is-invalid');ltsS.classList.remove('is-invalid');}
 if (buttonState === 0) {
  //campos generales
+ if(pyct.descAdd.flag==1){
+   if(!descAdd.value || descAdd.value.trim()==''){
+          alert("desactive la casilla descripcion adicional");
+          descAdd.classList.add('is-invalid');
+          return;
+   }else{pyct.descAdd.text=descAdd.value ;} 
+ }
+ 
  if(!tipCambio.value || isNaN(tipCambio.value)){
   alert("ERROR CON EL TIPO DE CAMBIO")
   tipCambio.classList.add('is-invalid');
@@ -406,13 +420,7 @@ pyct.grua=parseInt(grua.value);
 
 if(parseInt(marg.value)<35){
  if(!descValido){authDesMod(); return;}
- if(descValido==0){   
-  alert('No puede continuar sin autorizacion para Gastos indirectos menor a 35%');
-  marg.classList.add('is-invalid');
-  authDesMod();
-  return;
-  }
-if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
+ if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
 }else{pyct.gasInd=parseInt(marg.value)}
 alert('ID generado: '+c+' puede Cotizar');
 cotBtn.style.display= 'block';
@@ -429,6 +437,8 @@ try {
   inputs.forEach(input => {
   input.disabled = true; 
   });
+  const disc = document.getElementById('input7')
+  disc.disabled = true;
   if(cotType==2){hpMan.disabled=true;}
   buttonState = 1; 
 } else if (buttonState === 1) {
@@ -439,7 +449,11 @@ try {
   const inputs = document.querySelectorAll('.vLock');
   inputs.forEach(input => {
   input.disabled = false; 
+
   });
+  const disc = document.getElementById('input7')
+  disc.disabled = false
+  descValido=false;
   if(cotType==2){hpMan.disabled=false;}
   
 }
@@ -558,6 +572,8 @@ function equipBomb(){
  if (accsel.mxn === false || accsel.mxn === undefined) { 
     accsel.costo=((accsel.precio*tipCam*1.16)*0.48)*0.95;
     console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.costo); 
+  }else{accsel.costo=accsel.precio;
+        console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.costo);
   }
   });
   console.log(accsSel);
@@ -566,15 +582,20 @@ const cable = cals.find(item => item.calibre === selPump.calibre);
 const costo=((cable.precioMXN*1.16)*0.48)*0.95;
 const costoF=costo*(selPump.altMax+10)
 cable.costo=costoF
-console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
-
+console.log("sel pump cable calibre ",selPump.calibre," costo  mxn", cable.costo);
  // calacular el precio por metro del equipamiento  
  const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].costo};
+ console.log("tubo0",tubo);
  const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].costo};
+ console.log("kit ",kit);
  const check={check:accsSel[2].Accesorio, precio:accsSel[2].costo};
+ console.log("check ",check);
  tubo.precio= selPump.altMax/cants[0]*tubo.precio;
+ console.log("selPump.altmax ",selPump.altMax," cants[0]", cants[0],"tubo.precio",tubo.precio);
  kit.precio= cants[1]*kit.precio;
+ console.log("kit precio ",kit.precio);
  check.precio= check.precio*cants[2];
+ console.log("check precio ",check.precio);
 
  priceeq= Math.round((tubo.precio+kit.precio+check.precio+cable.costo)/selPump.altMax);
  console.log("precio por metro ", priceeq);
@@ -613,7 +634,7 @@ async function valiDesc(){
       alert('El campo contraseña de autorización no puede estar vacio!')
       return;
     }
-  const apiParamsUrl = `http://${hostUrl}:3000/disc/${pwd}`; 
+  const apiParamsUrl = `api/disc/${pwd}`; 
   console.log('api url:',apiParamsUrl);
   fetch(apiParamsUrl)
   .then(response => response.json())
@@ -629,7 +650,7 @@ async function valiDesc(){
       
     }else{
     pwdHtm.classList.add('is-invalid');
-    descValido=0;
+    descValido=false;
     j=j+1;
     console.log('intento desc:',j);
    }
