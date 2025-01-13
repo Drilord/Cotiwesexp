@@ -1,8 +1,8 @@
-let jason, cotis, a=1, buttonState = 0, k;
+let jason, cotis, a=1, buttonState = 0, k, authL;
 //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
 const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
 /*Login*/
-/*
+
 function authMain(){
   k=1
   modalContent=document.getElementById("modalCont");
@@ -77,11 +77,21 @@ async function valLogin(){
   else if(auth.token!='invalid'&& auth.id!=null){  
     
    console.log('vend Id', auth.id); 
-   repId=auth.id
-   const vendSelect = selectVend(reps,repId);
-   const salesRep = document.getElementById('vendSelect');
-   salesRep.value= vendSelect?.nombre
-   pyct.rep= vendSelect;
+   authL=auth.authL
+   let dispLevel;
+   if(authL===3){dispLevel='.dirW'}
+   if(authL===1){dispLevel='.comp'}
+   if(authL===0){
+    usrHtm.classList.add('is-invalid')
+    alert('Este usuario no tiene acceso')
+    return;}
+  console.log('displev',dispLevel);
+   const authdisp=document.querySelectorAll(dispLevel);
+   console.log('authdisp:');
+   console.log(authdisp);
+   authdisp.forEach(element=>{
+      element.style.display='block';
+   });
    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
    myModal.hide();
 
@@ -93,7 +103,7 @@ async function valLogin(){
 
     
   
-}*/
+}
       
 const url=`api/bombSol/`;
    fetch(url)

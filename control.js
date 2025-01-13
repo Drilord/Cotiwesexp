@@ -1,5 +1,5 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 //  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
 
 function authMain(){
@@ -37,12 +37,12 @@ async function valLogin(){
   usr = usr === '' ? null : usr;  
   pwd = pwd === '' ? null : pwd;
   if(usr==null){
-    ifusrHtm.classList.add('is-invalid')
+    usrHtm.classList.add('is-invalid')
     alert('EL campo Usuario no puede estar vacio')
     return;
   }
   if(pwd==null){
-    ifusrHtm.classList.add('is-invalid')
+    pwdHtm.classList.add('is-invalid')
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
@@ -78,6 +78,10 @@ async function valLogin(){
     
    console.log('vend Id', auth.id); 
    repId=auth.id
+   if(repId==0){
+    usrHtm.classList.add('is-invalid')
+    alert('Este usuario no puede cotizar')
+    return;}
    const vendSelect = selectVend(reps,repId);
    const salesRep = document.getElementById('vendSelect');
    salesRep.value= vendSelect?.nombre
@@ -261,7 +265,6 @@ function validar() {
   const tipCambio=document.getElementById('input0'); 
   const ltsS=document.getElementById('ltsSelect');
   const descAdd=document.getElementById('descAdd');
-  
 if(cdtFlg==1){
   alert('Combinacion de CDT y Volumen de Agua incorrecto!');
   cdt.classList.add('is-invalid');
@@ -500,7 +503,7 @@ function cotizar(){
     for (const month in pyct.ltsmes) {
     total += pyct.ltsmes[month];
     }             
-    const average = total / Object.keys(pyct.ltsmes).length;;
+    const average =Math.round(total / Object.keys(pyct.ltsmes).length);
     pyct.ltsAvg = average.toLocaleString('en-US');
     console.log("Average:", average); 
     saveToLocalStorage('cotData', selPump);
