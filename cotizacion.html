@@ -16,7 +16,7 @@
       crossorigin="anonymous"
     ></script>
     <script src="https://cdn.jsdelivr.net/npm/echarts@latest/dist/echarts.min.js"></script>
-
+    
     <script src="cotizacion.js"></script>
     <title>Cotización</title>
      </head>
@@ -60,15 +60,17 @@ body {
  
  /* 
   h4 { font-size:clamp(1rem,2vw,1.1rem); }*/ 
-  p { font-size: 0.8rem; }/*
+  p { font-size: 0.9rem; margin: 0px;}/*
   h1 { font-size: clamp(1.9rem,2.5vw,2.3rem); } 
   h2 { font-size: clamp(1.7rem,1.9vw,2.1rem); }
   h3 { font-size: clamp(1rem,1.2vw,1.3rem); }
   h5 { font-size: 1.1rem;}
   span { font-size: 0.5rem; }*/
-  li {font-size: 0.8rem;}/*
+  li {font-size: 0.6rem;}
+  ul {margin-bottom: 0;}/*
   tr{ font-size: 0.9rem;}
   td{ font-size: 0.9rem; }*/
+  .lipqn{font-size: 0.9rem;}
   .print-button {
       position: fixed; 
       bottom: 20px; 
@@ -107,9 +109,12 @@ body {
     border-bottom-color: #98cc53;
     border-left-color: #98cc53;
   }
+.cover{
+    font-size: 1rem;
+}
   </style>   
-  <body>
-    <button class="print-button hidden-print" onclick="window.print()">PDF</button>
+  <body>    
+    <button id="prtBtn" class="print-button btn-success hidden-print" onclick="window.print()">PDF</button>
     
 
      <div class="container-fluid page-break">
@@ -145,49 +150,48 @@ body {
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3">
-              <p class="card-text">Departamento emisor:</p>
+              <p class="card-text cover">Departamento emisor:</p>
             </div>
             <div class="col-5">
-              <p class="card-text">Ingeniería</p>
+              <p class="card-text cover">Ingeniería</p>
             </div>
           </div>
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3">
-              <p class="card-text">Código:</p>
+              <p class="card-text cover">Código:</p>
             </div>
             <div class="col-5">
-              <p id="idProyecto" class="card-text"></p>
+              <p id="idProyecto" class="card-text cover"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-1"></div>
             <div class="col-3">
-              <p class="card-text">Nombre:</p>
+              <p class="card-text cover">Nombre:</p>
             </div>
             <div class="col-5">
-              <p id="nomP" class="card-text"></p>
+              <p id="nomP" class="card-text cover"></p>
             </div>
           </div>
           <div class="row">
             <div class="col-1"></div>
             <div class="col-4">
-              <p class="card-text">Descripción del proyecto:</p>
+              <p class="card-text cover">Descripción del proyecto:</p>
             </div>
           </div>
           <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-              <p id="descP" class="card-text">
-               
-              </p>
+              <p id="descP" class="card-text cover"></p>
+              <p id="descAdd" class="card-text cover"></p>
             </div>
             <div class="col-1"></div>
           </div>
         </div>
         <div class="row">
-          <div class="col-1"></div>
-          <div class="col-10">
+          <div class="col-2"></div>
+          <div class="col-8">
             <img
               src="./images/Cot1.png"
               style="width: 90%; margin: 0px"
@@ -195,7 +199,7 @@ body {
               alt="logo"
             />
           </div>
-          <div class="col-1"></div>
+          <div class="col-2"></div>
         </div>
         <div class="row"><div class="col-12"><br></div></div>
         <div
@@ -238,7 +242,8 @@ body {
         </div>
       </div>
     </div>
-    <div class="container-fluid page-break">
+    <div class="html2pdf__page-break"></div>
+<div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
@@ -256,45 +261,36 @@ body {
           </div>
         </div>
         <div class="row" id="energia" style="margin: auto; order: 1;">
+          <div class="col-12"><h6>Energía</h6></div>
           <div class="col-3">
             <img id="imgEner" src="./images/energia.png" alt="energia" width="100%" />
           </div>
-          <div class="col-2">
-            <h5>Energía</h5>
-          </div>
-          <div class="col-7">
+          <div class="col-9">
             <p id="descEner"></p>
           </div>
         </div>
         <div class="row" id="hidraulica" style="margin: auto; order: 1;">
+          <div class="col-12"><h6>Hidráulica</h6></div>
           <div class="col-3">
             <img id="imgHidr" src="./images/hidraulica.png" alt="hidraulica" width="100%" />
           </div>
-          <div class="col-2">
-            <h5>Hidráulica</h5>
-          </div>
-          <div class="col-7">
-            <p id="bomba">
-              
-            </p>
+          <div class="col-9">
+            <p id="bomba"></p>
           </div>
         </div>
         <div class="row" id="servicios" style="margin: auto; order: 1;">
+          <div class="col-12"><h6>Servicios</h6></div>
           <div class="col-3">
             <img id="imgServ" src="./images/servicios.png" alt="servicios" width="100%" />
           </div>
-          <div class="col-2">
-            <h5>Servicios</h5>
-          </div>
-          <div class="col-7">
-            <p id="desServ">
-            </p>
+          <div class="col-9">
+            <p id="desServ"></p>
           </div>
         </div>
         <div class="row pie" style="order: 4;"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>
     </div>
-
+<div class="html2pdf__page-break"></div>
     <div class="container-fluid page-break" id="grafiCont">
       
        <div class="card text-wrap" style="display: flex; flex-direction: column; height: 100%;">
@@ -339,14 +335,16 @@ body {
       </div>
       
     </div>
- 
+<div class="html2pdf__page-break"></div> 
     <div class="container-fluid text-center page-break">
       <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
-          <h1>Cotización</h1>
+          <h3>Cotización</h3>
         </div>
-        <div id="tabla" style="margin: auto">
+        <div class="row">
+        <div class="col-1"></div>
+         <div id="tabla" class="col-10" style="margin: auto">
           <table>
             <tr>
               <th
@@ -360,7 +358,7 @@ body {
                 Cantidad
               </th>
               <th
-                class="col-10"
+                class="col-8"
                 style="
                   border: solid;
                   border-color: rgb(152, 204, 83);
@@ -390,7 +388,7 @@ body {
             <tr id="manObr"></tr>
             <tr>
               <td class="col-1 cotiTab"></td>
-              <td class="col-10 text-end  cotiTab">
+              <td class="col-8 text-end  cotiTab">
                 <b>Total:</b>
               </td>
               <td class="col-1 cotiTab">
@@ -399,24 +397,38 @@ body {
             </tr>
           </table>
         </div>
+        <div class="col-1"></div>
+      </div>
         <div class="row text-start">
           <div class="col-1"></div>
-          <div class="col-8">
+          <div class="col-3">
             <ul>
               <li>PRECIOS EN PESOS MXN</li>
-              <li>PRECIOS CON IVA 0%</li>
-              <li>VIGENCIA DE COTIZACION 30 DIAS</li>
-              <li>
+            </ul>
+          </div>  
+          <div class="col-3">
+            <ul> <li>PRECIOS CON IVA 0%</li></ul> 
+          </div>
+          <div class="col-4"> 
+          <ul><li>VIGENCIA DE COTIZACION 15 DIAS</li></ul>
+          </div>  
+        </div>
+        <div class="row text-start">
+          <div class="col-1"></div>
+         <div class="col-10">
+          <ul><li>
                 Nuestros productos están fabricados con los mejores materiales
                 del mercado y diseños certificados , para brindar el máximo
                 desempeño de los mismos.
-              </li>
-            </ul>
+              </li></ul>
+            </div>  
+            <div class="col-1"></div> 
           </div>
-        </div>
+        
         <div class="row pie"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div>
       </div>  
-    </div>  
+    </div> 
+<div class="html2pdf__page-break"></div> 
     <div class="container-fluid text-start page-break"> 
       <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
@@ -431,16 +443,16 @@ body {
           <div class="col-8">
             <ul>
               <!--color= #44546A;-->
-              <li>Somos una empresa con más de 18 años de experiencia.</li>
-              <li>
+              <li class="lipqn">Somos una empresa con más de 18 años de experiencia.</li>
+              <li class="lipqn">
                 Contamos con más de 1,000 proyectos instalados dentro de todo
                 México.
               </li>
-              <li>
+              <li class="lipqn">
                 Ofrecemos las más alta tecnología y calidad en nuestros
                 productos.
               </li>
-              <li>
+              <li class="lipqn">
                 Trabajamos con un alto sentido de calidad y profesionalismo.
               </li>
             </ul>
@@ -483,7 +495,7 @@ body {
       </div>
       
     </div>
-    
+<div class="html2pdf__page-break"></div>
      <div class="container-fluid text-start page-break" >
       <div class="card" style="align-items:center; width: 100%">
       
@@ -498,22 +510,22 @@ body {
           <div class="col-1"></div>
           <div class="col-8">
             <ol>
-              <li>
+              <li class="lipqn">
                 Proyecto calculado a los datos proporcionados por el cliente,
                 cualquier modificacion a estos implica cambios al proyecto y los
                 gastos correspondientes correran por cuenta del cliente.
               </li>
-              <li>
+              <li class="lipqn">
                 No incluye instalacion hidraulica para distribuir el agua a
                 depositos, o riegos.
               </li>
-              <li>
+              <li class="lipqn">
                 Weslaco no se hace responzable de cualquier situacion
                 relacionado al pozo, noria, o reservorio. Asi como a las
                 caracteristicas del agua (arenas, suciedad, lodos, quimica,
                 temperatura o residuos).
               </li>
-              <li>
+              <li class="lipqn">
                 Cotización valida por 15 dias.
               </li>
             </ol>
@@ -529,12 +541,13 @@ body {
           <div class="col-1"></div>
           <div class="col-8">
             <ol>
-              <li>
+              <li class="lipqn">
                 12 años en paneles solares y 25 años de produccion electrica.
               </li>
-              <li>3 año en vicios ocultos en la instalacion.</li>
-              <li>1 año en variador, motor, bomba y componentes electricos.</li>
-              <li>Garantias validas solo por defectos de fabricacion.</li>
+              <li class="lipqn">Tres años en vicios ocultos en la instalacion.</li>
+              <li class="lipqn">Un año en variador, motor, bomba y componentes electricos.</li>
+              <li class="lipqn"
+              >Garantias validas solo por defectos de fabricacion.</li>
             </ol>
           </div>
         </div>
@@ -561,18 +574,20 @@ body {
             funcionando el proyecto.
           </p>
         </div>
+        
+
         <div class="row text-center" style="margin: 0px">
           <div class="row fw-bold">
-            <p style="margin: 0px">BANORTE</p>
+            <p style="margin: 0px">BANREGIO</p>
           </div>
           <div class="row fw-bold">
-            <p style="margin: 0px">CUENTA 0887466566</p>
+            <p style="margin: 0px">CUENTA 133-87433-001-9</p>
           </div>
           <div class="row fw-bold">
-            <p style="margin: 0px">CLABE 072320008874665666</p>
+            <p style="margin: 0px">CLABE 058320000151513929</p>
           </div> 
           <div class="row fw-bold">
-            <p style="margin: 0px">Wenceslao Silva Valle</p>
+            <p style="margin: 0px">Weslaco Solar SA de CV</p>
           </div>
           <div class="row fw-bold">
             <p style="margin: 0px">
@@ -589,5 +604,6 @@ body {
         <div class="row pie"><img src="./images/piew.jpg" alt="piepag" width="100%" /></div> 
       </div>
     </div>
+
   </body>
 </html>

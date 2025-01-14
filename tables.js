@@ -1,68 +1,139 @@
-let jason, cotis, a=1;
-/* load data and create tables*/
+let jason, cotis, a=1, buttonState = 0, k, authL;
+//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
+/*Login*/
 
-fetch('datos.json')
+function authMain(){
+  k=1
+  modalContent=document.getElementById("modalCont");
+  modalTit=document.getElementById("staticBackdropLabel");
+  modalbutton=document.getElementById("btnPrim");
+  modalX=document.getElementById('xBtn');
+  modalClsBtn=document.getElementById('2aryBtn');
+  modalX.style.display='none';
+  modalClsBtn.style.display='none';
+  modalbutton.onclick= valLogin;
+  modalbutton.innerHTML= `Ingresar`
+  modalTit.innerHTML=`Ingreso a cotizador`;
+  modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
+                       </inpunt>
+                       <label for="pwdA">
+                       Introduce la contraseña de autorización:
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                       </inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+  myModal.show(); // Show the modal programmatically
+  
+}
+async function valLogin(){
+  const usrHtm=document.getElementById('usr');
+  const pwdHtm=document.getElementById('pwdA');
+  let usr=usrHtm.value.trim();
+  let pwd=pwdHtm.value.trim();
+  usr = usr === '' ? null : usr;  
+  pwd = pwd === '' ? null : pwd;
+  if(usr==null){
+    ifusrHtm.classList.add('is-invalid')
+    alert('EL campo Usuario no puede estar vacio')
+    return;
+  }
+  if(pwd==null){
+    ifusrHtm.classList.add('is-invalid')
+    alert('EL campo Contraseña no puede estar vacio')
+    return;
+  }
+  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
+  console.log('api url:',apiParamsUrl);
+  fetch(apiParamsUrl)
   .then(response => response.json())
-  .then(jsonData => {
-    // Data is now in the 'jason' global variable
+  .then(auth => {
+
+   console.log('auth:',auth);
+  if(auth.token==='invalid'){
+    if(k>=3){
+      modalContent.innerHTML=`<span style="color: red;">limite de intentos</span>`;
+      modalbutton.style.display='none';  
+    }else{
+    modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control is-invalid" placeholder="Usr">
+                       </inpunt>
+                       <label for="pwdA">
+                       Datos incorrectos
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control is-invalid">
+                       </inpunt>`;
+    k=k+1;
+    console.log('auth try:',k);
+   }
+  }
+  else if(auth.token!='invalid'&& auth.id!=null){  
+    
+   console.log('vend Id', auth.id); 
+   authL=auth.authL
+   let dispLevel;
+   if(authL===3){dispLevel='.dirW'}
+   if(authL===1){dispLevel='.comp'}
+   if(authL===0){
+    usrHtm.classList.add('is-invalid')
+    alert('Este usuario no tiene acceso')
+    return;}
+  console.log('displev',dispLevel);
+   const authdisp=document.querySelectorAll(dispLevel);
+   console.log('authdisp:');
+   console.log(authdisp);
+   authdisp.forEach(element=>{
+      element.style.display='block';
+   });
+   const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+   myModal.hide();
+
+  } 
+
+  }).catch(error => {
+    console.error('Error en auth de usuario:', error);
+  });
+
+    
+  
+}
+      
+const url=`api/bombSol/`;
+   fetch(url)
+  .then(response => response.json())
+  .then(jsonData => { 
     jason=jsonData
   })
   .catch(error => {
-    console.error('Error fetching data:', error);
+    console.error('Error fetching data bomSol:', error);
   });
- /* fetch('cotizacionesapiurl')
-  .then(response => response.json())
-  .then(jsonData => {
-    // Data is now in the 'json' global variable
-    cotis=jsonData
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-/*modificar a que sea void y mas bien usa la variable jason y en el html poner boton de ver bombas KOR on click KOR() despues
- hacer una funcion para cada conjunto iterativo de tablas que compartan columnas hacer que tenga un boton ocultar que cree la func como event listener para ocultarla
- 
- analizar para agregar boton que esconda las tablas de kor() 
-  const container = document.querySelector(".tcontainer");
 
-  // Create the button
-  const toggleButton = document.createElement("button");
-  toggleButton.textContent = "Hide/Show Tables";
-  toggleButton.addEventListener("click", () => {
-    const tables = container.querySelectorAll(".kor-table");
-    tables.forEach(table => {
-      table.style.display = table.style.display === "none" ? "table" : "none";
-    });
-  });
-  container.appendChild(toggleButton);
-
-  // ... rest of your table creation code ...
-
-  // Add the "kor-table" class to each table
-  const tables = container.querySelectorAll("table");
-  tables.forEach(table => {
-    table.classList.add("kor-table");
-  });
-}
- 
- */
   function KOR() {
-    const container = document.querySelector(".tcontainer");
+    const korBtn = document.getElementById('KORbtn');
+    if (buttonState === 0) {
+    const container = document.getElementById("KOR");
     const exiTab = document.getElementById('KOR1'); 
     if(!exiTab){
     jason.bomSol.bombas.forEach(bomba => {
    
       const table = document.createElement("table");
-      table.classList.add("table", "table-striped");
+      table.classList.add("table", "tKOR", "table-striped");
       table.id="KOR"+a;
     
   
-      // Create table header row
+      //  header row de la tabla
       const headerRow = document.createElement("tr");
       headerRow.innerHTML = `<th>Modelo</th><th>HP</th><th>Precio</th><th>Altura Máxima</th><th>Calibre</th>`;
       table.appendChild(headerRow);
   
-      // Loop through each pump for the current flow rate
+      // populate tablas 
       bomba.modelos.forEach((pump) => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -76,7 +147,7 @@ fetch('datos.json')
 
       });
       
-      // Add table caption (optional)
+      //table caption modificar para que se vea mas perro y este arriba de cada tabla 
       const caption = document.createElement("caption");
       caption.textContent = `Bombas de - ${bomba.lts}lt/s`;
       table.appendChild(caption);
@@ -85,6 +156,76 @@ fetch('datos.json')
       container.appendChild(table);
       a=a+1;
     });
-  } 
+  } else { //este pedo las muestra si ya existen y se escondieron con el boton
+    const taKOR = document.querySelectorAll('.tKOR');
+    taKOR.forEach(table=>{
+    table.style.display='block';
+    });
+  }
+  // control boton KOR
+  korBtn.textContent=`Esconder Bombas KOR`
+  buttonState = 1;
+  }else if (buttonState === 1) {
+  
+    korBtn.innerHTML=`Mostrar Bombas KOR` 
+    const taKOR = document.querySelectorAll('.tKOR');
+    taKOR.forEach(table=>{
+    table.style.display='none';
+    });
+    buttonState = 0; 
   }
   
+
+  }
+  
+async function genpass(){
+  fetch(`api/disc`)
+  .then(response => response.json())
+  .then(auth => {
+
+    const container = document.getElementById("gPass");
+    const p= document.createElement("inpunt");
+    const rewrite= document.getElementById("genP");
+    console.log(rewrite);
+    if(!rewrite){
+      console.log('if rewrite');
+     
+    p.id='genP'
+    p.classList.add('form-control');
+    p.type = 'text';
+    p.disabled = true; 
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'genP';
+    lbl.textContent = 'Autogenerado';
+    p.textContent=`OTP: ${auth.otp}`;
+    container.appendChild(p);
+    }
+    else{
+      console.log('else rewrite');
+      rewrite.textContent=`OTP: ${auth.otp}`;
+    }
+  })
+  .catch(error => {
+    console.error('Error generando otp:', error);
+  });
+
+}
+
+/*
+async function createUsr(){
+ 
+debe postear la data en node y al json 
+Access the vendedores array
+const vendedores = jsonData.vendedores;
+
+Get the length of the vendedores array
+const vendedoresLength = vendedores.length; 
+
+validar que el usr este asociado a un vendedor para hacer match con los ids aunque puede ser 
+mejor que cada user tenga su propio id y un sales red asociado o puede no tenerlo
+pero lo de arriba servira parra asignar el siguiente ID de user y puede ser que en el form pongamos un switch de
+asociar vendedor si esta apagado lee bombsol vendedores y postea uno nuevo con un  id y asociado a un user si no pues pasan bye
+
+
+}
+*/

@@ -16,7 +16,7 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
-       <script src="control.js"></script>
+    <script src="control.js"></script>
     <title>Autocotizador Weslaco</title>
     <style>
       .container {
@@ -39,7 +39,12 @@
     </style>
   </head>
   <body>
-    <script>window.onload = consultarTipoCambio()</script>
+    <script>
+      window.onload = function() {
+        consultarTipoCambio();
+        authMain();
+      };
+      </script>
     <!--Ventana modal-->
     <div
       class="modal fade"
@@ -56,7 +61,8 @@
             <h1 class="modal-title fs-5" id="staticBackdropLabel">
               Modal title
             </h1>
-            <button
+            <button style="display: none;"
+              id="xBtn"
               type="button"
               class="btn-close"
               data-bs-dismiss="modal"
@@ -65,7 +71,9 @@
           </div>
           <div id="modalCont" class="modal-body">...</div>
           <div class="modal-footer">
-            <button
+            <button 
+              id="2aryBtn"
+              style="display: none;"
               type="button"
               class="btn btn-secondary"
               data-bs-dismiss="modal"
@@ -119,7 +127,8 @@
       <div class="row">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-10 col-md-5 form-floating">
-            <input class="form-control" type="text" id="idCot" disabled placeholder="Identificador" value="Autogenerado" />
+            <input class="form-control" type="text" id="idCot" disabled placeholder="Identificador" 
+            value="Autogenerado" />
             <label for="idCot" >Identificador:</label>
           </div>
           <div class="col-5 d-md-block d-none"></div> 
@@ -165,6 +174,19 @@
         </div>
         <div class="col-5 d-md-block d-none"></div>  
       </div>
+      <div class="row">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-10 col-md-6 form-switch"><input class="form-check-input vLock" type="checkbox" id="checkDesA" /><label class="form-check-label" for="checkDesA">Descripcion Adicional?</label></div>
+        <div class="col-4 d-md-block d-none"></div> 
+      </div>
+      <div class="row descA">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-10 col-md-5 form-floating">
+          <textarea class="form-control vLock" id="descAdd" placeholder="Descripcion Adicional" style="display: none;" ></textarea>
+          
+        </div>
+        <div class="col-5 d-md-block d-none"></div> 
+      </div>
         <div class="row full bom">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-4 col-md-2 text-truncate">Corriente:</div>
@@ -185,8 +207,13 @@
       </div>  
       <div class="row bom full">
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select vLock" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
-        <div class="col-12 col-md-2"><span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">Descarga: 1 1/4"</span></div>
+        <div class="col-10 col-md-5">
+          <select class="form-select vLock" id="ltsSelect" onchange="maxCDT(), desc()"></select></div>
+        <div class="col-12 col-md-2">
+          <span Style="padding-left: 0px; color: rgb(0, 0, 0); align-items: start;" id="descr">
+            Descarga: 1 1/4"
+          </span>
+        </div>
         <div class="col-3 d-md-block d-none"></div>  
       </div>
       <div class="row bom full">
@@ -209,7 +236,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input type="text" class="form-control vLock" id="input7" placeholder="gastosind"/>
+          <input type="text" class="form-control" id="input7" placeholder="gastosind"/>
           <label for="input7">Gastos Indirectos:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div> 
@@ -278,7 +305,7 @@
       </div>
       <div class="row">   
         <div class="col-2 d-md-block d-none"></div>
-        <div class="col-10 col-md-5"><select class="form-select vLock" id="vendSelect"></select></div>
+        <div class="col-10 col-md-5"><input type="text" class="form-control" id="vendSelect" disabled></div>
         <div class="col-5 d-md-block d-none"></div>
       </div>
       <div class="row">

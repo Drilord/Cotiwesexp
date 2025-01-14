@@ -1,18 +1,116 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0;; 
+let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+
+function authMain(){
+  k=1
+  modalContent=document.getElementById("modalCont");
+  modalTit=document.getElementById("staticBackdropLabel");
+  modalbutton=document.getElementById("btnPrim");
+  modalX=document.getElementById('xBtn');
+  modalClsBtn=document.getElementById('2aryBtn');
+  modalX.style.display='none';
+  modalClsBtn.style.display='none';
+  modalbutton.onclick= valLogin;
+  modalbutton.innerHTML= `Ingresar`
+  modalTit.innerHTML=`Ingreso a cotizador`;
+  modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
+                       </inpunt>
+                       <label for="pwdA">
+                       Introduce la contraseña de autorización:
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                       </inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+  myModal.show(); // Show the modal programmatically
+  
+}
+async function valLogin(){
+  const usrHtm=document.getElementById('usr');
+  const pwdHtm=document.getElementById('pwdA');
+  let usr=usrHtm.value.trim();
+  let pwd=pwdHtm.value.trim();
+  usr = usr === '' ? null : usr;  
+  pwd = pwd === '' ? null : pwd;
+  if(usr==null){
+    usrHtm.classList.add('is-invalid')
+    alert('EL campo Usuario no puede estar vacio')
+    return;
+  }
+  if(pwd==null){
+    pwdHtm.classList.add('is-invalid')
+    alert('EL campo Contraseña no puede estar vacio')
+    return;
+  }
+
+  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
+  console.log('api url:',apiParamsUrl);
+  fetch(apiParamsUrl)
+  .then(response => response.json())
+  .then(auth => {
+
+   console.log('auth:',auth);
+  if(auth.token==='invalid'){
+    if(k>=3){
+      modalContent.innerHTML=`<span style="color: red;">limite de intentos</span>`;
+      modalbutton.style.display='none';  
+    }else{
+    modalContent.innerHTML=`
+                      <label for="usr">
+                       Usuario:
+                       </label>
+                       <input id="usr" type="text"  class="form-control is-invalid" placeholder="Usr">
+                       </inpunt>
+                       <label for="pwdA">
+                       Datos incorrectos
+                       </label>
+                       <input id="pwdA" type="password"  class="form-control is-invalid">
+                       </inpunt>`;
+    k=k+1;
+    console.log('auth try:',k);
+   }
+  }
+  else if(auth.token!='invalid'&& auth.id!=null){  
+    
+   console.log('vend Id', auth.id); 
+   repId=auth.id
+   if(repId==0){
+    usrHtm.classList.add('is-invalid')
+    alert('Este usuario no puede cotizar')
+    return;}
+   const vendSelect = selectVend(reps,repId);
+   const salesRep = document.getElementById('vendSelect');
+   salesRep.value= vendSelect?.nombre
+   pyct.rep= vendSelect;
+   const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+   myModal.hide();
+
+  } 
+
+  });
+
+    
+  
+}
+ 
 
 
-fetch('datos.json')
+fetch(`api/bombSol/`) 
   .then(response => response.json())
   .then(jsonData => {
-    
-    const vendSelect = document.getElementById('vendSelect');
+    reps=jsonData.bomSol.vendedores;
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
     const curra = document.getElementById('check6');
     const currd = document.getElementById('check7');
     const ltsSelect = document.getElementById('ltsSelect');
     const gasIndhtm = document.getElementById('input7');
+    const chkDesA = document.getElementById('checkDesA');
+    const DescAdd = document.getElementById('descAdd');
     srvcs=jsonData.bomSol.servicios;
     dataS=jsonData.bomSol.estructura;
     dataPan=jsonData.bomSol.solar;
@@ -38,13 +136,24 @@ currd.addEventListener('change', ()=>{
   
   });
 gasIndhtm.addEventListener('change',()=>{descValido=null;});
-jsonData.bomSol.vendedores.forEach(vend => {
+
+/*jsonData.bomSol.vendedores.forEach(vend => {
   const option = document.createElement('option');
   option.value = vend.nombre;
   option.text = vend.nombre;
   vendSelect.appendChild(option);
 });
-pyct.rep= selectVend(jsonData.bomSol.vendedores);
+   
+   pyct.rep= vendSelect;*/
+chkDesA.addEventListener('change', () => {
+  if(chkDesA.checked==true){
+        pyct.descAdd={flag:1,text:''};
+        DescAdd.style.display= 'block';    
+  }else{DescAdd.style.display= 'none';
+    pyct.descAdd={flag:0};
+  }
+  console.log(pyct.descAdd.flag);
+});
 
 CDT.addEventListener('blur', () => {
 selPump=datosBomba(jsonData);
@@ -57,9 +166,9 @@ temp.addEventListener('change', () => {
   console.log(pyct.motor);
   }
   });
-vendSelect.addEventListener('change', () => {
+/*vendSelect.addEventListener('change', () => {
   pyct.rep= selectVend(jsonData.bomSol.vendedores);
-  });
+  });*/
   
 ltsSelect.addEventListener('change', () => {
    selPump=datosBomba(jsonData);
@@ -142,11 +251,6 @@ async function consultarTipoCambio() {
 
 
 function validar() {
-/*const desc=document.getElementById('input7'); 
- if(desc.value<40){
-   if(descValido!=1){
-    authDescuen();
-    return;}}*/
   const nom=document.getElementById('input1'); 
   const loc=document.getElementById('input2');
   const km=document.getElementById('input3');
@@ -160,6 +264,7 @@ function validar() {
   const cotBtn=document.getElementById('acot'); 
   const tipCambio=document.getElementById('input0'); 
   const ltsS=document.getElementById('ltsSelect');
+  const descAdd=document.getElementById('descAdd');
 if(cdtFlg==1){
   alert('Combinacion de CDT y Volumen de Agua incorrecto!');
   cdt.classList.add('is-invalid');
@@ -168,6 +273,14 @@ if(cdtFlg==1){
   else{cdt.classList.remove('is-invalid');ltsS.classList.remove('is-invalid');}
 if (buttonState === 0) {
  //campos generales
+ if(pyct.descAdd.flag==1){
+   if(!descAdd.value || descAdd.value.trim()==''){
+          alert("desactive la casilla descripcion adicional");
+          descAdd.classList.add('is-invalid');
+          return;
+   }else{pyct.descAdd.text=descAdd.value ;} 
+ }
+ 
  if(!tipCambio.value || isNaN(tipCambio.value)){
   alert("ERROR CON EL TIPO DE CAMBIO")
   tipCambio.classList.add('is-invalid');
@@ -310,13 +423,7 @@ pyct.grua=parseInt(grua.value);
 
 if(parseInt(marg.value)<35){
  if(!descValido){authDesMod(); return;}
- if(descValido==0){   
-  alert('No puede continuar sin autorizacion para Gastos indirectos menor a 35%');
-  marg.classList.add('is-invalid');
-  authDesMod();
-  return;
-  }
-if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
+ if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
 }else{pyct.gasInd=parseInt(marg.value)}
 alert('ID generado: '+c+' puede Cotizar');
 cotBtn.style.display= 'block';
@@ -333,6 +440,8 @@ try {
   inputs.forEach(input => {
   input.disabled = true; 
   });
+  const disc = document.getElementById('input7')
+  disc.disabled = true;
   if(cotType==2){hpMan.disabled=true;}
   buttonState = 1; 
 } else if (buttonState === 1) {
@@ -343,7 +452,11 @@ try {
   const inputs = document.querySelectorAll('.vLock');
   inputs.forEach(input => {
   input.disabled = false; 
+
   });
+  const disc = document.getElementById('input7')
+  disc.disabled = false
+  descValido=false;
   if(cotType==2){hpMan.disabled=false;}
   
 }
@@ -390,7 +503,7 @@ function cotizar(){
     for (const month in pyct.ltsmes) {
     total += pyct.ltsmes[month];
     }             
-    const average = total / Object.keys(pyct.ltsmes).length;;
+    const average =Math.round(total / Object.keys(pyct.ltsmes).length);
     pyct.ltsAvg = average.toLocaleString('en-US');
     console.log("Average:", average); 
     saveToLocalStorage('cotData', selPump);
@@ -462,6 +575,8 @@ function equipBomb(){
  if (accsel.mxn === false || accsel.mxn === undefined) { 
     accsel.costo=((accsel.precio*tipCam*1.16)*0.48)*0.95;
     console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.costo); 
+  }else{accsel.costo=accsel.precio;
+        console.log("Acc: ", accsel.Accesorio,"  nuevo precio: ", accsel.costo);
   }
   });
   console.log(accsSel);
@@ -470,15 +585,20 @@ const cable = cals.find(item => item.calibre === selPump.calibre);
 const costo=((cable.precioMXN*1.16)*0.48)*0.95;
 const costoF=costo*(selPump.altMax+10)
 cable.costo=costoF
-console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
-
+console.log("sel pump cable calibre ",selPump.calibre," costo  mxn", cable.costo);
  // calacular el precio por metro del equipamiento  
  const tubo={tubo:accsSel[0].Accesorio, precio:accsSel[0].costo};
+ console.log("tubo0",tubo);
  const kit={kit:accsSel[1].Accesorio, precio:accsSel[1].costo};
+ console.log("kit ",kit);
  const check={check:accsSel[2].Accesorio, precio:accsSel[2].costo};
+ console.log("check ",check);
  tubo.precio= selPump.altMax/cants[0]*tubo.precio;
+ console.log("selPump.altmax ",selPump.altMax," cants[0]", cants[0],"tubo.precio",tubo.precio);
  kit.precio= cants[1]*kit.precio;
+ console.log("kit precio ",kit.precio);
  check.precio= check.precio*cants[2];
+ console.log("check precio ",check.precio);
 
  priceeq= Math.round((tubo.precio+kit.precio+check.precio+cable.costo)/selPump.altMax);
  console.log("precio por metro ", priceeq);
@@ -491,36 +611,65 @@ console.log("cable calibre ",selPump.calibre," costo  mxn", cable.costo);
 
 }
 function authDesMod(){
+  j=1;
   const desc=document.getElementById('input7');
   modalContent=document.getElementById("modalCont");
   modalTit=document.getElementById("staticBackdropLabel");
   modalbutton=document.getElementById("btnPrim");
-  
+  modal2button=document.getElementById("2aryBtn");
+  xBtn=document.getElementById("xBtn");
   modalbutton.onclick= valiDesc;
-  modalbutton.innerHTML= `Autorizar`
-  modalTit.innerHTML=`Authorizar descuento de ${desc.value}`;
-  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" id="inputPassword6" class="form-control"></inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // Get the modal instance
-  myModal.show(); // Show the modal programmatically
+  modalbutton.innerHTML= `Autorizar`;
+  modal2button.style.display='block';
+  xBtn.style.display='block';
+  modalTit.innerHTML=`Autorizar descuento de ${desc.value}%`;
+  modalContent.innerHTML=`<label for="pwd">Introduce la contraseña de autorización:</label><input id="pwd" type="password" class="form-control"></inpunt>`;
+  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop'));
+  myModal.show(); // Show modal
 }
-function valiDesc(){
+
+async function valiDesc(){
   const desc=document.getElementById('input7');
-  const pwd=document.getElementById('pwd').value;
-  if(pwd==="Weslaco123"){
-    alert("password correcto");
+  const pwdHtm=document.getElementById('pwd');
+  const pwd=pwdHtm.value.trim();
+    if(pwd===''){
+      pwdHtm.classList.add('is-invalid');
+      alert('El campo contraseña de autorización no puede estar vacio!')
+      return;
+    }
+  const apiParamsUrl = `api/disc/${pwd}`; 
+  console.log('api url:',apiParamsUrl);
+  fetch(apiParamsUrl)
+  .then(response => response.json())
+  .then(auth => {
+
+   console.log('auth:',auth.token);
+  if(auth.token==='invalid'){
+    if(j>=3){
+      modalContent.innerHTML=`<span style="color: red;">limite de intentos regargue la pagina</span>`;
+      modalbutton.style.display='none';
+      modal2button.style.display='none';
+      xBtn.style.display='none';
+      
+    }else{
+    pwdHtm.classList.add('is-invalid');
+    descValido=false;
+    j=j+1;
+    console.log('intento desc:',j);
+   }
+  }
+  else if(auth.token==='valid'){  
+    
+    alert("Descuento Autorizado");
     descValido=1;
     desc.disabled=true;
     const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
     myModal.hide();
-    return
-  }
-  else{alert("mal puñetas"); 
-    descValido=0;
-    return
-  }
-
-  
-  
+    
+   
+  } 
+  });
+ 
   /*esta funcion se debe llamar desde validar() si gastos ind es menor a 40  pide 
   auth modal password este pwd se podra cambiar en la UI de admin preparar 
   para sacarlo de datosjson por ahora solo poner un pwd  debe regresar descValido=1*/
@@ -781,14 +930,14 @@ function genID(selHp) {
   return finalID;
 }
 
-function selectVend(data){
-  const vend = document.getElementById('vendSelect').value;
+function selectVend(data,id){
+
  for(const rep of data){
-    if(rep.nombre == vend){
+    if(rep.id == id){
       return rep;
     }
   }
-  console.error(`No matching rep found for vendor: ${vend}`);
+  console.error(`No existe el vendedor con id: ${id}`);
   return null;
    
 }

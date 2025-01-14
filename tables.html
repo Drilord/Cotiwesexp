@@ -16,8 +16,13 @@
       crossorigin="anonymous"
     ></script>
        <script src="tables.js"></script>
+       
     <title>tablesact</title>
     <style>
+       .container {
+        background-color: rgb(236, 245, 225);
+        margin-top: 70px;
+      }
       .tcontainer {
         
         background-color: rgb(236, 245, 225);
@@ -44,8 +49,84 @@
     </style>
   </head>
   <body>
-    <div class="tcontainer">
-      <button onclick="KOR()">Mostrar Bombas KOR</button>
+    <script>
+      window.onload = function() {
+        authMain();
+      };
+      </script> 
+   <!--Ventana modal-->
+   <div
+   class="modal fade"
+   id="staticBackdrop"
+   data-bs-backdrop="static"
+   data-bs-keyboard="false"
+   tabindex="-1"
+   aria-labelledby="staticBackdropLabel"
+   aria-hidden="true"
+ >
+   <div class="modal-dialog modal-dialog-scrollable">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h1 class="modal-title fs-5" id="staticBackdropLabel">
+           Modal title
+         </h1>
+         <button style="display: none;"
+           id="xBtn"
+           type="button"
+           class="btn-close"
+           data-bs-dismiss="modal"
+           aria-label="Close"
+         ></button>
+       </div>
+       <div id="modalCont" class="modal-body">...</div>
+       <div class="modal-footer">
+         <button 
+           id="2aryBtn"
+           style="display: none;"
+           type="button"
+           class="btn btn-secondary"
+           data-bs-dismiss="modal"
+         >
+           Cerrar
+         </button>
+         <button id="btnPrim"
+           onclick=""
+           type="button"
+           class="btn btn-primary"
+         >
+           Actualizar
+         </button>
+       </div>
+     </div>
+   </div>
+ </div>
+ <!--Fin Ventana modal-->
+
+  <div class="container" id="ctnrPass">
+      <div class="row g-3">
+        <div class="col-2 d-md-block d-none"></div>
+        <div class="col-6 col-md-4"><h2 class="text-center text-truncate">Administracion</h2></div>
+        <div class="col-6 col-md-4 align-items-center">
+          <img src="./images/LOGO-WESLACO2.png" alt="logo" class="img-fluid" />
+        </div>
+        <div class="col-2 d-md-block d-none"></div>
+      </div>
+      <div class="row">
+      <div class="col-2 d-md-block d-none"></div>  
+      <div class="col-3"><button  style="display: none;"
+        class="btn btn-success align-items-center  dirW" onclick="genpass()">Autorizar descuento</button></div>
+      <div class="col-9 col-md-7 form-floating" id="gPass" ></div>
+      </div>
+    
+    <div class="row">
+      <div class="col-2 d-md-block d-none"></div>
+      <div class="col-10"><button  style="display: none;"
+        class="btn btn-success align-items-center  dirW comp" id="KORbtn" onclick="KOR()">Mostrar Bombas KOR</button></div>
     </div>
+    <div class="row ">
+      <div class="col-2 d-md-block d-none"></div>
+      <div class="col-10" id="KOR"></div>
+    </div>
+  </div> 
 </body>
 </html>
