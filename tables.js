@@ -3,33 +3,69 @@ let jason, cotis, a=1, buttonState = 0, k, authL;
 const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
 /*Login*/
 
-function authMain(){
-  k=1
-  modalContent=document.getElementById("modalCont");
-  modalTit=document.getElementById("staticBackdropLabel");
-  modalbutton=document.getElementById("btnPrim");
-  modalX=document.getElementById('xBtn');
-  modalClsBtn=document.getElementById('2aryBtn');
-  modalX.style.display='none';
-  modalClsBtn.style.display='none';
-  modalbutton.onclick= valLogin;
-  modalbutton.innerHTML= `Ingresar`
-  modalTit.innerHTML=`Ingreso a cotizador`;
-  modalContent.innerHTML=`
-                      <label for="usr">
-                       Usuario:
-                       </label>
-                       <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
-                       </inpunt>
-                       <label for="pwdA">
-                       Introduce la contraseña de autorización:
-                       </label>
-                       <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
-                       </inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
-  myModal.show(); // Show the modal programmatically
+async function authMain(){     
+  try {
+      const response = await fetch('api/vende/amoen')
+      if (response.ok) {
+        const data = await response.json(); 
+        console.log('vend Id dt', data?.userData?.id);
+        const auth = data?.userData 
+        console.log('vend Id at', auth.id); 
+        authL=auth.aLev
+        let dispLevel;
+        if(authL===3){dispLevel='.dirW'}
+        if(authL===1){dispLevel='.comp'}
+        if(authL===0){
+         alert('Este usuario no tiene acceso')
+         const UI=document.getElementById('main');
+         UI.style.display='none';
+         return;}
+       console.log('displev',dispLevel);
+        const authdisp=document.querySelectorAll(dispLevel);
+        console.log('authdisp:');
+        console.log(authdisp);
+        authdisp.forEach(element=>{
+           element.style.display='block';
+        });
+      } else if (response.status === 401) {
+         
+        k=1
+        modalContent=document.getElementById("modalCont");
+        modalTit=document.getElementById("staticBackdropLabel");
+        modalbutton=document.getElementById("btnPrim");
+        modalX=document.getElementById('xBtn');
+        modalClsBtn=document.getElementById('2aryBtn');
+        modalX.style.display='none';
+        modalClsBtn.style.display='none';
+        modalbutton.onclick= valLogin;
+        modalbutton.innerHTML= `Ingresar`
+        modalTit.innerHTML=`Ingreso a cotizador`;
+        modalContent.innerHTML=`
+                        <label for="usr">
+                         Usuario:
+                         </label>
+                         <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
+                         </inpunt>
+                         <label for="pwdA">
+                         Introduce la contraseña de autorización:
+                         </label>
+                         <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                         </inpunt>`;
+         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+         myModal.show(); // Show the modal programmatically    
+      } /*else {
+        // Other error handling
+        console.error('Error fetching protected data:', response.status);
+        displayError("An error occurred.");
+      }*/
+    } catch (error) {
+      console.error('Network error:', error);
+      displayError("A network error occurred.");
+    }
   
-}
+  
+    
+  }
 async function valLogin(){
   const usrHtm=document.getElementById('usr');
   const pwdHtm=document.getElementById('pwdA');
@@ -38,19 +74,27 @@ async function valLogin(){
   usr = usr === '' ? null : usr;  
   pwd = pwd === '' ? null : pwd;
   if(usr==null){
-    ifusrHtm.classList.add('is-invalid')
+    usrHtm.classList.add('is-invalid')
     alert('EL campo Usuario no puede estar vacio')
     return;
   }
   if(pwd==null){
-    ifusrHtm.classList.add('is-invalid')
+    usrHtm.classList.add('is-invalid')
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
-  console.log('api url:',apiParamsUrl);
-  fetch(apiParamsUrl)
-  .then(response => response.json())
+  const login= {p:pwd,u:usr}
+  fetch('api/vende',{
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},  
+    body: JSON.stringify(login)
+  })
+  .then(response => {
+    if (!response.ok) {
+      return response.json().then(err => {throw err});
+    }
+    return response.json(); 
+  })
   .then(auth => {
 
    console.log('auth:',auth);

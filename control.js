@@ -1,20 +1,39 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
-//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
 
-function authMain(){
-  k=1
-  modalContent=document.getElementById("modalCont");
-  modalTit=document.getElementById("staticBackdropLabel");
-  modalbutton=document.getElementById("btnPrim");
-  modalX=document.getElementById('xBtn');
-  modalClsBtn=document.getElementById('2aryBtn');
-  modalX.style.display='none';
-  modalClsBtn.style.display='none';
-  modalbutton.onclick= valLogin;
-  modalbutton.innerHTML= `Ingresar`
-  modalTit.innerHTML=`Ingreso a cotizador`;
-  modalContent.innerHTML=`
+
+
+async function authMain(){     
+try {
+    const response = await fetch('api/vende/amoen')
+    if (response.ok) {
+      const data = await response.json(); 
+      console.log('vend Id', data?.userData?.id); 
+      repId=data?.userData?.id
+      if(repId==0){
+    alert('Este usuario no puede cotizar');
+    const UI=document.getElementById('main');
+    UI.style.display='none';
+    return;}
+
+   const vendSelect = selectVend(reps,repId);
+   const salesRep = document.getElementById('vendSelect');
+   salesRep.value= vendSelect?.nombre
+   pyct.rep= vendSelect;
+    } else if (response.status === 401) {
+       
+      k=1
+      modalContent=document.getElementById("modalCont");
+      modalTit=document.getElementById("staticBackdropLabel");
+      modalbutton=document.getElementById("btnPrim");
+      modalX=document.getElementById('xBtn');
+      modalClsBtn=document.getElementById('2aryBtn');
+      modalX.style.display='none';
+      modalClsBtn.style.display='none';
+      modalbutton.onclick= valLogin;
+      modalbutton.innerHTML= `Ingresar`
+      modalTit.innerHTML=`Ingreso a cotizador`;
+      modalContent.innerHTML=`
                       <label for="usr">
                        Usuario:
                        </label>
@@ -25,8 +44,19 @@ function authMain(){
                        </label>
                        <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
                        </inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
-  myModal.show(); // Show the modal programmatically
+       const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+       myModal.show(); // Show the modal programmatically    
+    } /*else {
+      // Other error handling
+      console.error('Error fetching protected data:', response.status);
+      displayError("An error occurred.");
+    }*/
+  } catch (error) {
+    console.error('Network error:', error);
+    displayError("A network error occurred.");
+  }
+
+
   
 }
 async function valLogin(){
@@ -46,11 +76,19 @@ async function valLogin(){
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-
-  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
-  console.log('api url:',apiParamsUrl);
-  fetch(apiParamsUrl)
-  .then(response => response.json())
+   
+  const login= {p:pwd,u:usr}
+  fetch('api/vende',{
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},  
+    body: JSON.stringify(login)
+  })
+  .then(response =>{
+    if (!response.ok) {
+      return response.json().then(err => {throw err});
+    }
+    return response.json(); 
+  })
   .then(auth => {
 
    console.log('auth:',auth);
@@ -98,11 +136,13 @@ async function valLogin(){
 }
  
 
-
+(async () => {
+consultarTipoCambio();  
 fetch(`api/bombSol/`) 
   .then(response => response.json())
   .then(jsonData => {
     reps=jsonData.bomSol.vendedores;
+    authMain();
     const CDT = document.getElementById('input6');
     const temp = document.getElementById('check0');
     const curra = document.getElementById('check6');
@@ -115,7 +155,7 @@ fetch(`api/bombSol/`)
     dataS=jsonData.bomSol.estructura;
     dataPan=jsonData.bomSol.solar;
     eqBomba=jsonData.bomSol.equipamientoBomba;
-    estrucSol();          
+    estrucSol();     
 currType(6,jsonData.bomSol.bombas);
 curra.addEventListener('change', ()=>{
 const ltscurr=jsonData.bomSol.bombas
@@ -179,7 +219,7 @@ ltsSelect.addEventListener('change', () => {
   .catch(error => {
     console.error('Error fetching data:', error);
   });
-
+})(); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
 
 function cotTypVal(){
   const bombeo = document.getElementById("check1");
