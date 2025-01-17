@@ -137,7 +137,7 @@ async function valLogin(){
  
 
 (async () => {
-consultarTipoCambio();  
+ 
 fetch(`api/bombSol/`) 
   .then(response => response.json())
   .then(jsonData => {
@@ -264,7 +264,8 @@ function cotTypVal(){
 /*consultar tipo de cambio*/
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token=";
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd";
-async function consultarTipoCambio() {
+consultarTipoCambio(banxicourl,token); 
+async function consultarTipoCambio(banxicourl,token) {
   try{
       const response = await fetch(banxicourl+token);
       if(!response.ok){
