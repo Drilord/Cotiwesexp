@@ -1,7 +1,90 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 
-
+(async () => {
+ 
+  fetch(`api/bombSol/`) 
+    .then(response => response.json())
+    .then(jsonData => {
+      reps=jsonData.bomSol.vendedores;
+      authMain();
+      const CDT = document.getElementById('input6');
+      const temp = document.getElementById('check0');
+      const curra = document.getElementById('check6');
+      const currd = document.getElementById('check7');
+      const ltsSelect = document.getElementById('ltsSelect');
+      const gasIndhtm = document.getElementById('input7');
+      const chkDesA = document.getElementById('checkDesA');
+      const DescAdd = document.getElementById('descAdd');
+      srvcs=jsonData.bomSol.servicios;
+      dataS=jsonData.bomSol.estructura;
+      dataPan=jsonData.bomSol.solar;
+      eqBomba=jsonData.bomSol.equipamientoBomba;
+      estrucSol();     
+  currType(6,jsonData.bomSol.bombas);
+  curra.addEventListener('change', ()=>{
+  const ltscurr=jsonData.bomSol.bombas
+  currType(6,ltscurr);
+  selPump=datosBomba(jsonData);
+  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+  maxCDT();
+  console.log('en change listen de Alt',pumpCurrT);
+  
+  });
+  currd.addEventListener('change', ()=>{
+    const ltscurr=jsonData.bomSol.bombasKolosal
+    currType(7,ltscurr);
+    selPump=datosBomba(jsonData);
+    if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+    maxCDT();
+    console.log('en change listen de Alt',pumpCurrT);
+    
+    });
+  gasIndhtm.addEventListener('change',()=>{descValido=null;});
+  
+  /*jsonData.bomSol.vendedores.forEach(vend => {
+    const option = document.createElement('option');
+    option.value = vend.nombre;
+    option.text = vend.nombre;
+    vendSelect.appendChild(option);
+  });
+     
+     pyct.rep= vendSelect;*/
+  chkDesA.addEventListener('change', () => {
+    if(chkDesA.checked==true){
+          pyct.descAdd={flag:1,text:''};
+          DescAdd.style.display= 'block';    
+    }else{DescAdd.style.display= 'none';
+      pyct.descAdd={flag:0};
+    }
+    console.log(pyct.descAdd.flag);
+  });
+  
+  CDT.addEventListener('blur', () => {
+  selPump=datosBomba(jsonData);
+  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
+  
+  });
+  temp.addEventListener('change', () => {
+    if(selPump && pumpCurrT==1){
+    motorBomba(jsonData,selPump.hp);
+    console.log(pyct.motor);
+    }
+    });
+  /*vendSelect.addEventListener('change', () => {
+    pyct.rep= selectVend(jsonData.bomSol.vendedores);
+    });*/
+    
+  ltsSelect.addEventListener('change', () => {
+     selPump=datosBomba(jsonData);
+     if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+     console.log(pyct.motor); 
+    });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  })(); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
 
 async function authMain(){     
 try {
@@ -46,11 +129,7 @@ try {
                        </inpunt>`;
        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
        myModal.show(); // Show the modal programmatically    
-    } /*else {
-      // Other error handling
-      console.error('Error fetching protected data:', response.status);
-      displayError("An error occurred.");
-    }*/
+    } 
   } catch (error) {
     console.error('Network error:', error);
     displayError("A network error occurred.");
@@ -134,93 +213,51 @@ async function valLogin(){
     
   
 }
- 
 
-(async () => {
- 
-fetch(`api/bombSol/`) 
-  .then(response => response.json())
-  .then(jsonData => {
-    reps=jsonData.bomSol.vendedores;
-    authMain();
-    const CDT = document.getElementById('input6');
-    const temp = document.getElementById('check0');
-    const curra = document.getElementById('check6');
-    const currd = document.getElementById('check7');
-    const ltsSelect = document.getElementById('ltsSelect');
-    const gasIndhtm = document.getElementById('input7');
-    const chkDesA = document.getElementById('checkDesA');
-    const DescAdd = document.getElementById('descAdd');
-    srvcs=jsonData.bomSol.servicios;
-    dataS=jsonData.bomSol.estructura;
-    dataPan=jsonData.bomSol.solar;
-    eqBomba=jsonData.bomSol.equipamientoBomba;
-    estrucSol();     
-currType(6,jsonData.bomSol.bombas);
-curra.addEventListener('change', ()=>{
-const ltscurr=jsonData.bomSol.bombas
-currType(6,ltscurr);
-selPump=datosBomba(jsonData);
-if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-maxCDT();
-console.log('en change listen de Alt',pumpCurrT);
-
-});
-currd.addEventListener('change', ()=>{
-  const ltscurr=jsonData.bomSol.bombasKolosal
-  currType(7,ltscurr);
-  selPump=datosBomba(jsonData);
-  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-  maxCDT();
-  console.log('en change listen de Alt',pumpCurrT);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MAPS API
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let service;
+let predefinedAddress = { lat: 20.6639, lng: -103.4571 }; // weslaco
+function initMap() {
   
-  });
-gasIndhtm.addEventListener('change',()=>{descValido=null;});
+   const input = document.getElementById("input2");
+   const autocomplete = new google.maps.places.Autocomplete(input);
 
-/*jsonData.bomSol.vendedores.forEach(vend => {
-  const option = document.createElement('option');
-  option.value = vend.nombre;
-  option.text = vend.nombre;
-  vendSelect.appendChild(option);
-});
-   
-   pyct.rep= vendSelect;*/
-chkDesA.addEventListener('change', () => {
-  if(chkDesA.checked==true){
-        pyct.descAdd={flag:1,text:''};
-        DescAdd.style.display= 'block';    
-  }else{DescAdd.style.display= 'none';
-    pyct.descAdd={flag:0};
-  }
-  console.log(pyct.descAdd.flag);
-});
-
-CDT.addEventListener('blur', () => {
-selPump=datosBomba(jsonData);
-if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
-
-});
-temp.addEventListener('change', () => {
-  if(selPump && pumpCurrT==1){
-  motorBomba(jsonData,selPump.hp);
-  console.log(pyct.motor);
-  }
+  autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and
+          // pressed the Enter key, or the Place Details request failed.
+          window.alert("No details available for input: '" + place.name + "'");
+          return;
+      }
+      calculateDistance(place.formatted_address);
   });
-/*vendSelect.addEventListener('change', () => {
-  pyct.rep= selectVend(jsonData.bomSol.vendedores);
-  });*/
-  
-ltsSelect.addEventListener('change', () => {
-   selPump=datosBomba(jsonData);
-   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-   console.log(pyct.motor); 
-  });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-})(); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
+}
 
+function calculateDistance(destinationAddress) {
+  const service = new google.maps.DistanceMatrixService();
+  const request = {
+      origins: [predefinedAddress],
+      destinations: [destinationAddress],
+      travelMode: google.maps.TravelMode.DRIVING, // BICYCLING, WALKING, TRANSIT
+      unitSystem: google.maps.UnitSystem.METRIC, // metric para kilometros
+  };
+
+  service.getDistanceMatrix(request, (response, status) => {
+      if (status === "OK") {
+          const distance = response.rows[0].elements[0].distance.value / 1000; // Convert meters to kilometers
+          document.getElementById("input3").value = Math.round(distance.toFixed(2)); // Display with 2 decimal places
+
+      } else {
+          console.error("Error al calcular la distancia:", status);
+          document.getElementById("input3").value = "Error";
+      }
+  });
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function cotTypVal(){
   const bombeo = document.getElementById("check1");
   const solar = document.getElementById("check2");

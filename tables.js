@@ -1,7 +1,5 @@
 let jason, cotis, a=1, buttonState = 0, k, authL;
-//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
-const hostUrl = "localhost"; /*/ "172.31.3.233"; //*/
-/*Login*/
+
 
 async function authMain(){     
   try {
@@ -51,13 +49,9 @@ async function authMain(){
                          </label>
                          <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
                          </inpunt>`;
-         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+         const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer modal instance
          myModal.show(); // Show the modal programmatically    
-      } /*else {
-        // Other error handling
-        console.error('Error fetching protected data:', response.status);
-        displayError("An error occurred.");
-      }*/
+      } 
     } catch (error) {
       console.error('Network error:', error);
       displayError("A network error occurred.");
