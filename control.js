@@ -130,15 +130,15 @@ try {
       modalTit.innerHTML=`Ingreso a cotizador`;
       modalContent.innerHTML=`
                       <label for="usr">
-                       Usuario:
-                       </label>
-                       <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
-                       </inpunt>
-                       <label for="pwdA">
-                       Introduce la contraseña de autorización:
-                       </label>
-                       <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
-                      <div class="form-check">
+                         Usuario:
+                         </label>
+                         <input id="usr" type="text"  class="form-control" placeholder="Usuario:">
+                         </input>
+                         <label for="pwdA">
+                         Introduce la contraseña de autorización:
+                         </label>
+                         <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                         <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="showPassword">
                         <label class="form-check-label" for="showPassword">
                           Revelar Contraseña
@@ -147,6 +147,16 @@ try {
                       
                        </inpunt>`;
                        showPass();
+                       document.getElementById('pwdA').addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                          valLogin();
+                        }
+                      });
+                      document.getElementById('usr').addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                          valLogin();
+                        }
+                      });            
        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
        myModal.show(); // Show the modal programmatically    
     } 
@@ -212,13 +222,31 @@ async function valLogin(){
                       <label for="usr">
                        Usuario:
                        </label>
-                       <input id="usr" type="text"  class="form-control is-invalid" placeholder="Usr">
-                       </inpunt>
+                       <input id="usr" type="text"  class="form-control is-invalid" placeholder="Usuario:">
+                       </input>
                        <label for="pwdA">
                        Datos incorrectos
                        </label>
-                       <input id="pwdA" type="password"  class="form-control is-invalid">
-                       </inpunt>`;
+                       <input id="pwdA" type="password"  class="form-control is-invalid" placeholder="Contraseña:">
+                       <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showPassword">
+                        <label class="form-check-label" for="showPassword">
+                          Revelar Contraseña
+                        </label>
+                      </div>
+                      
+                       </input>`;
+                       showPass();
+                       document.getElementById('pwdA').addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                          valLogin();
+                        }
+                      });
+                      document.getElementById('usr').addEventListener('keypress', function (e) {
+                        if (e.key === 'Enter') {
+                          valLogin();
+                        }
+                      });            
     k=k+1;
     console.log('auth try:',k);
    }
