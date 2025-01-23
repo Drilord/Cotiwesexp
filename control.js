@@ -1,7 +1,7 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+let AL,selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 
-(async () => {
+document.addEventListener('DOMContentLoaded', async () => {
  
   fetch(`api/bombSol/`) 
     .then(response => response.json())
@@ -59,6 +59,11 @@ let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0
     }
     console.log(pyct.descAdd.flag);
   });
+  document.getElementById('descAdd').addEventListener('input', function () {
+    if (this.value.length >= 280) {
+      alert('Has alcanzado el límite máximo de caracteres.');
+    }
+  });
   
   CDT.addEventListener('blur', () => {
   selPump=datosBomba(jsonData);
@@ -84,7 +89,7 @@ let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0
     .catch(error => {
       console.error('Error fetching data:', error);
     });
-  })(); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
+  }); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
 
 async function authMain(){     
 try {
@@ -93,6 +98,13 @@ try {
       const data = await response.json(); 
       console.log('vend Id', data?.userData?.id); 
       repId=data?.userData?.id
+      AL=data?.userData?.aLev
+        let dispLevel;
+        if(AL===3){dispLevel='.dirW'}
+        const authdisp=document.querySelectorAll(dispLevel);
+        authdisp.forEach(element=>{
+          element.style.display='block';
+       });
       if(repId==0){
     alert('Este usuario no puede cotizar');
     const UI=document.getElementById('main');
@@ -126,18 +138,38 @@ try {
                        Introduce la contraseña de autorización:
                        </label>
                        <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showPassword">
+                        <label class="form-check-label" for="showPassword">
+                          Revelar Contraseña
+                        </label>
+                      </div>
+                      
                        </inpunt>`;
+                       showPass();
        const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
        myModal.show(); // Show the modal programmatically    
     } 
   } catch (error) {
     console.error('Network error:', error);
-    displayError("A network error occurred.");
+    alert("A network error occurred.");
   }
 
 
   
 }
+function showPass(){
+                        const shck=document.getElementById('showPassword');
+                        const pwdInput = document.getElementById('pwdA');
+                        shck.addEventListener('change', ()=> {
+                          
+                          if (shck.checked) {
+                            pwdInput.type = 'text';
+                          } else {
+                            pwdInput.type = 'password';
+                          }
+                        });
+}            
 async function valLogin(){
   const usrHtm=document.getElementById('usr');
   const pwdHtm=document.getElementById('pwdA');
@@ -195,6 +227,13 @@ async function valLogin(){
     
    console.log('vend Id', auth.id); 
    repId=auth.id
+   AL=auth?.authL ? auth.authL : 0;
+        let dispLevel;
+        if(AL===3){dispLevel='.dirW'}
+        const authdisp=document.querySelectorAll(dispLevel);
+        authdisp.forEach(element=>{
+          element.style.display='block';
+       });
    if(repId==0){
     usrHtm.classList.add('is-invalid')
     alert('Este usuario no puede cotizar')
@@ -746,6 +785,9 @@ async function valiDesc(){
     
    
   } 
+
+  
+
   });
  
   /*esta funcion se debe llamar desde validar() si gastos ind es menor a 40  pide 
@@ -753,7 +795,41 @@ async function valiDesc(){
   para sacarlo de datosjson por ahora solo poner un pwd  debe regresar descValido=1*/
 }
 
+async function genpass(){
 
+  fetch(`api/disc`)
+  .then(response => response.json())
+  .then(auth => {
+
+    const container = document.getElementById("gPass");
+    const p= document.createElement("input");
+    const rewrite= document.getElementById("genP");
+    console.log(rewrite);
+    if(!rewrite){
+      console.log('if rewrite');
+     
+    p.id='genP'
+    p.classList.add('form-control');
+    p.type = 'text';
+    p.placeholder='otp';
+    p.disabled = true; 
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'genP';
+    lbl.textContent = 'OTP:';
+    p.value=`${auth.otp}`;
+    container.appendChild(p);
+    container.appendChild(lbl);
+    }
+    else{
+      console.log('else rewrite');
+      rewrite.value=`${auth.otp}`;
+    }
+  })
+  .catch(error => {
+    console.error('Error generando otp:', error);
+  });
+
+}
 
 function motorBomba(data,hp){  
 let datosMot={} ;
@@ -1034,6 +1110,9 @@ function desc(){
   descr.textContent = `Desc.: ${legendText}"`;
   return legendText;
 }
+
+
+
 
 function saveToLocalStorage(key, value) {
   try {
