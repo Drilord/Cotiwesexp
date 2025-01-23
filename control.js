@@ -1,20 +1,134 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
-//  en la linea de abajo borrar pimer  /* para localhost ponerlo para ip 
+let AL,selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
 
-function authMain(){
-  k=1
-  modalContent=document.getElementById("modalCont");
-  modalTit=document.getElementById("staticBackdropLabel");
-  modalbutton=document.getElementById("btnPrim");
-  modalX=document.getElementById('xBtn');
-  modalClsBtn=document.getElementById('2aryBtn');
-  modalX.style.display='none';
-  modalClsBtn.style.display='none';
-  modalbutton.onclick= valLogin;
-  modalbutton.innerHTML= `Ingresar`
-  modalTit.innerHTML=`Ingreso a cotizador`;
-  modalContent.innerHTML=`
+document.addEventListener('DOMContentLoaded', async () => {
+ 
+  fetch(`api/bombSol/`) 
+    .then(response => response.json())
+    .then(jsonData => {
+      reps=jsonData.bomSol.vendedores;
+      authMain();
+      const CDT = document.getElementById('input6');
+      const temp = document.getElementById('check0');
+      const curra = document.getElementById('check6');
+      const currd = document.getElementById('check7');
+      const ltsSelect = document.getElementById('ltsSelect');
+      const gasIndhtm = document.getElementById('input7');
+      const chkDesA = document.getElementById('checkDesA');
+      const DescAdd = document.getElementById('descAdd');
+      srvcs=jsonData.bomSol.servicios;
+      dataS=jsonData.bomSol.estructura;
+      dataPan=jsonData.bomSol.solar;
+      eqBomba=jsonData.bomSol.equipamientoBomba;
+      estrucSol();     
+  currType(6,jsonData.bomSol.bombas);
+  curra.addEventListener('change', ()=>{
+  const ltscurr=jsonData.bomSol.bombas
+  currType(6,ltscurr);
+  selPump=datosBomba(jsonData);
+  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+  maxCDT();
+  console.log('en change listen de Alt',pumpCurrT);
+  
+  });
+  currd.addEventListener('change', ()=>{
+    const ltscurr=jsonData.bomSol.bombasKolosal
+    currType(7,ltscurr);
+    selPump=datosBomba(jsonData);
+    if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+    maxCDT();
+    console.log('en change listen de Alt',pumpCurrT);
+    
+    });
+  gasIndhtm.addEventListener('change',()=>{descValido=null;});
+  
+  /*jsonData.bomSol.vendedores.forEach(vend => {
+    const option = document.createElement('option');
+    option.value = vend.nombre;
+    option.text = vend.nombre;
+    vendSelect.appendChild(option);
+  });
+     
+     pyct.rep= vendSelect;*/
+  chkDesA.addEventListener('change', () => {
+    if(chkDesA.checked==true){
+          pyct.descAdd={flag:1,text:''};
+          DescAdd.style.display= 'block';    
+    }else{DescAdd.style.display= 'none';
+      pyct.descAdd={flag:0};
+    }
+    console.log(pyct.descAdd.flag);
+  });
+  document.getElementById('descAdd').addEventListener('input', function () {
+    if (this.value.length >= 280) {
+      alert('Has alcanzado el límite máximo de caracteres.');
+    }
+  });
+  
+  CDT.addEventListener('blur', () => {
+  selPump=datosBomba(jsonData);
+  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
+  
+  });
+  temp.addEventListener('change', () => {
+    if(selPump && pumpCurrT==1){
+    motorBomba(jsonData,selPump.hp);
+    console.log(pyct.motor);
+    }
+    });
+  /*vendSelect.addEventListener('change', () => {
+    pyct.rep= selectVend(jsonData.bomSol.vendedores);
+    });*/
+    
+  ltsSelect.addEventListener('change', () => {
+     selPump=datosBomba(jsonData);
+     if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+     console.log(pyct.motor); 
+    });
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+    });
+  }); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
+
+async function authMain(){     
+try {
+    const response = await fetch('api/vende/amoen')
+    if (response.ok) {
+      const data = await response.json(); 
+      console.log('vend Id', data?.userData?.id); 
+      repId=data?.userData?.id
+      AL=data?.userData?.aLev
+        let dispLevel;
+        if(AL===3){dispLevel='.dirW'}
+        const authdisp=document.querySelectorAll(dispLevel);
+        authdisp.forEach(element=>{
+          element.style.display='block';
+       });
+      if(repId==0){
+    alert('Este usuario no puede cotizar');
+    const UI=document.getElementById('main');
+    UI.style.display='none';
+    return;}
+
+   const vendSelect = selectVend(reps,repId);
+   const salesRep = document.getElementById('vendSelect');
+   salesRep.value= vendSelect?.nombre
+   pyct.rep= vendSelect;
+    } else if (response.status === 401) {
+       
+      k=1
+      modalContent=document.getElementById("modalCont");
+      modalTit=document.getElementById("staticBackdropLabel");
+      modalbutton=document.getElementById("btnPrim");
+      modalX=document.getElementById('xBtn');
+      modalClsBtn=document.getElementById('2aryBtn');
+      modalX.style.display='none';
+      modalClsBtn.style.display='none';
+      modalbutton.onclick= valLogin;
+      modalbutton.innerHTML= `Ingresar`
+      modalTit.innerHTML=`Ingreso a cotizador`;
+      modalContent.innerHTML=`
                       <label for="usr">
                        Usuario:
                        </label>
@@ -24,11 +138,38 @@ function authMain(){
                        Introduce la contraseña de autorización:
                        </label>
                        <input id="pwdA" type="password"  class="form-control" placeholder="Contraseña:">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="showPassword">
+                        <label class="form-check-label" for="showPassword">
+                          Revelar Contraseña
+                        </label>
+                      </div>
+                      
                        </inpunt>`;
-  const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
-  myModal.show(); // Show the modal programmatically
+                       showPass();
+       const myModal = new bootstrap.Modal(document.getElementById('staticBackdrop')); // traer la modal instance
+       myModal.show(); // Show the modal programmatically    
+    } 
+  } catch (error) {
+    console.error('Network error:', error);
+    alert("A network error occurred.");
+  }
+
+
   
 }
+function showPass(){
+                        const shck=document.getElementById('showPassword');
+                        const pwdInput = document.getElementById('pwdA');
+                        shck.addEventListener('change', ()=> {
+                          
+                          if (shck.checked) {
+                            pwdInput.type = 'text';
+                          } else {
+                            pwdInput.type = 'password';
+                          }
+                        });
+}            
 async function valLogin(){
   const usrHtm=document.getElementById('usr');
   const pwdHtm=document.getElementById('pwdA');
@@ -46,11 +187,19 @@ async function valLogin(){
     alert('EL campo Contraseña no puede estar vacio')
     return;
   }
-
-  const apiParamsUrl = `api/vende/${usr}/${pwd}`; 
-  console.log('api url:',apiParamsUrl);
-  fetch(apiParamsUrl)
-  .then(response => response.json())
+   
+  const login= {p:pwd,u:usr}
+  fetch('api/vende',{
+    method:'POST',
+    headers:{'Content-Type': 'application/json'},  
+    body: JSON.stringify(login)
+  })
+  .then(response =>{
+    if (!response.ok) {
+      return response.json().then(err => {throw err});
+    }
+    return response.json(); 
+  })
   .then(auth => {
 
    console.log('auth:',auth);
@@ -78,6 +227,13 @@ async function valLogin(){
     
    console.log('vend Id', auth.id); 
    repId=auth.id
+   AL=auth?.authL ? auth.authL : 0;
+        let dispLevel;
+        if(AL===3){dispLevel='.dirW'}
+        const authdisp=document.querySelectorAll(dispLevel);
+        authdisp.forEach(element=>{
+          element.style.display='block';
+       });
    if(repId==0){
     usrHtm.classList.add('is-invalid')
     alert('Este usuario no puede cotizar')
@@ -96,91 +252,51 @@ async function valLogin(){
     
   
 }
- 
 
-
-fetch(`api/bombSol/`) 
-  .then(response => response.json())
-  .then(jsonData => {
-    reps=jsonData.bomSol.vendedores;
-    const CDT = document.getElementById('input6');
-    const temp = document.getElementById('check0');
-    const curra = document.getElementById('check6');
-    const currd = document.getElementById('check7');
-    const ltsSelect = document.getElementById('ltsSelect');
-    const gasIndhtm = document.getElementById('input7');
-    const chkDesA = document.getElementById('checkDesA');
-    const DescAdd = document.getElementById('descAdd');
-    srvcs=jsonData.bomSol.servicios;
-    dataS=jsonData.bomSol.estructura;
-    dataPan=jsonData.bomSol.solar;
-    eqBomba=jsonData.bomSol.equipamientoBomba;
-    estrucSol();          
-currType(6,jsonData.bomSol.bombas);
-curra.addEventListener('change', ()=>{
-const ltscurr=jsonData.bomSol.bombas
-currType(6,ltscurr);
-selPump=datosBomba(jsonData);
-if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-maxCDT();
-console.log('en change listen de Alt',pumpCurrT);
-
-});
-currd.addEventListener('change', ()=>{
-  const ltscurr=jsonData.bomSol.bombasKolosal
-  currType(7,ltscurr);
-  selPump=datosBomba(jsonData);
-  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-  maxCDT();
-  console.log('en change listen de Alt',pumpCurrT);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//MAPS API
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+let service;
+let predefinedAddress = { lat: 20.6639, lng: -103.4571 }; // weslaco
+function initMap() {
   
+   const input = document.getElementById("input2");
+   const autocomplete = new google.maps.places.Autocomplete(input);
+
+  autocomplete.addListener("place_changed", () => {
+      const place = autocomplete.getPlace();
+      if (!place.geometry) {
+          // User entered the name of a Place that was not suggested and
+          // pressed the Enter key, or the Place Details request failed.
+          window.alert("No details available for input: '" + place.name + "'");
+          return;
+      }
+      calculateDistance(place.formatted_address);
   });
-gasIndhtm.addEventListener('change',()=>{descValido=null;});
+}
 
-/*jsonData.bomSol.vendedores.forEach(vend => {
-  const option = document.createElement('option');
-  option.value = vend.nombre;
-  option.text = vend.nombre;
-  vendSelect.appendChild(option);
-});
-   
-   pyct.rep= vendSelect;*/
-chkDesA.addEventListener('change', () => {
-  if(chkDesA.checked==true){
-        pyct.descAdd={flag:1,text:''};
-        DescAdd.style.display= 'block';    
-  }else{DescAdd.style.display= 'none';
-    pyct.descAdd={flag:0};
-  }
-  console.log(pyct.descAdd.flag);
-});
+function calculateDistance(destinationAddress) {
+  const service = new google.maps.DistanceMatrixService();
+  const request = {
+      origins: [predefinedAddress],
+      destinations: [destinationAddress],
+      travelMode: google.maps.TravelMode.DRIVING, // BICYCLING, WALKING, TRANSIT
+      unitSystem: google.maps.UnitSystem.METRIC, // metric para kilometros
+  };
 
-CDT.addEventListener('blur', () => {
-selPump=datosBomba(jsonData);
-if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
+  service.getDistanceMatrix(request, (response, status) => {
+      if (status === "OK") {
+          const distance = response.rows[0].elements[0].distance.value / 1000; // Convert meters to kilometers
+          document.getElementById("input3").value = Math.round(distance.toFixed(2)); // Display with 2 decimal places
 
-});
-temp.addEventListener('change', () => {
-  if(selPump && pumpCurrT==1){
-  motorBomba(jsonData,selPump.hp);
-  console.log(pyct.motor);
-  }
+      } else {
+          console.error("Error al calcular la distancia:", status);
+          document.getElementById("input3").value = "Error";
+      }
   });
-/*vendSelect.addEventListener('change', () => {
-  pyct.rep= selectVend(jsonData.bomSol.vendedores);
-  });*/
-  
-ltsSelect.addEventListener('change', () => {
-   selPump=datosBomba(jsonData);
-   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-   console.log(pyct.motor); 
-  });
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-
-
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function cotTypVal(){
   const bombeo = document.getElementById("check1");
   const solar = document.getElementById("check2");
@@ -224,7 +340,8 @@ function cotTypVal(){
 /*consultar tipo de cambio*/
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token=";
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd";
-async function consultarTipoCambio() {
+consultarTipoCambio(banxicourl,token); 
+async function consultarTipoCambio(banxicourl,token) {
   try{
       const response = await fetch(banxicourl+token);
       if(!response.ok){
@@ -668,6 +785,9 @@ async function valiDesc(){
     
    
   } 
+
+  
+
   });
  
   /*esta funcion se debe llamar desde validar() si gastos ind es menor a 40  pide 
@@ -675,7 +795,41 @@ async function valiDesc(){
   para sacarlo de datosjson por ahora solo poner un pwd  debe regresar descValido=1*/
 }
 
+async function genpass(){
 
+  fetch(`api/disc`)
+  .then(response => response.json())
+  .then(auth => {
+
+    const container = document.getElementById("gPass");
+    const p= document.createElement("input");
+    const rewrite= document.getElementById("genP");
+    console.log(rewrite);
+    if(!rewrite){
+      console.log('if rewrite');
+     
+    p.id='genP'
+    p.classList.add('form-control');
+    p.type = 'text';
+    p.placeholder='otp';
+    p.disabled = true; 
+    const lbl = document.createElement('label');
+    lbl.htmlFor = 'genP';
+    lbl.textContent = 'OTP:';
+    p.value=`${auth.otp}`;
+    container.appendChild(p);
+    container.appendChild(lbl);
+    }
+    else{
+      console.log('else rewrite');
+      rewrite.value=`${auth.otp}`;
+    }
+  })
+  .catch(error => {
+    console.error('Error generando otp:', error);
+  });
+
+}
 
 function motorBomba(data,hp){  
 let datosMot={} ;
@@ -956,6 +1110,9 @@ function desc(){
   descr.textContent = `Desc.: ${legendText}"`;
   return legendText;
 }
+
+
+
 
 function saveToLocalStorage(key, value) {
   try {

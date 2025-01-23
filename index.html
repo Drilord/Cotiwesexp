@@ -17,6 +17,8 @@
       crossorigin="anonymous"
     ></script>
     <script src="control.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBEswtJGkC3gU9Zp-2yiqdf35EaIe3zidY&libraries=places&callback=initMap&loading=async"></script>
+    
     <title>Autocotizador Weslaco</title>
     <style>
       .container {
@@ -39,13 +41,7 @@
     </style>
   </head>
   <body>
-    <script>
-      window.onload = function() {
-        consultarTipoCambio();
-        authMain();
-      };
-      </script>
-    <!--Ventana modal-->
+     <!--Ventana modal-->
     <div
       class="modal fade"
       id="staticBackdrop"
@@ -94,7 +90,13 @@
     <!--Fin Ventana modal-->
 
     <!--Ventana Principal-->
-    <div class="container">
+    <div class="container" id="main">
+      <div class="row">
+        <div class="col-2 d-md-block d-none"></div>  
+          <div class="col-3"><button  style="display: none;"
+            class="btn btn-success align-items-center  dirW" onclick="genpass()">Autorizar descuento</button></div>
+          <div class="col-9 col-md-7 form-floating" id="gPass" ></div>
+      </div>
       <div class="row g-3">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-6 col-md-4"><h2 class="text-center text-truncate">Autocotizador</h2></div>
@@ -169,7 +171,7 @@
       <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <input class="form-control vLock" type="text" id="input3" placeholder="Kilometros" />
+          <input class="form-control vLock" type="text" id="input3" placeholder="Kilometros" disabled/>
           <label for="input3">Kilometros:</label>
         </div>
         <div class="col-5 d-md-block d-none"></div>  
@@ -182,7 +184,8 @@
       <div class="row descA">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
-          <textarea class="form-control vLock" id="descAdd" placeholder="Descripcion Adicional" style="display: none;" ></textarea>
+          <textarea class="form-control vLock" id="descAdd" placeholder="Descripcion Adicional" style="display: none;" maxlength="280"></textarea>
+       
           
         </div>
         <div class="col-5 d-md-block d-none"></div> 

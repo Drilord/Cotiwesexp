@@ -1,1 +1,0 @@
-sudo cp -r -f /home/ubuntu/Weslaco/* /var/www/html/weslaco

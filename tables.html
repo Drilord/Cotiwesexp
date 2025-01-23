@@ -43,8 +43,34 @@
               background-color: rgb(179, 226, 169);
               border-radius: 5px;
               border-color: black;
-              color: rgb(33, 56, 33);
+              color: #213821;
               width: 90%;
+      }
+      table, th, td {
+        border: 1px solid #037503;
+      }
+      body {
+        font-size: 16px;
+      }
+      @media (max-width: 1200px) {
+        body {
+          font-size: 15px;
+        }
+      }
+      @media (max-width: 992px) {
+        body {
+          font-size: 14px;
+        }
+      }
+      @media (max-width: 768px) {
+        body {
+          font-size: 13px;
+        }
+      }
+      @media (max-width: 576px) {
+        body {
+          font-size: 12px;
+        }
       }
     </style>
   </head>
@@ -101,32 +127,216 @@
    </div>
  </div>
  <!--Fin Ventana modal-->
+ <div class="container" id="main">
+  <div class="row dirW comp" style="display: none;">
+    <!-- Button trigger Menu -->
+    <button type="button" class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#sideMenu">
+      Abrir Menu
+    </button>
 
-  <div class="container" id="ctnrPass">
-      <div class="row g-3">
-        <div class="col-2 d-md-block d-none"></div>
-        <div class="col-6 col-md-4"><h2 class="text-center text-truncate">Administracion</h2></div>
-        <div class="col-6 col-md-4 align-items-center">
-          <img src="./images/LOGO-WESLACO2.png" alt="logo" class="img-fluid" />
+    <!-- Side Menu -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sideMenu" aria-labelledby="sideMenuLabel">
+      <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="sideMenuLabel">Menu</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+      
+      
+      <div class="accordion-item dirW" style="display: none;">
+        <h2 class="accordion-header" id="headingUsuarios">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUsuarios" aria-expanded="false" aria-controls="collapseUsuarios">
+            Usuarios
+          </button>
+        </h2>
+        <div id="collapseUsuarios" class="accordion-collapse collapse" aria-labelledby="headingUsuarios" data-bs-parent="#sideMenuAccordion">
+          <div class="accordion-body">
+            <ul>
+              <li><a href="#">Agregar</a></li>
+              <li><a href="#">Modificar</a></li>
+            </ul>
+          </div>
         </div>
-        <div class="col-2 d-md-block d-none"></div>
       </div>
-      <div class="row">
-      <div class="col-2 d-md-block d-none"></div>  
-      <div class="col-3"><button  style="display: none;"
-        class="btn btn-success align-items-center  dirW" onclick="genpass()">Autorizar descuento</button></div>
-      <div class="col-9 col-md-7 form-floating" id="gPass" ></div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingBombas">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBombas" aria-expanded="false" aria-controls="collapseBombas">
+            Bombas
+          </button>
+        </h2>
+        <div id="collapseBombas" class="accordion-collapse collapse" aria-labelledby="headingBombas" data-bs-parent="#sideMenuAccordion">
+          <div class="accordion-body">
+            <ul>
+              <li>
+                <h4 class="accordion-header" id="headingAlterna">
+                  <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAlterna" aria-expanded="false" aria-controls="collapseAlterna" data-bs-parent="#collapseBombas">
+                    Alterna
+                  </a>
+                </h4>
+                <div id="collapseAlterna" class="accordion-collapse collapse" aria-labelledby="headingAlterna" data-bs-parent="#sideMenuAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>
+                        <h5 class="accordion-header" id="headingKOR">
+                          <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKOR" aria-expanded="false" aria-controls="collapseKOR" data-bs-parent="#collapseAlterna">
+                            KOR
+                          </a>
+                        </h5>
+                        <div id="collapseKOR" class="accordion-collapse collapse" aria-labelledby="headingKOR" data-bs-parent="#sideMenuAccordion">
+                          <div class="accordion-body">
+                            <ul id = "korUl">
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <h4 class="accordion-header" id="headingDirecta">
+                  <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDirecta" aria-expanded="false" aria-controls="collapseDirecta" data-bs-parent="#collapseBombas">
+                    Directa
+                  </a>
+                </h4>
+                <div id="collapseDirecta" class="accordion-collapse collapse" aria-labelledby="headingDirecta" data-bs-parent="#sideMenuAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li>
+                        <h5 class="accordion-header" id="headingKolosal">
+                          <a id="KolosMenuA" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseKolosal" aria-expanded="false" aria-controls="collapseKolosal" data-bs-parent="#collapseDirecta">
+                            Kolosal
+                          </a>
+                        </h5>
+                        <div id="collapseKolosal" class="accordion-collapse collapse" aria-labelledby="headingKolosal" data-bs-parent="#sideMenuAccordion">
+                          <div class="accordion-body">
+                            <ul id="kolosUl">
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <h4 class="accordion-header" id="headingEquipo">
+                  <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEquipo" aria-expanded="false" aria-controls="collapseEquipo" data-bs-parent="#collapseBombas">
+                    Equipo
+                  </a>
+                </h4>
+                <div id="collapseEquipo" class="accordion-collapse collapse" aria-labelledby="headingEquipo" data-bs-parent="#sideMenuAccordion">
+                  <div class="accordion-body">
+                    <ul>
+                      <li><a id="cableMenu" href="#">Cable</a></li>
+                      <li>
+                        <h5 class="accordion-header" id="headingDescarga">
+                          <a class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDescarga" aria-expanded="false" aria-controls="collapseDescarga" data-bs-parent="#collapseEquipo">
+                            Descarga
+                          </a>
+                        </h5>
+                        <div id="collapseDescarga" class="accordion-collapse collapse" aria-labelledby="headingDescarga" data-bs-parent="#sideMenuAccordion">
+                          <div class="accordion-body">
+                            <ul id="eqBombaUl">
+                             
+                            </ul>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-    
-    <div class="row">
-      <div class="col-2 d-md-block d-none"></div>
-      <div class="col-10"><button  style="display: none;"
-        class="btn btn-success align-items-center  dirW comp" id="KORbtn" onclick="KOR()">Mostrar Bombas KOR</button></div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingMotores">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotores" aria-expanded="false" aria-controls="collapseMotores">
+            Motores
+          </button>
+        </h2>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingSolar">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolar" aria-expanded="false" aria-controls="collapseSolar">
+        Solar
+          </button>
+        </h2>
+        <div id="collapseSolar" class="accordion-collapse collapse" aria-labelledby="headingSolar" data-bs-parent="#sideMenuAccordion">
+          <div class="accordion-body">
+        <ul>
+          <li><a href="#">Gabinetes</a></li>
+          <li><a href="#">Variadores</a></li>
+          <li><a href="#">Paneles</a></li>
+        </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingServicios">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServicios" aria-expanded="false" aria-controls="collapseServicios">
+            Servicios
+          </button>
+        </h2>
+        <div class="accordion-item dirW" style="display: none;">
+          <h2 class="accordion-header" id="headingCotizaciones">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCotizaciones" aria-expanded="false" aria-controls="collapseCotizaciones">
+              Cotizaciones
+            </button>
+          </h2>
+          
+        </div>
+      </div>
+      <style>
+        .accordion-body ul {
+          list-style-type: none;
+          padding-left: 0;
+        }
+        .accordion-body ul li  {
+          border: 1px solid #213821;
+          padding: 5px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+        }
+        .accordion-item h2  {
+          border: 1px solid #213821;
+          padding: 5px;
+          margin-bottom: 5px;
+          border-radius: 5px;
+        }
+      </style>
+      </div>
     </div>
-    <div class="row ">
-      <div class="col-2 d-md-block d-none"></div>
-      <div class="col-10" id="KOR"></div>
+    <div class="col-10">
+      <!-- Existing content -->
+      <div class="container" id="ctnrPass">
+        <div class="row g-3">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-6 col-md-4"><h2 class="text-center text-truncate">Administracion</h2></div>
+          <div class="col-6 col-md-4 align-items-center">
+            <img src="./images/LOGO-WESLACO2.png" alt="logo" class="img-fluid" />
+          </div>
+          <div class="col-2 d-md-block d-none"></div>
+        </div>
+        <div class="row">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-10"></div>
+        </div>
+        <div class="row ">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-10" id="paTablas"></div>
+        </div>
+        <div class="row ">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-10" id="paSubTablas"></div>
+        </div>
+      </div> 
     </div>
-  </div> 
+  </div>
+</div>
 </body>
 </html>

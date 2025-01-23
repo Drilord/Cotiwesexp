@@ -279,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
         bomOnly.forEach((elmt) => {
           elmt.style.display = "none";
         });
-        descP.innerText = ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
+        descP.innerText = ` Instalación de bomba para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S, descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en ${loc}. ${descFlag==1 ? descAddT : ''}`;
       }
       if (proyT == 2) {
         //poner solo solar
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", () => {
           elmt.style.display = "none";
         });
 
-        descP.innerText = `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
+        descP.innerText = `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
           cantPan.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }${strPaDes}<br>${desMatElec}`;
       }
       if (proyT == 3) {
-        descP.innerText = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en la localidad de ${loc}. ${descFlag==1 ? descAddT : ''}`;
+        descP.innerText = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
           cantPan.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
@@ -311,10 +311,19 @@ document.addEventListener("DOMContentLoaded", () => {
         
 
       window.addEventListener("load", () => {
-        const myChart = echarts.init(document.getElementById("myChart"));
+        const chartContainer = document.getElementById("myChart");
+        chartContainer.style.width = "100%";
+        chartContainer.style.height = "365px";
+        chartContainer.style.margin = "0 auto";
+        const myChart = echarts.init(chartContainer);
         const valores = Object.values(graData);
         const valorMaximo = Math.max(...valores);
         const option = {
+          grid: {
+            left: '100px',
+            right: '100px'
+            
+          },
           tooltip: {
             trigger: "axis",
             axisPointer: {
@@ -349,10 +358,10 @@ document.addEventListener("DOMContentLoaded", () => {
               type: "value",
               name: "Lts por día Promedio",
               min: 0,
-              max: valorMaximo,
-              interval: Math.ceil(valorMaximo / 10),
+              max: Math.round(valorMaximo),
+              interval: Math.round(Math.ceil(valorMaximo / 10)),
               axisLabel: {
-                formatter: "{value} lts/día",
+                formatter: "{value}lts/dia",
               },
             },
             {
@@ -362,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
               max: 10,
               interval: 1,
               axisLabel: {
-                formatter: "{value} kWh/m2/día",
+                formatter: "{value} kWh/m2/dia",
               },
             },
           ],
@@ -375,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   return value + " lts/día";
                 },
               },
-              data: Object.values(graData),
+              data: Object.values(graData).map(Math.round),
               itemStyle: {
                 color: "#4c9d2f",
               },
