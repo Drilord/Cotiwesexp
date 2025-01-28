@@ -263,7 +263,7 @@ if(ul=='korUl'|| ul=='kolosUl'){
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
-addUsr(ul){
+function addUsr(ul){
   clearTables(["tKOR","tEQ"]);
   const container=document.getElementById('addUsrDiv');
   container.style.display='flex';
