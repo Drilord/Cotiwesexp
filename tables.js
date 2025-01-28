@@ -211,7 +211,7 @@ async function bomSol() {
       pupUls('','gabM');
       pupUls('','varM');
       pupUls('','panM');
-      popUls('','addUsr');
+      pupUls('','addUsr');
       ;
 
   }
