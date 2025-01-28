@@ -280,6 +280,8 @@ function addUsr(ul){
         table.remove();
       });
     });
+    const container=document.getElementById('addUsrDiv');
+  container.style.display='none';
   }
   function createTables (anchor,ul){
     if(ul!='panelT'){
