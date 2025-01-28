@@ -13,3 +13,15 @@ console.log(cotPrb);
 cotPrb.push({ id: "002", nombre: "Pames", cdt: cdt, vendedor: vendedor });
 
 console.log(cotPrb);
+
+/*
+newUsr.vend={
+    nombre: tuVarNom,
+    tel: tuVarTel,
+    mail: tuVarMail
+  };
+  newUsr.usr={
+    mail: tuVarUsr,
+      pw: tuVarPw,
+      auth: TuVarAuthLv,    
+  };  */

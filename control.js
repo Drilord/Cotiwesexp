@@ -543,6 +543,7 @@ if (isNaN(marg.value)) {
     return;
   } else{grua.classList.remove('is-invalid');}
    selPump.eqBomba=equipBomb();
+   pyct.solar= datosSolar(parseFloat(selPump.hp),parseInt('0'),parseInt(proPozo.value))
    //alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
    c = genID(selPump.hp);
  } 
@@ -657,8 +658,8 @@ function cotizar(){
     
     pyct.manObr = srvcs[0].precio;
     pyct.matElec = srvcs[1].precio;
-    pyct.hpDia = srvcs[2].precio;
-    pyct.preKm = srvcs[3].precio;
+    pyct.hpDia = srvcs[3].precio;
+    pyct.preKm = srvcs[2].precio;
     pyct.hosp3per = srvcs[4].precio;
     pyct.com3per = srvcs[5].precio;
     pyct.km = parseInt(document.getElementById('input3').value);

@@ -140,8 +140,8 @@ document.addEventListener("DOMContentLoaded", () => {
         cotTot =
           (precioPump ?? 0) +
           (precioEq ?? 0) +
-          (preMatElec ??
-            0) /*+(servPrice ?? 0) Bombeo va a llevar otro tipo de mano de obra */;
+          (preMatElec ??0)+
+          ((servPrice ?? 0)/2); // Bombeo va a llevar la mitad
       }
       console.log(precioPan ?? 0);
       console.log(preGabi ?? 0);
