@@ -360,6 +360,10 @@ function cotTypVal(){
           Solar.forEach(element => {
             element.style.display= 'flex'; });
             const cantidadxHP = dataPan.paneles.cantidadxHP;
+            const exitSel = document.getElementById('solHp')
+            if(exitSel){
+              exitSel.style.display='flex';
+            }else{
             const selectElement = document.createElement('select');
             selectElement.id='solHp';
             selectElement.classList.add('form-select', 'text-right')
@@ -376,12 +380,13 @@ function cotTypVal(){
             hpDiv.insertBefore(selectElement, hpLabel);
             
             voltSel(cantidadxHP,selectElement.value);
-           
+            selectElement.addEventListener('change',()=>{
+              voltSel(cantidadxHP,selectElement.value);
+                         
+            });
+          }
           document.getElementById("hp").style.display = 'none';
-          selectElement.addEventListener('change',()=>{
-            voltSel(cantidadxHP,selectElement.value);
-                       
-          });
+          
             console.log("Solo Solar"); 
 
 
