@@ -211,6 +211,7 @@ async function bomSol() {
       pupUls('','gabM');
       pupUls('','varM');
       pupUls('','panM');
+      popUls('','addUsr');
       ;
 
   }
@@ -253,7 +254,20 @@ if(ul=='korUl'|| ul=='kolosUl'){
       createTables('paneles','panelT');
       //createPanTab();
     }); 
+  }else if(ul=='addUsr'){
+    Ul.addEventListener('click', () =>{ 
+      addUsr(ul);
+     
+    }); 
   }
+}
+
+/////////////////////////////////////////////////////Add user////////////////////////////////////////
+addUsr(ul){
+  clearTables(["tKOR","tEQ"]);
+  const container=document.getElementById('addUsrDiv');
+  container.style.display='flex';
+
 }
 
   
