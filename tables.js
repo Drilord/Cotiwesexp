@@ -324,14 +324,16 @@ function addUsr(ul){
     caption.textContent = captntext
     caption.style.fontWeight = 'bold';
     table.appendChild(caption);
-    table.appendChild(caption);
     if (ul == 'panelT') {
       const keysArray = Object.keys(tabArr[anchor]);
-      delete tabArr[anchor][keysArray[keysArray.length - 1]];
-      keys = Object.keys(tabArr[anchor]);
-      tabArr[anchor] = [tabArr[anchor]];
-      console.log('tabArr panelT',tabArr);
+      const tabArrCopy = { ...tabArr[anchor] };
+      delete tabArrCopy[keysArray[keysArray.length - 1]];
+      keys = Object.keys(tabArrCopy);
+      tabArr[anchor] = [tabArrCopy];
+      console.log('tabArr panelT', tabArr);
     } else {
+      console.log('ul', ul);
+      console.log('tabArr', tabArr);
       keys = Object.keys(tabArr[anchor][0]);
     }
     const headerRow = createHeaders(keys);
