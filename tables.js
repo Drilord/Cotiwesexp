@@ -257,16 +257,25 @@ if(ul=='korUl'|| ul=='kolosUl'){
   }else if(ul=='addUsr'){
     Ul.addEventListener('click', () =>{ 
       addUsr(ul);
-     
     }); 
+    const vendCont = document.getElementById('addVenDiv');
+    const vFlag =  document.getElementById('chkVend');  
+    vFlag.addEventListener('change',()=>{
+      
+    });
   }
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
 function addUsr(ul){
   clearTables(["tKOR","tEQ"]);
-  const container=document.getElementById('addUsrDiv');
-  container.style.display='flex';
+  const usrCont=document.getElementById('addUsrDiv');
+  usrCont.style.display='flex';
+  const vendCont = document.getElementById('addVenDiv');
+    const vFlag =  document.getElementById('chkVend');  
+    vFlag.addEventListener('change',()=>{
+      vendCont.style.display= vFlag.checked? 'flex':'none'
+    });
 
 }
 
@@ -699,7 +708,7 @@ if (Object.keys(changes).length === 0) {
       };
       console.log('Changes:', changes);
        fetch('api/cmbeos',{
-    method:'POST',
+    method:'PUT',
     headers:{'Content-Type': 'application/json'},  
     body: JSON.stringify(changes)
   }).then(response =>{
