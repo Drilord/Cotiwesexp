@@ -86,12 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("diasObr ", diasObr);
       console.log("gastras ", gasTras);
       //precios
+      const stPrecioE= !myObject.pyct.struct.precioE?1:myObject.pyct.struct?.precioE
       const strEPrice = Math.round(
-        myObject.pyct.struct?.precioE * cantPan?.cantidadPaneles * gasInd
+        stPrecioE * cantPan?.cantidadPaneles * gasInd
       );
       const SstrEPrice = strEPrice.toLocaleString("en-US");
       const strPPrice = Math.round(
-        myObject.pyct.struc?.precioP * cantPan?.cantidadPaneles * gasInd
+        myObject.pyct.struct?.precioP * cantPan?.cantidadPaneles * gasInd
       );
       const SstrPPrice = strPPrice.toLocaleString("en-US");
       const precioPan = Math.round(
@@ -126,6 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
           (servPrice ?? 0) +
           (strPPrice ?? 0) +
           (strType != 3 ? strEPrice ?? 0 : 0);
+          console.log('strtype',strType);
+          console.log('strEprice',strEPrice);
+          console.log('strEprice',SstrPPrice);
+          
       }
       /*solar*/ if (proyT == 2) {
         cotTot =
@@ -134,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
           (preMatElec ?? 0) +
           (servPrice ?? 0) +
           (strPPrice ?? 0) +
-          (!strType == 3 ? strEPrice ?? 0 : 0);
+          (strType !== 3 ? strEPrice ?? 0 : 0);
       }
       /*bombe*/ if (proyT == 1) {
         cotTot =
