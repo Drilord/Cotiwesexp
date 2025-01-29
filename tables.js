@@ -181,19 +181,22 @@ async function valLogin(){
 }
 /////////////////////////////////////////Menu fill///////////////////////////////////////////
 
-
-(async()=>{
-const url=`api/bombSol/`;
-   fetch(url)
-  .then(response => response.json())
-  .then(jsonData => { 
-    jason=jsonData;
-    PopulateMenus();
-  })
-  .catch(error => {
+async function bomSol() {
+  const url = `api/bombSol/`;
+  try {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
     console.error('Error fetching data bombSol:', error);
-  });})();
-  
+  }
+}
+
+(async () => {
+  jason = await bomSol(); 
+  PopulateMenus();
+})();
+
   function PopulateMenus(){ // Use const for function expressions
     
       KORpump = jason.bomSol.bombas;
@@ -202,7 +205,14 @@ const url=`api/bombSol/`;
       pupUls(KORpump,'korUl');
       pupUls(kolosP,'kolosUl');
       pupUls(eqBomba,'eqBombaUl');
-    
+      pupUls('','cableMenu');
+      pupUls('','motoresM');
+      pupUls('','servicesM')
+      pupUls('','gabM');
+      pupUls('','varM');
+      pupUls('','panM');
+      pupUls('','addUsr');
+      ;
 
   }
 function pupUls(data,ul){
@@ -228,7 +238,35 @@ if(ul=='korUl'|| ul=='kolosUl'){
       li.appendChild(a);
       Ul.appendChild(li);
   });
+  }else if(ul=='cableMenu'){
+    Ul.addEventListener('click', () =>  createTables('cableSumergible',ul)); 
+  }else if(ul=='motoresM'){
+    Ul.addEventListener('click', () =>  createTables('motores',ul)); 
+  }else if(ul=='servicesM'){
+    Ul.addEventListener('click', () =>  createTables('servicios',ul)); 
+  }else if(ul=='gabM'){
+    Ul.addEventListener('click', () =>  createTables('gabinetesArmados',ul)); 
+  }else if(ul=='varM'){
+    Ul.addEventListener('click', () =>  createTables('variadorSolar',ul)); 
+  }else if(ul=='panM'){
+    Ul.addEventListener('click', () => { 
+      createTables('cantidadxHP',ul);
+      createTables('paneles','panelT');
+      //createPanTab();
+    }); 
+  }else if(ul=='addUsr'){
+    Ul.addEventListener('click', () =>{ 
+      addUsr(ul);
+     
+    }); 
   }
+}
+
+/////////////////////////////////////////////////////Add user////////////////////////////////////////
+function addUsr(ul){
+  clearTables(["tKOR","tEQ"]);
+  const container=document.getElementById('addUsrDiv');
+  container.style.display='flex';
 
 }
 
@@ -242,7 +280,113 @@ if(ul=='korUl'|| ul=='kolosUl'){
         table.remove();
       });
     });
+    const container=document.getElementById('addUsrDiv');
+  container.style.display='none';
   }
+  function createTables (anchor,ul){
+    if(ul!='panelT'){
+    clearTables(["tKOR","tEQ"]);
+    }
+    const tabCont= ul== 'panM'? 'paSubTablas': 'paTablas';
+    const container = document.getElementById(tabCont);
+    let captntext, tId, tabArr,keys;
+    tId = anchor;
+    if(ul=='cableMenu'){
+      tabArr  = jason.bomSol.equipamientoBomba
+      captntext = 'Cable Sumergible';
+      
+    }else if(ul=='motoresM'){
+      tabArr  = jason.bomSol
+      captntext = 'Motores KOR';
+      
+    }else if(ul=='servicesM'){
+      tabArr  = jason.bomSol
+      captntext = 'Servicios y Viaticos';
+    }else if(ul=='gabM'){
+      tabArr  = jason.bomSol.solar
+      captntext = 'Gabinetes Armados';
+    }else if(ul=='varM'){
+      tabArr  = jason.bomSol.solar
+      captntext = 'Variadores Solares';
+    }else if(ul=='panM'){
+      tabArr  = jason.bomSol.solar.paneles
+      captntext = 'Paneles por HP';
+    }else if(ul=='panelT'){
+      tabArr  = jason.bomSol.solar
+      captntext = 'Tipo de Panel';
+    }
+
+    /////create table
+    const table = document.createElement("table");
+    table.classList.add("table", "tKOR","table-success", "table-striped");
+    table.id = tId;
+    const caption = document.createElement("caption");
+    caption.textContent = captntext
+    caption.style.fontWeight = 'bold';
+    table.appendChild(caption);
+    if (ul == 'panelT') {
+      const keysArray = Object.keys(tabArr[anchor]);
+      const tabArrCopy = { ...tabArr[anchor] };
+      delete tabArrCopy[keysArray[keysArray.length - 1]];
+      keys = Object.keys(tabArrCopy);
+      tabArr[anchor] = [tabArrCopy];
+      console.log('tabArr panelT', tabArr);
+    } else {
+      console.log('ul', ul);
+      console.log('tabArr', tabArr);
+      keys = Object.keys(tabArr[anchor][0]);
+    }
+    const headerRow = createHeaders(keys);
+    table.appendChild(headerRow);
+  
+    const tbody = document.createElement("tbody");
+    tabArr[anchor].forEach((tRow) => {
+      const row = document.createElement("tr");
+      Object.entries(tRow).forEach(([key,value])=> {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      row.appendChild(cell);
+      });
+      ////////////////////////////////////////////////CORREGIR para ser comun para toda tabla 
+      const editCell = document.createElement("td");
+      const editButton = document.createElement("button");
+      editButton.classList.add("btn", "btn-success", "editbtn");
+      editButton.textContent = "Editar";
+      editButton.addEventListener("click", () => {
+      const origRow = row.cloneNode(true);
+      if(ul=='cableMenu'){
+      modelo = String(tRow.calibre);
+      }
+      if(ul=='motoresM'){
+      modelo = String(tRow.id);
+      }
+      if(ul=='servicesM'){
+      modelo = tRow.servicio;
+      }
+      if(ul=='gabM'){
+      modelo = String(tRow.id);
+      }
+      if(ul=='varM'){
+      modelo = String(tRow.id);
+      }
+      if(ul=='panM'){
+      modelo = String(tRow.id);
+      }
+      if(ul=='panelT'){
+      modelo = tRow.tipoPaneles;
+      }
+      editRow(modelo,tId,ul,keys,origRow);
+      });
+      editCell.appendChild(editButton);
+      row.appendChild(editCell);
+      tbody.appendChild(row);
+    });
+    table.appendChild(tbody);
+    container.appendChild(table);
+
+  
+  }
+
   function createHeaders(keys) {
     const headerRow = document.createElement("tr");
     keys.forEach(key => {
@@ -268,7 +412,7 @@ if(ul=='korUl'|| ul=='kolosUl'){
     eqBomba=jason.bomSol.equipamientoBomba;
     const container = document.getElementById("paSubTablas");
           const table = document.createElement("table");
-      table.classList.add("table", "tEQ", "table-striped");
+      table.classList.add("table", "tEQ","table-success", "table-striped");
       table.id='eqBomba'+pump.Modelo;
       const caption = document.createElement("caption");
       caption.textContent = `Equipo de bomba: ${pump.Modelo} - Descasrga ${descE}" `;
@@ -287,6 +431,7 @@ if(ul=='korUl'|| ul=='kolosUl'){
       table.appendChild(headerRow);
       const accDisp = eqBomba.descarga[descE];
       const accsSel = accDisp.filter(accesorio => ids.includes(accesorio.id));
+      const tbody = document.createElement("tbody");
       accsSel.forEach((acc) => {
          const row = document.createElement("tr");
           const cell = document.createElement("td");
@@ -299,8 +444,9 @@ if(ul=='korUl'|| ul=='kolosUl'){
           cell3.textContent = cants[ids.indexOf(acc.id)];
           row.appendChild(cell3);
           
-         table.appendChild(row);  
+         tbody.appendChild(row);  
       });
+      table.appendChild(tbody);
 
       
       container.appendChild(table);
@@ -318,7 +464,7 @@ function crtShwEq(ancVal,dat,ul){
     return acc;
   }, {});
   const table = document.createElement("table");
-  table.classList.add("table", "tKOR", "table-striped");
+  table.classList.add("table", "tKOR","table-success", "table-striped");
   const tId = ancVal;
   table.id = tId;
   const caption = document.createElement("caption");
@@ -328,6 +474,7 @@ function crtShwEq(ancVal,dat,ul){
   const keys = Object.keys(tabArr[ancVal][0]);
     const headerRow = createHeaders(keys);
       table.appendChild(headerRow);
+      const tbody = document.createElement("tbody");
       tabArr[ancVal].forEach((acc) => {
         const row = document.createElement("tr");
         Object.entries(acc).forEach(([key,value])=> {
@@ -346,8 +493,9 @@ function crtShwEq(ancVal,dat,ul){
         });
         editCell.appendChild(editButton);
         row.appendChild(editCell);
-        table.appendChild(row);
+        tbody.appendChild(row);
       });
+      table.appendChild(tbody);
       container.appendChild(table);
 }
 
@@ -359,7 +507,7 @@ function crtShwEq(ancVal,dat,ul){
       const container = document.getElementById("paTablas");
       const tabArr = dat.find(arrT =>  arrT.rangMod=== modRang);
       const table = document.createElement("table");
-      table.classList.add("table", "tKOR", "table-striped");
+      table.classList.add("table", "tKOR","table-success", "table-striped");
       table.id =modRang;
       const caption = document.createElement("caption");
       caption.textContent = `Bombas Serie - ${tabArr.rangMod} - ${tabArr.lts} lt/s - Descarga ${tabArr.descarga}" `;
@@ -371,26 +519,26 @@ function crtShwEq(ancVal,dat,ul){
       table.appendChild(headerRow);
 
       // populate tablas 
+      const tbody = document.createElement("tbody");
       tabArr.modelos.forEach((pump) => {
         const row = document.createElement("tr");
         Object.entries(pump).forEach(([key,value])=> {
           const cell = document.createElement("td");
           if(key=='equipB'){
-            const editEqBtn = document.createElement("button");
-            editEqBtn.classList.add("btn", "btn-success", "verEq");
-            editEqBtn.textContent = `Ver Equipo`;
-            editEqBtn.addEventListener("click", () => {
-            showEq(pump,tabArr.descarga);
-            });
-            cell.appendChild(editEqBtn);
-            row.appendChild(cell);
+        const editEqBtn = document.createElement("button");
+        editEqBtn.classList.add("btn", "btn-success", "verEq");
+        editEqBtn.textContent = `Ver Equipo`;
+        editEqBtn.addEventListener("click", () => {
+        showEq(pump,tabArr.descarga);
+        });
+        cell.appendChild(editEqBtn);
+        row.appendChild(cell);
           }else if(key!='eqCants'){
           cell.textContent = value;
           row.appendChild(cell);
           } 
           
         });
-        
         const editCell = document.createElement("td");
         const editButton = document.createElement("button");
         editButton.classList.add("btn", "btn-success", "editbtn");
@@ -402,51 +550,23 @@ function crtShwEq(ancVal,dat,ul){
         editCell.appendChild(editButton);
         row.appendChild(editCell);
 
-        table.appendChild(row);
+        tbody.appendChild(row);
       });
+      table.appendChild(tbody);
+      
       container.appendChild(table);
   }
 
 /////////////////////////////////////////EDIT ROWS///////////////////////////////////////////
 
-  function edEqRow(pump,row){
-    const cells = Array.from(row.cells).slice(1, -1);
-    cells.forEach((cell, index) => {
-      const input = document.createElement("input");
-      input.classList.add("form-control");
-      input.value = cell.textContent;
-      cell.textContent = '';
-      cell.appendChild(input);
-    });
-    
-    // Disable the edit button
-    const editButton = document.querySelectorAll(".editEqBtn");
-    editButton.forEach(btn=>{
-    btn.disabled = true;
-    });
-
-    const saveButton = document.createElement("button");
-    saveButton.classList.add("btn", "btn-primary");
-    saveButton.textContent = "Guardar";
-    saveButton.addEventListener("click", () => {console.log('row before click save:', row.cloneNode(true));saveEqRow(row, pump);});
-
-    const cancelButton = document.createElement("button");
-    cancelButton.classList.add("btn", "btn-secondary");
-    cancelButton.textContent = "Cancelar";
-    cancelButton.addEventListener("click", () => cancelEdit(row, pump));
-
-    const cell = document.createElement("td");
-    cell.appendChild(saveButton);
-    cell.appendChild(cancelButton);
-    row.appendChild(cell);
-
-  }
+ 
 
 
   function editRow(modelo, tId,ul,keys,originalRow) {
     console.log('tId:', tId);
     console.log('modelo:', modelo);
     const table = document.getElementById(tId);
+    console.log('Table',table);
     const row = Array.from(table.rows).find(row => row.cells[0].textContent === modelo);
     const cells = Array.from(row.cells).slice(1, -1); // Omit the first cell  and the last cell (edit button)
     cells.forEach((cell, index) => {
@@ -458,7 +578,9 @@ function crtShwEq(ancVal,dat,ul){
           checkbox.checked = cell.textContent === 'Si';
           cell.textContent = '';
           cell.appendChild(checkbox);
-        } else if (keys[index + 1] === 'precio') {
+        } else if (keys[index + 1] === 'precio'||keys[index + 1] === 'precioMXN'|| keys[index + 1] ==='cantidadPaneles'||
+          keys[index + 1] === 'Sinfiltro'||keys[index + 1] ==='filtro150'||keys[index + 1] ==='filtro500'
+        ) {
           const input = document.createElement("input");
           input.type = "number";
           input.classList.add("form-control");
@@ -469,7 +591,7 @@ function crtShwEq(ancVal,dat,ul){
       }
     });
     
-    // Disable the edit button
+    // Disable  edit button y los de ver equip
     const editButton = document.querySelectorAll(".editbtn, .verEq");
     editButton.forEach(btn=>{
     btn.disabled = true;
@@ -518,6 +640,7 @@ async function saveRow(row, modelo, tId,ul,keys,originalRow) {
     const priceCell = cells[priceIndex];
     const priceInput = priceCell.firstChild;
     if (priceInput && priceInput.type === 'number') {
+      
       changeObj['precio'] = parseFloat(priceInput.value);
     }
   }
@@ -586,8 +709,12 @@ if (Object.keys(changes).length === 0) {
     return response.json(); 
   })
   .then(saved => {
-    if(saved.succ){
+    console.log('saved:',saved);
+    if(saved.succ === true){
       alert('Cambios guardados en la base de datos');
+      bomSol().then(updatedData => {
+        jason = updatedData;
+      });
     }else{
       alert('Error al guardar los cambios:', saved?.message);
     }

@@ -19,7 +19,7 @@
     
     <script src="cotizacion.js"></script>
     <title>Cotización</title>
-     </head>
+    </head>
   <style>
    /* html {
   font-size: 16px; 
@@ -112,11 +112,15 @@ body {
 .cover{
     font-size: 1rem;
 }
-  </style>   
+#cotizT{
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+
+}
+  </style>
   <body>    
     <button id="prtBtn" class="print-button btn-success hidden-print" onclick="window.print()">PDF</button>
-    
-
      <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
         <div class="row">
@@ -337,16 +341,16 @@ body {
       
     </div>
 <div class="html2pdf__page-break"></div> 
-    <div class="container-fluid text-center page-break">
+    <div class="container-fluid page-break">
       <div class="card" style="align-items:center; width: 100%">
         <div class="row"><img src="./images/hdrw.jpg" alt="hdr" width="100%" /></div>
         <div class="row">
           <h3>Cotización</h3>
         </div>
-        <div class="row">
-        <div class="col-1"></div>
-         <div id="tabla" class="col-10" style="margin: auto">
-          <table>
+        <div class="row justify-content-center">
+          <div class="col-1"></div>
+          <div id="tabla" class="col-10" style="margin: 0 auto;">
+          <table id="cotizT">
             <tr>
               <th
                 class="col-1"
@@ -379,24 +383,26 @@ body {
                 Precio
               </th>
             </tr>
-            <tr class="bom" id="panels"></tr>
-            <tr class="bom" id="gabi"></tr>
-            <tr class="sol" id="pumpD"></tr>
-            <tr class="sol" id="pumpEq"></tr>
-            <tr id="matElec"></tr>
-            <tr class="bom" id="strElev"></tr>
-            <tr class="bom" id="strPan"></tr>
-            <tr id="manObr"></tr>
-            <tr>
-              <td class="col-1 cotiTab"></td>
-              <td class="col-8 text-end  cotiTab">
-                <b>Total:</b>
-              </td>
-              <td class="col-1 cotiTab">
-                <b id="coTotal"></b>
-              </td>
-            </tr>
-          </table>
+            <tbody>
+              <tr class="bom" id="panels"></tr>
+              <tr class="bom" id="gabi"></tr>
+              <tr class="sol" id="pumpD"></tr>
+              <tr class="sol" id="pumpEq"></tr>
+              <tr id="matElec"></tr>
+              <tr class="bom" id="strElev"></tr>
+              <tr class="bom" id="strPan"></tr>
+              <tr id="manObr"></tr>
+              <tr>
+                <td class="col-1 cotiTab"></td>
+                <td class="col-8 text-end cotiTab">
+                  <b>Total:</b>
+                </td>
+                <td class="col-1 cotiTab">
+                  <b id="coTotal"></b>
+                </td>
+              </tr>
+            </tbody>
+          </table> 
         </div>
         <div class="col-1"></div>
       </div>

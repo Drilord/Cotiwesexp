@@ -55,14 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const volt = myObject.pyct.motor.volt ?? 0;
       const pumpCal = myObject.calibre;
       const cdt = myObject.pyct.cdtP;
-      const cantPan = myObject.pyct.solar.cantPan;
-      const tipPan = myObject.pyct.solar.tipPan;
-      const potPan = myObject.pyct.solar.pot;
-      const variador = myObject.pyct.solar.variador;
+      const cantPan = myObject.pyct.solar?.cantPan;
+      const tipPan = myObject.pyct.solar?.tipPan;
+      const potPan = myObject.pyct.solar?.pot;
+      const variador = myObject.pyct.solar?.variador;
       const potVariador = (volt * (variador?.amp ?? 0)) / 1000;
-      const gabinete = myObject.pyct.solar.gabinete;
-      const strType = myObject.pyct.struct.type;
-      const strMat = myObject.pyct.struct.material;
+      const gabinete = myObject.pyct.solar?.gabinete;
+      const strType = myObject.pyct.struct?.type;
+      const strMat = myObject.pyct.struct?.material;
       const eqBombaP = myObject?.eqBomba?.[3]?.precioeq ?? 0;
       const tubo = myObject?.eqBomba?.[0]?.tubo ?? "";
       const kit = myObject?.eqBomba?.[1]?.kit ?? "";
@@ -71,11 +71,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const currT = myObject.pyct.curr;
       const desc = myObject.pyct.desc;
       const diasObr = pumpHP * myObject.pyct.hpDia;
-      const hosp = (myObject.pyct.hosp3per * (diasObr < 2 ? 2 : diasObr)) / 1.5;
+      const hosp = Math.round((myObject.pyct.hosp3per * (diasObr < 2 ? 2 : diasObr)) / 1.5);
       const comidas = myObject.pyct.com3per * (diasObr < 2 ? 2 : diasObr);
       const gasTras = myObject.pyct.preKm * myObject.pyct.km;
       const grua = myObject.pyct.grua ?? 0;
-      const viat = hosp + comidas + gasTras;
+      const viat = Math.round(hosp + comidas + gasTras);
       const gasInd = myObject.pyct.gasInd / 100 + 1;
       
       console.log("grua ", grua);
@@ -86,20 +86,21 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("diasObr ", diasObr);
       console.log("gastras ", gasTras);
       //precios
+      const stPrecioE= !myObject.pyct.struct.precioE?1:myObject.pyct.struct?.precioE
       const strEPrice = Math.round(
-        myObject.pyct.struct.precioE * cantPan.cantidadPaneles * gasInd
+        stPrecioE * cantPan?.cantidadPaneles * gasInd
       );
       const SstrEPrice = strEPrice.toLocaleString("en-US");
       const strPPrice = Math.round(
-        myObject.pyct.struct.precioP * cantPan.cantidadPaneles * gasInd
+        myObject.pyct.struct?.precioP * cantPan?.cantidadPaneles * gasInd
       );
       const SstrPPrice = strPPrice.toLocaleString("en-US");
       const precioPan = Math.round(
-        myObject.pyct.solar.precio * cantPan.cantidadPaneles * gasInd
+        myObject.pyct.solar?.precio * cantPan?.cantidadPaneles * gasInd
       );
       const SprecioPan = precioPan.toLocaleString("en-US");
       const preGabi = Math.round(
-        (gabinete.precio + (variador?.precio ?? 0)) * gasInd
+        (gabinete?.precio + (variador?.precio ?? 0)) * gasInd
       );
       const SpreGabi = preGabi.toLocaleString("en-US");
       const precioEq = Math.round(eqBombaP * gasInd);
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const precioPump = Math.round(precioBom + precMotor);
       const SprecioPump = precioPump.toLocaleString("en-US");
       const servPrice = Math.round(
-        myObject.pyct.manObr * cantPan.cantidadPaneles * gasInd + viat + grua
+        (myObject.pyct.manObr ?? 0) * (cantPan?.cantidadPaneles ?? 1) * (gasInd ?? 0) + (viat ?? 0) + (grua ?? 0)
       );
       const SservPrice = servPrice.toLocaleString("en-US");
       const preMatElec = Math.round(myObject.pyct.matElec * pumpHP * gasInd);
@@ -126,6 +127,10 @@ document.addEventListener("DOMContentLoaded", () => {
           (servPrice ?? 0) +
           (strPPrice ?? 0) +
           (strType != 3 ? strEPrice ?? 0 : 0);
+          console.log('strtype',strType);
+          console.log('strEprice',strEPrice);
+          console.log('strEprice',SstrPPrice);
+          
       }
       /*solar*/ if (proyT == 2) {
         cotTot =
@@ -134,14 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
           (preMatElec ?? 0) +
           (servPrice ?? 0) +
           (strPPrice ?? 0) +
-          (!strType == 3 ? strEPrice ?? 0 : 0);
+          (strType !== 3 ? strEPrice ?? 0 : 0);
       }
       /*bombe*/ if (proyT == 1) {
         cotTot =
           (precioPump ?? 0) +
           (precioEq ?? 0) +
-          (preMatElec ??
-            0) /*+(servPrice ?? 0) Bombeo va a llevar otro tipo de mano de obra */;
+          (preMatElec ??0)+
+          ((servPrice ?? 0)/2); // Bombeo va a llevar la mitad
       }
       console.log(precioPan ?? 0);
       console.log(preGabi ?? 0);
@@ -155,11 +160,11 @@ document.addEventListener("DOMContentLoaded", () => {
       //descripciones repetidas
       const gabiArma = `Gabinete armado para bomba de ${pumpHP} HP, ${
         currT === 1
-          ? ` ${gabinete.desc} con variador de frecuencia solar de ${variador.descripcion}v, potencia de ${potVariador}kW `
-          : `${gabinete.desc} `
+          ? ` ${gabinete?.desc} con variador de frecuencia solar de ${variador?.descripcion}v, potencia de ${potVariador}kW `
+          : `${gabinete?.desc} `
       }con supresores de picos.`;
       const modFotV = `${
-        cantPan.cantidadPaneles == 1
+        cantPan?.cantidadPaneles == 1
           ? `Modulo fotovoltaico policristalino`
           : `Modulos fotovoltaicos policristalinos`
       } tipo ${tipPan} de ${potPan}w, con 12 años de garantía y 25 años de vida útil.`;
@@ -169,11 +174,11 @@ document.addEventListener("DOMContentLoaded", () => {
           : strType === 2
           ? " reforzada a nivel de piso"
           : ""
-      } para ${cantPan.cantidadPaneles} módulos.`;
+      } para ${cantPan?.cantidadPaneles} módulos.`;
       const strPaDes = `Fabricación de estructura ${
         strType == 3 ? `coplanar` : ``
       } de aluminio anodizado para aplicación solar, fijada con tornillería de acero inoxidable 304 para ${
-        cantPan.cantidadPaneles
+        cantPan?.cantidadPaneles
       } módulos fotovoltaicos.`;
       const pumpDesc = `Bomba de ${pumpHP}HP ${
         currT === 1
@@ -183,7 +188,7 @@ document.addEventListener("DOMContentLoaded", () => {
           : ""
       } modelo ${pumpModel} ${
         currT === 1
-          ? `, ${mot.Modelo.toLowerCase()}${
+          ? `, ${mot?.Modelo?.toLowerCase()}${
               mot.serie == "N/A" ? `` : `, serie ${mot.serie}`
             }.`
           : "."
@@ -242,7 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
           : ``
       }`;
       //Tabla cotizacion
-      panels.innerHTML = `<td class="col-1 cotiTab">${cantPan.cantidadPaneles}</td>
+      panels.innerHTML = `<td class="col-1 cotiTab">${cantPan?.cantidadPaneles}</td>
                            <td class="col-8 cotiTab">${modFotV}</td>
                            <td class="col-1 cotiTab">$${SprecioPan}</td>`;
       gabi.innerHTML = `<td class="col-1 cotiTab">1</td>
@@ -293,9 +298,9 @@ document.addEventListener("DOMContentLoaded", () => {
           elmt.style.display = "none";
         });
 
-        descP.innerText = `Instalación de ${cantPan.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en ${loc}. ${descFlag==1 ? descAddT : ''}`;
+        descP.innerText = `Instalación de ${cantPan?.cantidadPaneles} paneles solares, para energizar una bomba de ${pumpHP}HP en ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
-          cantPan.cantidadPaneles
+          cantPan?.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
           strType === 3 ? `` : `${strDesc}<br>`
         }${strPaDes}<br>${desMatElec}`;
@@ -303,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (proyT == 3) {
         descP.innerText = ` Instalación de bombeo solar para un pozo de ${proPozo} metros de profundidad, con un volumen de agua de ${lts} LT/S,  descarga de ${desc}", Con una carga dinamica de ${cdt} metros, en ${loc}. ${descFlag==1 ? descAddT : ''}`;
         descEnerg.innerHTML = `${
-          cantPan.cantidadPaneles
+          cantPan?.cantidadPaneles
         } ${modFotV} ${gabiArma}<br>${
           strType === 3 ? `` : `${strDesc}<br>`
         }${strPaDes}<br>${desMatElec}`;

@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       const gasIndhtm = document.getElementById('input7');
       const chkDesA = document.getElementById('checkDesA');
       const DescAdd = document.getElementById('descAdd');
+
+
       srvcs=jsonData.bomSol.servicios;
       dataS=jsonData.bomSol.estructura;
       dataPan=jsonData.bomSol.solar;
@@ -85,6 +87,8 @@ document.addEventListener('DOMContentLoaded', async () => {
      if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
      console.log(pyct.motor); 
     });
+
+
     })
     .catch(error => {
       console.error('Error fetching data:', error);
@@ -315,6 +319,7 @@ function calculateDistance(destinationAddress) {
   service.getDistanceMatrix(request, (response, status) => {
       if (status === "OK") {
           const distance = response.rows[0].elements[0].distance.value / 1000; // Convert meters to kilometers
+          if(isNaN(distance)){alert("Distancia no calculada intente corregirr direccion");return;}
           document.getElementById("input3").value = Math.round(distance.toFixed(2)); // Display with 2 decimal places
 
       } else {
@@ -342,7 +347,10 @@ function cotTypVal(){
         element.style.display= 'flex'; });
         Solar.forEach(element => {
           element.style.display= 'none'; });
-          document.getElementById("hp").disabled = true;  
+          document.getElementById("hp").disabled = true;
+          document.getElementById("hp").style.display = 'block'; 
+          const hpSel =document.getElementById("solHp");
+          if(hpSel){hpSel.style.display = 'none';} 
         console.log("Solo bombeo");
         cotType= 1;
       }  
@@ -351,8 +359,37 @@ function cotTypVal(){
           element.style.display= 'none'; });
           Solar.forEach(element => {
             element.style.display= 'flex'; });
-            document.getElementById("hp").disabled = false;
+            const cantidadxHP = dataPan.paneles.cantidadxHP;
+            const exitSel = document.getElementById('solHp')
+            if(exitSel){
+              exitSel.style.display='flex';
+            }else{
+            const selectElement = document.createElement('select');
+            selectElement.id='solHp';
+            selectElement.classList.add('form-select', 'text-right')
+            const hpValues = cantidadxHP.map(item => item.hp);
+            const uniqueHpValues = [...new Set(hpValues)];
+            uniqueHpValues.forEach(optionText => {
+              const optionElement = document.createElement('option');
+              optionElement.value = optionText;
+              optionElement.text = optionText;
+              selectElement.appendChild(optionElement);
+            });
+            const hpDiv=document.getElementById("hpDiv");
+            const hpLabel = hpDiv.querySelector("label");
+            hpDiv.insertBefore(selectElement, hpLabel);
+            
+            voltSel(cantidadxHP,selectElement.value);
+            selectElement.addEventListener('change',()=>{
+              voltSel(cantidadxHP,selectElement.value);
+                         
+            });
+          }
+          document.getElementById("hp").style.display = 'none';
+          
             console.log("Solo Solar"); 
+
+
         cotType= 2; 
       }
       if (solar.checked && bombeo.checked) {
@@ -360,11 +397,32 @@ function cotTypVal(){
         fullBomSol.forEach(element => {
         element.style.display= 'flex'; });
         document.getElementById("hp").disabled = true;
+          document.getElementById("hp").style.display = 'block';
+          const hpSel =document.getElementById("solHp");
+          if(hpSel){hpSel.style.display = 'none';}
         document.getElementById('voltrow').style.display= 'none';
         cotType= 3;
       }  
 }
+function voltSel(cantidadxHP,hp){
+  const voltSel=document.getElementById("voltaje");
+  console.log('hp select changed');
+  console.log('hp select ',hp);
+  const volt = cantidadxHP.filter(item => item.hp == hp);
+  console.log('volt',volt)
+  const voltVal = volt.map(item => item.voltaje);
+  console.log('voltVal',voltVal)
+  while (voltSel.firstChild) {
+    voltSel.removeChild(voltSel.firstChild);
+  }
+  voltVal.forEach(optText =>{
+    const optionElement = document.createElement('option');
+    optionElement.value = optText;
+    optionElement.text = `${optText}v`;
+    voltSel.appendChild(optionElement);
+  });
 
+} 
 /*consultar tipo de cambio*/
 const banxicourl="https://www.banxico.org.mx/SieAPIRest/service/v1/series/SF18561/datos/oportuno?token=";
 const token="b762a196dea52ff59a8a0609a3e74a5bcac7e697da6e107748f7ee33d59e1cfd";
@@ -400,7 +458,7 @@ function validar() {
   const loc=document.getElementById('input2');
   const km=document.getElementById('input3');
   const cdt=document.getElementById('input6');  
-  const hpMan=document.getElementById('hp');  
+  const hpMan=document.getElementById('solHp');  
   const distP=document.getElementById('input8');
   const proPozo=document.getElementById('input5');
   const marg=document.getElementById('input7');
@@ -490,23 +548,13 @@ if (isNaN(marg.value)) {
     return;
   } else{grua.classList.remove('is-invalid');}
    selPump.eqBomba=equipBomb();
+   pyct.solar= datosSolar(parseFloat(selPump.hp),parseInt('0'),parseInt(proPozo.value))
    //alert('Precio equip Bomba tot:', selPump.eqBomba.precioeq);
    c = genID(selPump.hp);
  } 
  //solar
  if(cotType == 2){
   pyct.cotType=2;
- 
-  if(!hpMan.value){
-    alert("Debe introducir los HP de la bomba existente")
-    hpMan.classList.add('is-invalid');
-    return;
-  } else{hpMan.classList.remove('is-invalid');}
-if (isNaN(hpMan.value)) {
-  alert("El campo HP no es un número.");
-  hpMan.classList.add('is-invalid');
-    return;
-  } else{hpMan.classList.remove('is-invalid');}
 if(!distP.value){
   alert("Introduzca la distancia de la bomba a los paneles")
   distP.classList.add('is-invalid');
@@ -613,12 +661,12 @@ try {
 
 function cotizar(){ 
     
-    pyct.manObr = srvcs.manObr;
-    pyct.matElec = srvcs.matElec;
-    pyct.hpDia = srvcs.hpDia;
-    pyct.preKm = srvcs.preKm;
-    pyct.hosp3per = srvcs.hosp3per;
-    pyct.com3per = srvcs.com3per;
+    pyct.manObr = srvcs[0].precio;
+    pyct.matElec = srvcs[1].precio;
+    pyct.hpDia = srvcs[3].precio;
+    pyct.preKm = srvcs[2].precio;
+    pyct.hosp3per = srvcs[4].precio;
+    pyct.com3per = srvcs[5].precio;
     pyct.km = parseInt(document.getElementById('input3').value);
     pyct.nombre = document.getElementById("input1").value ;
     pyct.loc = document.getElementById("input2").value;
@@ -630,7 +678,7 @@ function cotizar(){
     pyct.curr=pumpCurrT;  
     pyct.id = c;
     if(!selPump){selPump={};
-    selPump.hp=document.getElementById('hp').value;
+    selPump.hp=document.getElementById('solHp').value;
 
     }
     if(!pyct.motor){
