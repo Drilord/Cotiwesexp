@@ -10,11 +10,13 @@ async function authMain(){
         authL=auth.aLev
         let dispLevel;
         if(authL===3){dispLevel='.dirW'}
+        if(authL===2){dispLevel='.gere'}
         if(authL===1){dispLevel='.comp'}
         if(authL===0){
          alert('Este usuario no tiene acceso')
          const UI=document.getElementById('main');
          UI.style.display='none';
+         window.location.href = '/';
          return;}
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
@@ -158,10 +160,12 @@ async function valLogin(){
    authL=auth.authL
    let dispLevel;
    if(authL===3){dispLevel='.dirW'}
+   if(authL===2){dispLevel='.gere'}
    if(authL===1){dispLevel='.comp'}
    if(authL===0){
     usrHtm.classList.add('is-invalid')
     alert('Este usuario no tiene acceso')
+    window.location.href = '/';
     return;}
    const authdisp=document.querySelectorAll(dispLevel);
    authdisp.forEach(element=>{
@@ -258,27 +262,30 @@ if(ul=='korUl'|| ul=='kolosUl'){
     Ul.addEventListener('click', () =>{ 
       addUsr(ul);
     }); 
-    const vendCont = document.getElementById('addVenDiv');
-    const vFlag =  document.getElementById('chkVend');  
-    vFlag.addEventListener('change',()=>{
-      
-    });
+    
   }
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
-function addUsr(ul){
+ function addUsr(ul){
   clearTables(["tKOR","tEQ"]);
   const usrCont=document.getElementById('addUsrDiv');
   usrCont.style.display='flex';
   const vendCont = document.getElementById('addVenDiv');
-    const vFlag =  document.getElementById('chkVend');  
+    const vFlag =  document.getElementById('chkVend'); 
+    const svBtn = document.getElementById('usrSaveBtn'); 
     vFlag.addEventListener('change',()=>{
       vendCont.style.display= vFlag.checked? 'flex':'none'
     });
-
+    svBtn.addEventListener('click',()=>{
+      crtUsr();
+    });
 }
-
+async function crtUsr(){
+  const cretaed= /*valor recibido */true
+  if(created===true){alert('Usuario creado exitosamente');}
+  else {alert('Error al crear usuario');}
+}
   
   ///SHOW TABLES////////////////////////////////////////////////////////////////////////////////////
   
@@ -291,6 +298,8 @@ function addUsr(ul){
     });
     const container=document.getElementById('addUsrDiv');
   container.style.display='none';
+  const containerV=document.getElementById('addVenDiv');
+  containerV.style.display='none';
   }
   function createTables (anchor,ul){
     if(ul!='panelT'){

@@ -100,11 +100,13 @@ try {
     const response = await fetch('api/vende/amoen')
     if (response.ok) {
       const data = await response.json(); 
+      document.getElementById('main').style.display='block'
       console.log('vend Id', data?.userData?.id); 
       repId=data?.userData?.id
       AL=data?.userData?.aLev
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
+        if(AL===2){dispLevel='.gere'}
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
@@ -113,6 +115,7 @@ try {
     alert('Este usuario no puede cotizar');
     const UI=document.getElementById('main');
     UI.style.display='none';
+    window.location.href = '/tables.html';
     return;}
 
    const vendSelect = selectVend(reps,repId);
@@ -256,12 +259,13 @@ async function valLogin(){
    }
   }
   else if(auth.token!='invalid'&& auth.id!=null){  
-    
+    document.getElementById('main').style.display='block' 
    console.log('vend Id', auth.id); 
    repId=auth.id
    AL=auth?.authL ? auth.authL : 0;
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
+        if(AL===2){dispLevel='.gere'}
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
@@ -269,6 +273,7 @@ async function valLogin(){
    if(repId==0){
     usrHtm.classList.add('is-invalid')
     alert('Este usuario no puede cotizar')
+    window.location.href = '/tables.html';
     return;}
    const vendSelect = selectVend(reps,repId);
    const salesRep = document.getElementById('vendSelect');

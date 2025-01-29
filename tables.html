@@ -35,10 +35,11 @@
       }
       .div {
         margin: 10px;
-        
-        
-        
+
       }
+    .addusrIpt {
+    margin-bottom: 15px;
+    }
       table {
         border-collapse: separate;
         border-spacing: 0;
@@ -331,30 +332,30 @@
           <div class="col-2 d-md-block d-none"></div>
         </div>
         <!-- Add usr container -->
-        <div class="row" id="addUsrDiv" style="display: none;">
+        <div class="row" id="addUsrDiv" style="display: none; ">
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
-            <div class="col-10 form-floating" >
-              <h3 class="text-center text-truncate">Agregar Usuario</h3>
+            <div class="col-10 form-floating addusrIpt" >
+              <h3 class="text-center text-truncate ">Agregar Usuario</h3>
             </div>
           </div>  
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
             <div class="col-6 form-floating" >
-              <input class="form-control vLock" type="text" id="adduser" placeholder="User" />
+              <input class="form-control addusrIpt" type="text" id="adduser" placeholder="User" />
               <label for="adduser">Usuario:</label>
             </div>
           </div>  
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
-            <div class="col-6 form-floating" >
+            <div class="col-6 form-floating addusrIpt" >
               <input class="form-control vLock" type="password" id="addpw" placeholder="Pwd" />
               <label for="addpw">Contraseña:</label>
             </div>
           </div> 
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
-            <div class="col-6 form-floating" >
+            <div class="col-6 form-floating addusrIpt" >
               <select id="perm" class="form-select text-right">
                 <option value="0">Vendedor</option>
                 <option value="1">Compras</option>
@@ -366,43 +367,54 @@
           </div>       
           <div class="row">
             <div class="col-2 d-md-block d-none"></div>
-            <div class="col-6 col-md-6 form-switch">
+            <div class="col-6 col-md-6 form-switch addusrIpt">
               <input class="form-check-input vLock" type="checkbox" id="chkVend" />
               <label class="form-check-label" for="chkVend">Vendedor?</label></div>
             <div class="col-4 d-md-block d-none"></div> 
           </div>
           
-        </div>
-        <!-- Add Vend container -->
+          <!-- Add Vend container -->
         <div class="row" id="addVenDiv" style="display: none;">
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
-            <div class="col-10 form-floating" >
+            <div class="col-10 form-floating addusrIpt" >
               <h4 class="text-center text-truncate">Datos del vendedor para cotización</h4>
             </div>
           </div>  
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
             <div class="col-6 form-floating" >
-              <input class="form-control vLock" type="text" id="venNom" placeholder="Nambe" />
+              <input class="form-control addusrIpt" type="text" id="venNom" placeholder="Nambe" />
               <label for="adduser">Nombre Completo:</label>
             </div>
           </div>  
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
             <div class="col-6 form-floating" >
-              <input class="form-control vLock" type="text" id="venTel" placeholder="Telesforo" />
+              <input class="form-control addusrIpt" type="text" id="venTel" placeholder="Telesforo" />
               <label for="addpw">Teléfono:</label>
             </div>
           </div> 
           <div  class="row">
             <div class="col-2 d-md-block d-none"></div>
             <div class="col-6 form-floating" >
-              <input class="form-control vLock" type="text" id="venMail" placeholder="emilio" />
+              <input class="form-control addusrIpt" type="text" id="venMail" placeholder="emilio" />
               <label for="addpw">e-mail:</label>
             </div>
           </div>
-        </div>
+         </div>
+          <!-- end vend container -->
+         <div  class="row">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-6 form-floating addusrIpt" >
+          <button type="button" class="btn btn-success float-end" id="usrSaveBtn">
+          Guardar Nuevo Usuario 
+          </button>
+          </div>
+         </div>
+      </div>
+       <!-- end Add usr container -->
+        
         <!-- Tablas container -->
          
         <div class="row ">
