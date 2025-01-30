@@ -205,7 +205,8 @@ async function bomSol() {
     
       KORpump = jason.bomSol.bombas;
       kolosP = jason.bomSol.bombasKolosal;
-      eqBomba=jason.bomSol.equipamientoBomba.descarga; 
+      eqBomba=jason.bomSol.equipamientoBomba.descarga;
+      vendedores=jason.bomSol.vendedores 
       pupUls(KORpump,'korUl');
       pupUls(kolosP,'kolosUl');
       pupUls(eqBomba,'eqBombaUl');
@@ -216,6 +217,7 @@ async function bomSol() {
       pupUls('','varM');
       pupUls('','panM');
       pupUls('','addUsr');
+      pupUls('','modUsr');
       ;
 
   }
@@ -263,30 +265,181 @@ if(ul=='korUl'|| ul=='kolosUl'){
       addUsr(ul);
     }); 
     
+  }else if(ul=='modUsr'){
+    Ul.addEventListener('click', () =>{ 
+      addUsr(ul);
+    }); 
+    
   }
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
  function addUsr(ul){
   clearTables(["tKOR","tEQ"]);
+  if(ul==='addUsr'){
   const usrCont=document.getElementById('addUsrDiv');
   usrCont.style.display='flex';
   const vendCont = document.getElementById('addVenDiv');
-    const vFlag =  document.getElementById('chkVend'); 
-    const svBtn = document.getElementById('usrSaveBtn'); 
+  const vFlag =  document.getElementById('chkVend'); 
+  const svBtn = document.getElementById('usrSaveBtn'); 
+  const usrHtm = document.getElementById('adduser');
+  const pwdHtm = document.getElementById('addpw');
+  const permHtm = document.getElementById('perm');
+  const veNaHtm = document.getElementById('veNom');
+  const veTlHtm = document.getElementById('venTel');
+  const veMaHtm = document.getElementById('venMail');
     vFlag.addEventListener('change',()=>{
       vendCont.style.display= vFlag.checked? 'flex':'none'
     });
-    svBtn.addEventListener('click',()=>{
-      crtUsr();
+    let isCreatingUser = false;
+    svBtn.addEventListener('click', async () => {
+      if (isCreatingUser) return;
+      isCreatingUser = true;
+      const NewUser = crtUsr();
+      const created = await crtDbUsr(NewUser);
+      if (created === true) {
+      alert('Usuario creado exitosamente');
+      usrHtm.value = '';
+      pwdHtm.value = '';
+      permHtm.value = '';
+      veNaHtm.value = '';
+      veTlHtm.value = '';
+      veMaHtm.value = '';
+      vFlag.checked = false;
+      vendCont.style.display = 'none';
+      } else {
+      alert('Error al crear usuario');
+      }
+      isCreatingUser = false;
     });
-}
-async function crtUsr(){
-  const cretaed= /*valor recibido */true
-  if(created===true){alert('Usuario creado exitosamente');}
-  else {alert('Error al crear usuario');}
-}
+
+
+  }if(ul==='modUsr'){
+    clearTables(["tKOR","tEQ"]);
+    
+    //const vendArr= response.json()
+
+  }  
+
+ }
   
+function crtUsr(){
+  const vFlag =  document.getElementById('chkVend'); 
+  const usrHtm = document.getElementById('adduser');
+  const pwdHtm = document.getElementById('addpw');
+  const permHtm = document.getElementById('perm');
+  const veNaHtm = document.getElementById('veNom');
+  const veTlHtm = document.getElementById('venTel');
+  const veMaHtm = document.getElementById('venMail');
+  let usr = usrHtm.value.trim();
+  let pwd = pwdHtm.value.trim();
+  let usrLv = permHtm.value
+  let venom = veNaHtm.value.trim();
+  let vetel = veTlHtm.value.trim();
+  let vemail= veMaHtm.value.trim();
+
+  usr = usr === '' ? null : usr;
+  pwd = pwd === '' ? null : pwd;
+  venom = venom === '' ? null : venom;
+  vetel = vetel === '' ? null : vetel;
+  vemail = vemail === '' ? null : vemail;
+  usrLv = usrLv === '' ? null : usrLv;
+  usrHtm.addEventListener
+  if (usr == null) {
+    usrHtm.classList.add('is-invalid');
+    alert('El campo Usuario no puede estar vacío');
+    return;
+  }else{
+    usrHtm.classList.remove('is-invalid');
+  }
+  if (pwd == null) {
+    alert('El campo Contraseña no puede estar vacío');
+    return;
+  } else {
+    pwdHtm.classList.remove('is-invalid');
+  }
+  if (vFlag.checked && venom == null) {
+    veNaHtm.classList.add('is-invalid');
+    alert('El campo Vendedor no puede estar vacío');
+    return;
+  } else {
+    veNaHtm.classList.remove('is-invalid');
+  }
+
+  if (vFlag.checked && vetel == null) {
+    veTlHtm.classList.add('is-invalid');
+    alert('El campo Telefono no puede estar vacío');
+    return;
+  } else {
+    veTlHtm.classList.remove('is-invalid');
+  }
+
+  if (vFlag.checked && vemail == null) {
+    veMaHtm.classList.add('is-invalid');
+    alert('El campo E-mail no puede estar vacío');
+    return;
+  } else {
+    veMaHtm.classList.remove('is-invalid');
+  }
+
+  const newUser = {};
+  newUser.usr={
+    mail: usr,
+    pw: pwd,
+    auth: usrLv,
+  };
+  const venFlag= vFlag.checked; 
+  console.log('venflag checked',venFlag);
+  if(venFlag===true){
+  newUser.flag=venFlag; 
+  newUser.vend={
+    nombre:venom,
+    tel:vetel,
+    mail:vemail
+  };
+ }else{
+  newUser.flag=false;
+  newUser.vend=null;
+ }
+ console.log('new user',newUser);
+ return newUser;
+
+}
+
+async function crtDbUsr(newUser){
+ 
+  try {
+    const response = await fetch('api/cmbeos/newven', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newUser)
+    });
+    const result = await response.json();
+    
+    return result.succ===true;
+
+    } catch (error) {
+    console.error('Error creating user:', error);
+    return false;
+  }
+
+  
+}
+
+async function fchUser(){
+//fetch a endpoint que traiga los usuarios sin passwor 
+
+}
+
+async function  modUsr(){
+  //hacer un put a la api con el vend id y el usr id para modificarlos 
+ 
+
+}
+async function dltUser(venId,usrId) {
+  //hacer delete a la api con el id en el endpoint nadamas elegir ese objeto borrarlo 
+}
+
   ///SHOW TABLES////////////////////////////////////////////////////////////////////////////////////
   
   function clearTables(classes) {
@@ -298,8 +451,7 @@ async function crtUsr(){
     });
     const container=document.getElementById('addUsrDiv');
   container.style.display='none';
-  const containerV=document.getElementById('addVenDiv');
-  containerV.style.display='none';
+ 
   }
   function createTables (anchor,ul){
     if(ul!='panelT'){
