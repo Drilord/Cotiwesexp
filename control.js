@@ -1,99 +1,118 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
 let AL,selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+authMain();
+async function bombsol(){
+ try{
+  const response = await fetch(`api/bombSol/`);
+  if(response.ok){
+    const data=response.json();
+    return data;
+  }else{
+    throw new Error('Error fetching data');
+  }
+ }catch(error){
 
-document.addEventListener('DOMContentLoaded', async () => {
- 
-  fetch(`api/bombSol/`) 
-    .then(response => response.json())
-    .then(jsonData => {
-      reps=jsonData.bomSol.vendedores;
-      authMain();
-      const CDT = document.getElementById('input6');
-      const temp = document.getElementById('check0');
-      const curra = document.getElementById('check6');
-      const currd = document.getElementById('check7');
-      const ltsSelect = document.getElementById('ltsSelect');
-      const gasIndhtm = document.getElementById('input7');
-      const chkDesA = document.getElementById('checkDesA');
-      const DescAdd = document.getElementById('descAdd');
+   console.error('Error fetching data:', error);
+}
+}
+
+async function init(){
+  
+    const jsonData= await bombsol();
+    if(jsonData){
+    reps=jsonData.bomSol.vendedores;
+    const vendSelect = selectVend(reps,repId);
+    const salesRep = document.getElementById('vendSelect');
+    salesRep.value= vendSelect?.nombre
+    pyct.rep= vendSelect;
+    const CDT = document.getElementById('input6');
+    const temp = document.getElementById('check0');
+    const curra = document.getElementById('check6');
+    const currd = document.getElementById('check7');
+    const ltsSelect = document.getElementById('ltsSelect');
+    const gasIndhtm = document.getElementById('input7');
+    const chkDesA = document.getElementById('checkDesA');
+    const DescAdd = document.getElementById('descAdd');
 
 
-      srvcs=jsonData.bomSol.servicios;
-      dataS=jsonData.bomSol.estructura;
-      dataPan=jsonData.bomSol.solar;
-      eqBomba=jsonData.bomSol.equipamientoBomba;
-      estrucSol();     
-  currType(6,jsonData.bomSol.bombas);
-  curra.addEventListener('change', ()=>{
-  const ltscurr=jsonData.bomSol.bombas
-  currType(6,ltscurr);
+    srvcs=jsonData.bomSol.servicios;
+    dataS=jsonData.bomSol.estructura;
+    dataPan=jsonData.bomSol.solar;
+    eqBomba=jsonData.bomSol.equipamientoBomba;
+    estrucSol();     
+currType(6,jsonData.bomSol.bombas);
+curra.addEventListener('change', ()=>{
+const ltscurr=jsonData.bomSol.bombas
+currType(6,ltscurr);
+selPump=datosBomba(jsonData);
+if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+maxCDT();
+console.log('en change listen de Alt',pumpCurrT);
+
+});
+currd.addEventListener('change', ()=>{
+  const ltscurr=jsonData.bomSol.bombasKolosal
+  currType(7,ltscurr);
   selPump=datosBomba(jsonData);
   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
   maxCDT();
   console.log('en change listen de Alt',pumpCurrT);
   
   });
-  currd.addEventListener('change', ()=>{
-    const ltscurr=jsonData.bomSol.bombasKolosal
-    currType(7,ltscurr);
-    selPump=datosBomba(jsonData);
-    if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-    maxCDT();
-    console.log('en change listen de Alt',pumpCurrT);
-    
-    });
-  gasIndhtm.addEventListener('change',()=>{descValido=null;});
+gasIndhtm.addEventListener('change',()=>{descValido=null;});
+
+/*jsonData.bomSol.vendedores.forEach(vend => {
+  const option = document.createElement('option');
+  option.value = vend.nombre;
+  option.text = vend.nombre;
+  vendSelect.appendChild(option);
+});
+   
+   pyct.rep= vendSelect;*/
+chkDesA.addEventListener('change', () => {
+  if(chkDesA.checked==true){
+        pyct.descAdd={flag:1,text:''};
+        DescAdd.style.display= 'block';    
+  }else{DescAdd.style.display= 'none';
+    pyct.descAdd={flag:0};
+  }
+  console.log(pyct.descAdd.flag);
+});
+document.getElementById('descAdd').addEventListener('input', function () {
+  if (this.value.length >= 280) {
+    alert('Has alcanzado el límite máximo de caracteres.');
+  }
+});
+
+CDT.addEventListener('blur', () => {
+selPump=datosBomba(jsonData);
+if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
+
+});
+temp.addEventListener('change', () => {
+  if(selPump && pumpCurrT==1){
+  motorBomba(jsonData,selPump.hp);
+  console.log(pyct.motor);
+  }
+  });
+/*vendSelect.addEventListener('change', () => {
+  pyct.rep= selectVend(jsonData.bomSol.vendedores);
+  });*/
   
-  /*jsonData.bomSol.vendedores.forEach(vend => {
-    const option = document.createElement('option');
-    option.value = vend.nombre;
-    option.text = vend.nombre;
-    vendSelect.appendChild(option);
+ltsSelect.addEventListener('change', () => {
+   selPump=datosBomba(jsonData);
+   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+   console.log(pyct.motor); 
   });
-     
-     pyct.rep= vendSelect;*/
-  chkDesA.addEventListener('change', () => {
-    if(chkDesA.checked==true){
-          pyct.descAdd={flag:1,text:''};
-          DescAdd.style.display= 'block';    
-    }else{DescAdd.style.display= 'none';
-      pyct.descAdd={flag:0};
+    }else{
+      throw new Error('Error con bombsol');
     }
-    console.log(pyct.descAdd.flag);
-  });
-  document.getElementById('descAdd').addEventListener('input', function () {
-    if (this.value.length >= 280) {
-      alert('Has alcanzado el límite máximo de caracteres.');
-    }
-  });
-  
-  CDT.addEventListener('blur', () => {
-  selPump=datosBomba(jsonData);
-  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
-  
-  });
-  temp.addEventListener('change', () => {
-    if(selPump && pumpCurrT==1){
-    motorBomba(jsonData,selPump.hp);
-    console.log(pyct.motor);
-    }
-    });
-  /*vendSelect.addEventListener('change', () => {
-    pyct.rep= selectVend(jsonData.bomSol.vendedores);
-    });*/
-    
-  ltsSelect.addEventListener('change', () => {
-     selPump=datosBomba(jsonData);
-     if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-     console.log(pyct.motor); 
-    });
+
+ 
+
+}
 
 
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
 
 async function authMain(){     
 try {
@@ -107,6 +126,7 @@ try {
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
         if(AL===2){dispLevel='.gere'}
+        init();
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
@@ -118,10 +138,7 @@ try {
     window.location.href = '/tables.html';
     return;}
 
-   const vendSelect = selectVend(reps,repId);
-   const salesRep = document.getElementById('vendSelect');
-   salesRep.value= vendSelect?.nombre
-   pyct.rep= vendSelect;
+   
     } else if (response.status === 401) {
        
       k=1
@@ -266,6 +283,7 @@ async function valLogin(){
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
         if(AL===2){dispLevel='.gere'}
+        init();
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
@@ -275,11 +293,7 @@ async function valLogin(){
     alert('Este usuario no puede cotizar')
     window.location.href = '/tables.html';
     return;}
-   const vendSelect = selectVend(reps,repId);
-   const salesRep = document.getElementById('vendSelect');
-   salesRep.value= vendSelect?.nombre
-   pyct.rep= vendSelect;
-   const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
    myModal.hide();
 
   } 

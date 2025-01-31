@@ -18,6 +18,7 @@ async function authMain(){
          UI.style.display='none';
          window.location.href = '/';
          return;}
+        init(); 
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
            element.style.display='block';
@@ -156,7 +157,7 @@ async function valLogin(){
     k=k+1;
     }
   }
-  else if(auth.token!='invalid'&& auth.id!=null){  
+  else if(auth.token!='invalid'&& auth.id!=null){ 
    authL=auth.authL
    let dispLevel;
    if(authL===3){dispLevel='.dirW'}
@@ -167,7 +168,8 @@ async function valLogin(){
     alert('Este usuario no tiene acceso')
     window.location.href = '/';
     return;}
-   const authdisp=document.querySelectorAll(dispLevel);
+    init();  
+    const authdisp=document.querySelectorAll(dispLevel);
    authdisp.forEach(element=>{
       element.style.display='block';
    });
@@ -196,10 +198,22 @@ async function bomSol() {
   }
 }
 
-(async () => {
+async function gtus() {
+  const url = `api/cmbeos/gtus`;
+  try {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error('Error fetching data bombSol:', error);
+  }
+}
+
+
+async function init(){
   jason = await bomSol(); 
   PopulateMenus();
-})();
+};
 
   function PopulateMenus(){ // Use const for function expressions
     
@@ -266,39 +280,49 @@ if(ul=='korUl'|| ul=='kolosUl'){
     }); 
     
   }else if(ul=='modUsr'){
-    Ul.addEventListener('click', () =>{ 
-      addUsr(ul);
+    Ul.addEventListener('click', async () =>{ 
+     const dataUs= await gtus();
+     createTables(dataUs,ul);
     }); 
     
   }
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
- function addUsr(ul){
-  clearTables(["tKOR","tEQ"]);
-  if(ul==='addUsr'){
+ async function addUsr(ul,edtUsr){
+  let NewUser;
+  clearTables(["tKOR","tEQ","tVen"]);  
   const usrCont=document.getElementById('addUsrDiv');
   usrCont.style.display='flex';
   const vendCont = document.getElementById('addVenDiv');
   const vFlag =  document.getElementById('chkVend'); 
   const svBtn = document.getElementById('usrSaveBtn'); 
+  const cnclB = document.getElementById('usrCnclBtn'); 
   const usrHtm = document.getElementById('adduser');
   const pwdHtm = document.getElementById('addpw');
   const permHtm = document.getElementById('perm');
   const veNaHtm = document.getElementById('veNom');
   const veTlHtm = document.getElementById('venTel');
   const veMaHtm = document.getElementById('venMail');
+  if(ul==='addUsr'){
     vFlag.addEventListener('change',()=>{
       vendCont.style.display= vFlag.checked? 'flex':'none'
     });
+  }
     let isCreatingUser = false;
     svBtn.addEventListener('click', async () => {
       if (isCreatingUser) return;
       isCreatingUser = true;
-      const NewUser = crtUsr();
+      if(!edtUsr){
+      NewUser = crtUsr();
+      }else{
+      NewUser = edtUsr;  
+      }
+      if(NewUser){
       const created = await crtDbUsr(NewUser);
       if (created === true) {
-      alert('Usuario creado exitosamente');
+      const creado=ul=='addUsr'? 'creado':'modificado';
+      alert(`Usuario ${creado} exitosamente`);
       usrHtm.value = '';
       pwdHtm.value = '';
       permHtm.value = '';
@@ -310,17 +334,31 @@ if(ul=='korUl'|| ul=='kolosUl'){
       } else {
       alert('Error al crear usuario');
       }
+      }
       isCreatingUser = false;
     });
 
 
-  }if(ul==='modUsr'){
-    clearTables(["tKOR","tEQ"]);
-    
-    //const vendArr= response.json()
-
-  }  
-
+  
+  if(ul==='edtUsr'){
+      cnclB.style.display='flex';
+      cnclB.addEventListener('click',async()=>{
+        const dataUs= await gtus();
+        createTables(dataUs,'modUsr');
+        cnclB.style.display='none';
+      })
+      const venId=edtUsr.usr.vendId
+      usrHtm.value = edtUsr.usr.mail;
+      pwdHtm.value = edtUsr.usr.pw;
+      permHtm.value = edtUsr.usr.auth;
+      veNaHtm.value =  venId==''?'':edtUsr.vend.nombre;
+      veTlHtm.value = venId==''?'':edtUsr.vend.tel;
+      veMaHtm.value = venId==''?'':edtUsr.vend.mail;
+      vFlag.disabled=true;
+      vFlag.checked = venId==''?false:true;
+      vendCont.style.display= vFlag.checked? 'flex':'none'
+  }
+ 
  }
   
 function crtUsr(){
@@ -333,7 +371,7 @@ function crtUsr(){
   const veMaHtm = document.getElementById('venMail');
   let usr = usrHtm.value.trim();
   let pwd = pwdHtm.value.trim();
-  let usrLv = permHtm.value
+  let usrLv = parseInt(permHtm.value);
   let venom = veNaHtm.value.trim();
   let vetel = veTlHtm.value.trim();
   let vemail= veMaHtm.value.trim();
@@ -344,7 +382,6 @@ function crtUsr(){
   vetel = vetel === '' ? null : vetel;
   vemail = vemail === '' ? null : vemail;
   usrLv = usrLv === '' ? null : usrLv;
-  usrHtm.addEventListener
   if (usr == null) {
     usrHtm.classList.add('is-invalid');
     alert('El campo Usuario no puede estar vacío');
@@ -426,15 +463,18 @@ async function crtDbUsr(newUser){
   
 }
 
-async function fchUser(){
-//fetch a endpoint que traiga los usuarios sin passwor 
-
-}
-
-async function  modUsr(){
-  //hacer un put a la api con el vend id y el usr id para modificarlos 
- 
-
+async function  modUsr(vId,usrM){
+  console.log('tRow=>usrM',usrM);
+  const rep =selectVend(jason.bomSol.vendedores,vId);
+  const venFlag= !vId? false:true;
+  const edtUsr = {
+    usr:usrM,
+    flag:venFlag,
+    vend:rep
+  };
+  console.log('edtUsr',edtUsr);
+  
+  addUsr('edtUsr',edtUsr);
 }
 async function dltUser(venId,usrId) {
   //hacer delete a la api con el id en el endpoint nadamas elegir ese objeto borrarlo 
@@ -453,9 +493,41 @@ async function dltUser(venId,usrId) {
   container.style.display='none';
  
   }
+
+  function crtVend(rep){
+    console.log('rep crtven',rep);
+    clearTables(["tVen"]);
+      const container = document.getElementById("paSubTablas");
+      const table = document.createElement("table");
+      table.classList.add("table", "tVen","table-success", "table-striped");
+      table.id='reps';
+      const caption = document.createElement("caption");
+      caption.textContent = `Datos de vendedor`;
+      caption.style.fontWeight = 'bold'; // Make the caption text bold
+      table.appendChild(caption);
+      keys = Object.keys(rep);
+      const headerRow = createHeaders(keys);
+      table.appendChild(headerRow);
+      const tbody = document.createElement("tbody");
+        const row = document.createElement("tr");
+        Object.entries(rep).forEach(([key,value])=> {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);     
+       });  
+        tbody.appendChild(row);  
+      
+      table.appendChild(tbody);
+
+      
+      container.appendChild(table);
+    
+   
+  }
+
   function createTables (anchor,ul){
     if(ul!='panelT'){
-    clearTables(["tKOR","tEQ"]);
+    clearTables(["tKOR","tEQ","tVen"]);
     }
     const tabCont= ul== 'panM'? 'paSubTablas': 'paTablas';
     const container = document.getElementById(tabCont);
@@ -484,6 +556,14 @@ async function dltUser(venId,usrId) {
     }else if(ul=='panelT'){
       tabArr  = jason.bomSol.solar
       captntext = 'Tipo de Panel';
+    }else if(ul=='modUsr'){
+
+      tabArr ={ users:[...anchor]};
+      anchor='users';
+      tId='UserMod'
+      console.log('anchor',anchor);
+      console.log('tabArr',tabArr);
+      captntext = 'Usuarios';
     }
 
     /////create table
@@ -513,9 +593,32 @@ async function dltUser(venId,usrId) {
     tabArr[anchor].forEach((tRow) => {
       const row = document.createElement("tr");
       Object.entries(tRow).forEach(([key,value])=> {
-      const cell = document.createElement("td");
-      cell.textContent = value;
-      row.appendChild(cell);
+        if(ul=='modUsr' && key=='auth'){
+          const cell = document.createElement("td");
+          cell.textContent = value==0? "Vendedor":value==1?'Compras':value==2?'Gerencia Ventas':'Dirección';
+          row.appendChild(cell);
+        }else if(ul=='modUsr' && key=='vendId'){
+          if(value!=''){
+          const cell = document.createElement("td");
+          const venBtn = document.createElement("button");
+          venBtn.classList.add("btn", "btn-success", "venbtn");
+          venBtn.textContent='Ver Datos';
+          venBtn.addEventListener("click", () => {
+           const rep =selectVend(jason.bomSol.vendedores,value);
+           crtVend(rep);
+          });
+          cell.appendChild(venBtn);
+          row.appendChild(cell);}else{
+                                  const cell = document.createElement("td");
+                                  cell.textContent = '';
+                                  row.appendChild(cell);
+                                }
+
+        }else{  
+         const cell = document.createElement("td");
+         cell.textContent = value;
+         row.appendChild(cell);
+         }
       });
       ////////////////////////////////////////////////CORREGIR para ser comun para toda tabla 
       const editCell = document.createElement("td");
@@ -523,7 +626,7 @@ async function dltUser(venId,usrId) {
       editButton.classList.add("btn", "btn-success", "editbtn");
       editButton.textContent = "Editar";
       editButton.addEventListener("click", () => {
-      const origRow = row.cloneNode(true);
+      
       if(ul=='cableMenu'){
       modelo = String(tRow.calibre);
       }
@@ -545,7 +648,16 @@ async function dltUser(venId,usrId) {
       if(ul=='panelT'){
       modelo = tRow.tipoPaneles;
       }
-      editRow(modelo,tId,ul,keys,origRow);
+      if(ul=='modUsr'){
+        modelo = tRow.id;
+      }
+      if(ul!='modUsr'){
+      const origRow = row.cloneNode(true); 
+       editRow(modelo,tId,ul,keys,origRow);
+      }else{
+        
+        modUsr(tRow.vendId,tRow);
+      }
       });
       editCell.appendChild(editButton);
       row.appendChild(editCell);
@@ -564,6 +676,22 @@ async function dltUser(venId,usrId) {
         const th = document.createElement("th");
         th.textContent = 'Equipo Bomba';
         headerRow.appendChild(th);
+      }else if (key === 'pw') {
+        const th = document.createElement("th");
+        th.textContent = 'Contraseña';
+        headerRow.appendChild(th);
+      }else if (key === 'vendId') {
+        const th = document.createElement("th");
+        th.textContent = 'Vendedor';
+        headerRow.appendChild(th);
+      }else if (key === 'mail') {
+        const th = document.createElement("th");
+        th.textContent = 'Usuario';
+        headerRow.appendChild(th);
+      }else if (key === 'auth') {
+        const th = document.createElement("th");
+        th.textContent = 'Tipo';
+        headerRow.appendChild(th);
       } else if (key !== 'eqCants') {
         const th = document.createElement("th");
         th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
@@ -576,7 +704,7 @@ async function dltUser(venId,usrId) {
 
   function showEq(pump,descE){
 
-    clearTables(["tEQ"]);
+    clearTables(["tEQ","tVen"]);
     const ids=pump.equipB;
     const cants=pump.eqCants
     eqBomba=jason.bomSol.equipamientoBomba;
@@ -625,7 +753,7 @@ async function dltUser(venId,usrId) {
   }
 
 function crtShwEq(ancVal,dat,ul){
-  clearTables(["tKOR","tEQ"]);  
+  clearTables(["tKOR","tEQ","tVen"]);  
   const container = document.getElementById("paTablas");
   const tabArr = Object.entries(dat).reduce((acc, [key, value]) => {
     if (key === ancVal) {
@@ -672,7 +800,7 @@ function crtShwEq(ancVal,dat,ul){
 
 
   function crtShwPumps(modRang,dat,ul) {
-    clearTables(["tKOR","tEQ"]);
+    clearTables(["tKOR","tEQ","tVen"]);
    
       const container = document.getElementById("paTablas");
       const tabArr = dat.find(arrT =>  arrT.rangMod=== modRang);
@@ -899,7 +1027,18 @@ if (Object.keys(changes).length === 0) {
 
  
 }
+
+function selectVend(data,id){
+
+  for(const rep of data){
+     if(rep.id == id){
+       return rep;
+     }
+   }
+   console.error(`No existe el vendedor con id: ${id}`);
+   return null;
     
+ }
 
   
 
