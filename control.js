@@ -726,7 +726,69 @@ function actualizar() {
     a = document.getElementById('input0').value;
     alert('Los datos se actualizaron correctamente!');
 }
+async function gtCot() {
+  const url = `api/cmbeos/gtcot`;
+  try {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error('Error fetching data Cots:', error);
+  }
+}
 
+async function busCot(){
+  const busBtn=document.getElementById('buscBtn');
+  const cots= await gtCot();
+  const divRw=document.getElementById('idDiv')
+  const srch= document.createElement('input');
+  srch.placeholder='Identificador Existente';
+  srch.type='text';
+  srch.id='serId';
+  busBtn.addEventListener('click',()=>{
+    if(srch){
+    const id=srch.value
+    if(cots){
+    const selCot=cots.find(cot => cot.id === id);}else{throw new Error('Fatal no se puede obtener la cot');}
+    if(!selCot){
+      srch.classList.add('is-invalid')
+    }else{
+      srch.classList.remove('is-invalid')
+    fillForm(selCot);}
+    }else{
+      busCot();
+    }
+  });
+  divRw.appendChild(srch);  
+}
+
+function fillForm(data){
+  const nom=document.getElementById('input1'); 
+  const loc=document.getElementById('input2');
+  const km=document.getElementById('input3');
+  const cdt=document.getElementById('input6');  
+  const hpMan=document.getElementById('solHp');  
+  const distP=document.getElementById('input8');
+  const proPozo=document.getElementById('input5');
+  const marg=document.getElementById('input7');
+  const grua=document.getElementById('input9');
+  const myButton = document.getElementById('validar');
+  const cotBtn=document.getElementById('acot'); 
+  const tipCambio=document.getElementById('input0'); 
+  const ltsS=document.getElementById('ltsSelect');
+  const descAdd=document.getElementById('descAdd');
+  const idCot=document.getElementById('idCot');
+  const bomb=document.getElementById('check1');
+  const sola=document.getElementById('check2');
+  const checkDesA=document.getElementById('checkDesA');
+  const desAddT=document.getElementById('descAdd');
+  const agC = document.getElementById('check0');
+  const dirC = document.getElementById('check6');
+  const altC = document.getElementById('check7');
+  const allInp =document.querySelectorAll('vLock');
+
+  
+}
 
 function datosBomba(data) {
 let datosBomba= null ;

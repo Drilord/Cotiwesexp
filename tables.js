@@ -1,4 +1,4 @@
-let jason, cotis, a=1, buttonState = 0, k, authL, KORpump, kolosP ;
+let jason, cotis, a=1, buttonState = 0, k, authL, KORpump, kolosP,dtCot ;
 /////////////////////////////////////////LOGIN///////////////////////////////////////////
 
 async function authMain(){     
@@ -209,6 +209,17 @@ async function gtus() {
   }
 }
 
+async function gtCot() {
+  const url = `api/cmbeos/gtcot`;
+  try {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error('Error fetching data Cots:', error);
+  }
+}
+
 
 async function init(){
   jason = await bomSol(); 
@@ -232,6 +243,7 @@ async function init(){
       pupUls('','panM');
       pupUls('','addUsr');
       pupUls('','modUsr');
+      pupUls('','cots')
       ;
 
   }
@@ -285,6 +297,11 @@ if(ul=='korUl'|| ul=='kolosUl'){
      createTables(dataUs,ul);
     }); 
     
+  }else if(ul=='cots'){
+    Ul.addEventListener('click', async () =>{ 
+     dtCot= await gtCot();
+     createTables(dtCot,ul);
+    }); 
   }
 }
 
@@ -309,7 +326,7 @@ if(ul=='korUl'|| ul=='kolosUl'){
       vendCont.style.display= vFlag.checked? 'flex':'none'
     });
   }
-    let isCreatingUser = false;
+    let isCreatingUser = false, mod=false;
     svBtn.addEventListener('click', async () => {
       if (isCreatingUser) return;
       isCreatingUser = true;
@@ -317,9 +334,10 @@ if(ul=='korUl'|| ul=='kolosUl'){
       NewUser = crtUsr();
       }else{
       NewUser = edtUsr;  
+      mod=true;
       }
       if(NewUser){
-      const created = await crtDbUsr(NewUser);
+      const created = await crtDbUsr(NewUser,mod);
       if (created === true) {
       const creado=ul=='addUsr'? 'creado':'modificado';
       alert(`Usuario ${creado} exitosamente`);
@@ -354,7 +372,6 @@ if(ul=='korUl'|| ul=='kolosUl'){
       veNaHtm.value =  venId==''?'':edtUsr.vend.nombre;
       veTlHtm.value = venId==''?'':edtUsr.vend.tel;
       veMaHtm.value = venId==''?'':edtUsr.vend.mail;
-      vFlag.disabled=true;
       vFlag.checked = venId==''?false:true;
       vendCont.style.display= vFlag.checked? 'flex':'none'
   }
@@ -443,14 +460,25 @@ function crtUsr(){
 
 }
 
-async function crtDbUsr(newUser){
+async function crtDbUsr(newUser,mod){
  
   try {
+    if(!mod){
     const response = await fetch('api/cmbeos/newven', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser)
     });
+  }else if(mod===true){
+    const endpoint = `api/cmbeos/newven/${newUser.vend.id}`;
+    const response = await fetch(endpoint, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newUser)
+    });
+
+
+  }
     const result = await response.json();
     
     return result.succ===true;
@@ -564,8 +592,22 @@ async function dltUser(venId,usrId) {
       console.log('anchor',anchor);
       console.log('tabArr',tabArr);
       captntext = 'Usuarios';
+    }else if(ul=='cots'){
+      tabArr ={ cots:[...anchor]};
+      venSel=document.getElementById('venFilt');
+      venSel.addEventListener('change',()=>{
+        const filtVen=venSel.value;
+        if(filtVen=='all'){
+          createTables(dtCot,ul);
+        }else{
+          const filtCots=anchor.filter(cot=>cot.vendId==filtVen);
+          createTables(filtCots,ul);
+        }
+      }); 
+      anchor='cots';
+      tId='Cots'
+      captntext = 'Cotizaciones';
     }
-
     /////create table
     const table = document.createElement("table");
     table.classList.add("table", "tKOR","table-success", "table-striped");

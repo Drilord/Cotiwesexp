@@ -115,12 +115,12 @@
         <div class="col-2 col-md-2">Cotizar:</div>
         <div class="col-4 col-md-2 form-switch">
           
-          <input class="form-check-input vLock" type="checkbox" id="check1" checked onchange="cotTypVal()"/>
+          <input class="form-check-input vLock ctTy" type="checkbox" id="check1" checked onchange="cotTypVal()"/>
           <label class="form-check-label" for="check1">Bombeo</label>
         </div>
         <div class="col-4 col-md-2 form-switch">
           
-          <input class="form-check-input vLock" type="checkbox" id="check2" checked onchange="cotTypVal()"/>
+          <input class="form-check-input vLock ctTy" type="checkbox" id="check2" checked onchange="cotTypVal()"/>
           <label class="form-check-label" for="check2">Solar</label>
         </div>
         <div class="col-4 d-md-block d-none"> 
@@ -133,8 +133,16 @@
             value="Autogenerado" />
             <label for="idCot" >Identificador:</label>
           </div>
+          <div class="col-5 d-md-block d-none">
+          </div> 
+        </div>  
+        <div class="row">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-5 d-md-block d-none"  id="idDiv">
+            <button class="btn btn-success" id="buscBtn" onclick="busCot()" >Buscar...</button>
+          </div>
           <div class="col-5 d-md-block d-none"></div> 
-        </div> 
+        </div>
         <div class="row">
         <div class="col-2 d-md-block d-none"></div>
         <div class="col-10 col-md-5 form-floating">
@@ -283,7 +291,7 @@
         </div>
         <div class="col-12 col-md-2 form-switch">
           <input class="str form-check-input vLock" onchange="validstruct(5)" type="checkbox" id="check5"/>
-          <label class="form-check-label" for="check4">Coplanar</label>
+          <label class="form-check-label" for="check5">Coplanar</label>
         </div> 
         <div class="col-4 d-md-block d-none"></div>
       </div>
