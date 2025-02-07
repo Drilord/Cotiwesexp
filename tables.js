@@ -13,7 +13,7 @@ async function authMain(){
         if(authL===2){dispLevel='.gere'}
         if(authL===1){dispLevel='.comp'}
         if(authL===0){
-         alert('Este usuario no tiene acceso')
+          toastr.error('Este usuario no tiene acceso', 'Sin Acceso!')
          const UI=document.getElementById('main');
          UI.style.display='none';
          window.location.href = '/';
@@ -70,7 +70,9 @@ async function authMain(){
       } 
     } catch (error) {
       console.error('Network error:', error);
-      alert("A network error occurred.");
+      toastr.error("A network error occurred.", "Network Error");
+      toastr.error("A network error occurred.", "Network Error");
+      toastr.error("A network error occurred.", "Network Error");
     }
   
   
@@ -99,12 +101,12 @@ async function valLogin(){
   pwd = pwd === '' ? null : pwd;
   if(usr==null){
     usrHtm.classList.add('is-invalid')
-    alert('EL campo Usuario no puede estar vacio')
+    toastr.error('EL campo Usuario no puede estar vacio', 'Corrija Para Continuar')
     return;
   }
   if(pwd==null){
     usrHtm.classList.add('is-invalid')
-    alert('EL campo Contraseña no puede estar vacio')
+    toastr.error('EL campo Contraseña no puede estar vacio', 'Corrija Para Continuar')
     return;
   }
   const login= {p:pwd,u:usr}
@@ -165,7 +167,7 @@ async function valLogin(){
    if(authL===1){dispLevel='.comp'}
    if(authL===0){
     usrHtm.classList.add('is-invalid')
-    alert('Este usuario no tiene acceso')
+    toastr.error('Este usuario no tiene acceso', 'Sin Acceso!')
     window.location.href = '/';
     return;}
     init();  
@@ -210,7 +212,7 @@ async function gtus() {
 }
 
 async function gtCot() {
-  const url = `api/cmbeos/gtcot`;
+  const url = `api/cots`;
   try {
     const response = await fetch(url);
     const jsonData = await response.json();
@@ -306,79 +308,196 @@ if(ul=='korUl'|| ul=='kolosUl'){
 }
 
 /////////////////////////////////////////////////////Add user////////////////////////////////////////
- async function addUsr(ul,edtUsr){
-  let NewUser;
-  clearTables(["tKOR","tEQ","tVen"]);  
-  const usrCont=document.getElementById('addUsrDiv');
-  usrCont.style.display='flex';
-  const vendCont = document.getElementById('addVenDiv');
-  const vFlag =  document.getElementById('chkVend'); 
-  const svBtn = document.getElementById('usrSaveBtn'); 
-  const cnclB = document.getElementById('usrCnclBtn'); 
-  const usrHtm = document.getElementById('adduser');
-  const pwdHtm = document.getElementById('addpw');
-  const permHtm = document.getElementById('perm');
-  const veNaHtm = document.getElementById('veNom');
-  const veTlHtm = document.getElementById('venTel');
-  const veMaHtm = document.getElementById('venMail');
-  if(ul==='addUsr'){
-    vFlag.addEventListener('change',()=>{
-      vendCont.style.display= vFlag.checked? 'flex':'none'
-    });
-  }
-    let isCreatingUser = false, mod=false;
-    svBtn.addEventListener('click', async () => {
-      if (isCreatingUser) return;
-      isCreatingUser = true;
-      if(!edtUsr){
-      NewUser = crtUsr();
-      }else{
-      NewUser = edtUsr;  
-      mod=true;
+  async function addUsr(ul, edtUsr) {
+    let NewUser;
+    clearTables(["tKOR", "tEQ", "tVen"]);
+    const usrCont = document.getElementById('addUsrDiv');
+    usrCont.style.display = 'flex';
+    const vendCont = document.getElementById('addVenDiv');
+    const vFlag = document.getElementById('chkVend');
+    const svBtn = document.getElementById('usrSaveBtn');
+    const cnclB = document.getElementById('usrCnclBtn');
+    const delbtn = document.getElementById('usrDelBtn');
+    const usrHtm = document.getElementById('adduser');
+    const pwdHtm = document.getElementById('addpw');
+    const permHtm = document.getElementById('perm');
+    const veNaHtm = document.getElementById('veNom');
+    const veTlHtm = document.getElementById('venTel');
+    const veMaHtm = document.getElementById('venMail');
+    const pwLegend = document.getElementById('chgPwLeg');
+  
+    // Remove existing event listeners
+    const newVFlag = vFlag.cloneNode(true);
+    vFlag.parentNode.replaceChild(newVFlag, vFlag);
+    const newSvBtn = svBtn.cloneNode(true);
+    svBtn.parentNode.replaceChild(newSvBtn, svBtn);
+    const newCnclB = cnclB.cloneNode(true);
+    cnclB.parentNode.replaceChild(newCnclB, cnclB);
+    const newDelbtn = delbtn.cloneNode(true);
+    delbtn.parentNode.replaceChild(newDelbtn, delbtn);
+  
+    newVFlag.addEventListener('change', () => {
+      vendCont.style.display = newVFlag.checked ? 'flex' : 'none';
+      if (edtUsr) {
+        edtUsr.flag = newVFlag.checked;
       }
-      if(NewUser){
-      const created = await crtDbUsr(NewUser,mod);
-      if (created === true) {
-      const creado=ul=='addUsr'? 'creado':'modificado';
-      alert(`Usuario ${creado} exitosamente`);
+    });
+  
+    if (ul === 'addUsr') {
+      newSvBtn.textContent = 'Agregar Usuario';
+      newCnclB.style.display = 'none';
+      newDelbtn.style.display = 'none';
+      pwLegend.style.display = 'none';
       usrHtm.value = '';
       pwdHtm.value = '';
       permHtm.value = '';
       veNaHtm.value = '';
       veTlHtm.value = '';
       veMaHtm.value = '';
-      vFlag.checked = false;
-      vendCont.style.display = 'none';
+    }
+  
+    let isCreatingUser = false, mod = false;
+    newSvBtn.addEventListener('click', async () => {
+      if (isCreatingUser) return;
+      isCreatingUser = true;
+      if (!edtUsr) {
+        NewUser = crtUsr();
       } else {
-      alert('Error al crear usuario');
+        NewUser = modUsr(edtUsr);
+        mod = true;
       }
+      if (NewUser) {
+        const created = await crtDbUsr(NewUser, mod);
+        if (created === true) {
+          const creado = ul == 'addUsr' ? 'creado' : 'modificado';
+          toastr.success(`Usuario ${creado} exitosamente`, `Cambios Guardados`);
+          if (creado == 'creado') {
+            usrHtm.value = '';
+            pwdHtm.value = '';
+            permHtm.value = '';
+            veNaHtm.value = '';
+            veTlHtm.value = '';
+            veMaHtm.value = '';
+            newVFlag.checked = false;
+            vendCont.style.display = 'none';
+            jason = await bomSol();
+          } else {
+            jason = await bomSol();
+            const dataUs = await gtus();
+            createTables(dataUs, 'modUsr');
+            newCnclB.style.display = 'none';
+            newDelbtn.style.display = 'none';
+          }
+        } else if (created === null) {
+          toastr.error('Error al crear o modificar usuario', 'ERROR en APP');
+          toastr.error('Error al crear o modificar usuario', 'ERROR en APP');
+          toastr.error('Error al crear o modificar usuario', 'ERROR en APP');
+          return;
+        }
       }
       isCreatingUser = false;
     });
-
-
   
-  if(ul==='edtUsr'){
-      cnclB.style.display='flex';
-      cnclB.addEventListener('click',async()=>{
-        const dataUs= await gtus();
-        createTables(dataUs,'modUsr');
-        cnclB.style.display='none';
-      })
-      const venId=edtUsr.usr.vendId
+    if (ul === 'edtUsr') {
+      newSvBtn.textContent = 'Guardar Cambios';
+      newCnclB.style.display = 'flex';
+      newDelbtn.style.display = 'block';
+      pwLegend.style.display = 'flex';
+      newCnclB.addEventListener('click', async () => {
+        const dataUs = await gtus();
+        createTables(dataUs, 'modUsr');
+        newCnclB.style.display = 'none';
+        newDelbtn.style.display = 'none';
+      });
+      newDelbtn.addEventListener('click', async () => {
+        if (newDelbtn.disabled) return; // Prevent multiple clicks
+        newDelbtn.disabled = true; // Disable the button to prevent multiple clicks
+        if (confirm('¿Desea eliminar este usuario?')) {
+          console.log('edtUsr elim usr', edtUsr);
+          const delUsr = await delUser(edtUsr);
+          if (delUsr) {
+            toastr.success('Usuario eliminado Exitosamente', 'Usuario Eliminado');
+            toastr.warning('El vendedor tambien se elimina', 'Vendedor Eliminado');
+            const dataUs = await gtus();
+            createTables(dataUs, 'modUsr');
+            newCnclB.style.display = 'none';
+          } else {
+            toastr.error('Error al eliminar usuario', 'ERROR en APP');
+            toastr.error('Error al eliminar usuario', 'ERROR en APP');
+            toastr.error('Error al eliminar usuario', 'ERROR en APP');
+            toastr.error('Error al eliminar usuario', 'ERROR en APP');
+            return;
+          }
+        }
+        newDelbtn.disabled = false; // Re-enable the button after the operation is complete
+      });
+      const venId = edtUsr.usr.vendId;
       usrHtm.value = edtUsr.usr.mail;
       pwdHtm.value = edtUsr.usr.pw;
       permHtm.value = edtUsr.usr.auth;
-      veNaHtm.value =  venId==''?'':edtUsr.vend.nombre;
-      veTlHtm.value = venId==''?'':edtUsr.vend.tel;
-      veMaHtm.value = venId==''?'':edtUsr.vend.mail;
-      vFlag.checked = venId==''?false:true;
-      vendCont.style.display= vFlag.checked? 'flex':'none'
+      veNaHtm.value = venId == '' ? '' : edtUsr.vend.nombre;
+      veTlHtm.value = venId == '' ? '' : edtUsr.vend.tel;
+      veMaHtm.value = venId == '' ? '' : edtUsr.vend.mail;
+      newVFlag.checked = venId == '' ? false : true;
+      vendCont.style.display = newVFlag.checked ? 'flex' : 'none';
+    }
+  } 
+
+ async function delUser(edtUsr){
+  const usrId=edtUsr.usr.id;
+  const vendId=edtUsr.usr.vendId===''?'none':edtUsr.usr.vendId;
+  try {
+    const response = await fetch(`api/cmbeos/newven/${usrId}/${vendId}`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({vendId:vendId})
+    });
+
+    const result = await response.json();
+    return result.succ===true;
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return null;
   }
- 
- }
+
+ } 
   
 function crtUsr(){
+ 
+  const vFlag =  document.getElementById('chkVend'); 
+  const usrHtm = document.getElementById('adduser');
+  const pwdHtm = document.getElementById('addpw');
+  const permHtm = document.getElementById('perm');
+  const veNaHtm = document.getElementById('veNom');
+  const veTlHtm = document.getElementById('venTel');
+  const veMaHtm = document.getElementById('venMail');
+  const vDt=valiDtUser();
+  if(vDt==false){return false;}
+  const newUser = {};
+  newUser.usr={
+    mail: usrHtm.value,
+    pw: pwdHtm.value,
+    auth: parseInt(permHtm.value),
+  };
+  const venFlag= vFlag.checked; 
+  console.log('venflag checked',venFlag);
+  if(venFlag===true){
+  newUser.flag=venFlag; 
+  newUser.vend={
+    nombre:veNaHtm.value,
+    tel:veTlHtm.value,
+    mail:veMaHtm.value
+  };
+ }else{
+  newUser.flag=false;
+  newUser.vend=null;
+
+ }
+ console.log('new user',newUser);
+ return newUser;
+
+}
+function valiDtUser(mod){
   const vFlag =  document.getElementById('chkVend'); 
   const usrHtm = document.getElementById('adduser');
   const pwdHtm = document.getElementById('addpw');
@@ -392,7 +511,7 @@ function crtUsr(){
   let venom = veNaHtm.value.trim();
   let vetel = veTlHtm.value.trim();
   let vemail= veMaHtm.value.trim();
-
+  
   usr = usr === '' ? null : usr;
   pwd = pwd === '' ? null : pwd;
   venom = venom === '' ? null : venom;
@@ -401,109 +520,183 @@ function crtUsr(){
   usrLv = usrLv === '' ? null : usrLv;
   if (usr == null) {
     usrHtm.classList.add('is-invalid');
-    alert('El campo Usuario no puede estar vacío');
-    return;
+    toastr.error('El campo Usuario no puede estar vacío', 'Corrija Para Continuar');
+    return false;
   }else{
     usrHtm.classList.remove('is-invalid');
   }
   if (pwd == null) {
-    alert('El campo Contraseña no puede estar vacío');
-    return;
+    toastr.error('El campo Contraseña no puede estar vacío', 'Corrija Para Continuar');
+    return false;
   } else {
     pwdHtm.classList.remove('is-invalid');
   }
   if (vFlag.checked && venom == null) {
     veNaHtm.classList.add('is-invalid');
-    alert('El campo Vendedor no puede estar vacío');
-    return;
+    toastr.errort('El campo Vendedor no puede estar vacío', 'Corrija Para Continuar');
+    return false;
   } else {
     veNaHtm.classList.remove('is-invalid');
   }
 
   if (vFlag.checked && vetel == null) {
     veTlHtm.classList.add('is-invalid');
-    alert('El campo Telefono no puede estar vacío');
-    return;
+    toastr.error('El campo Telefono no puede estar vacío', 'Corrija Para Continuar');
+    return false;
   } else {
     veTlHtm.classList.remove('is-invalid');
   }
 
   if (vFlag.checked && vemail == null) {
     veMaHtm.classList.add('is-invalid');
-    alert('El campo E-mail no puede estar vacío');
-    return;
+    toastr.error('El campo E-mail no puede estar vacío', 'Corrija Para Continuar');
+    return false;
   } else {
     veMaHtm.classList.remove('is-invalid');
   }
-
-  const newUser = {};
-  newUser.usr={
-    mail: usr,
-    pw: pwd,
-    auth: usrLv,
+  if (mod==true){
+    console.log('mod true');
+  }
+}
+function modUsr(edtUsr){
+  const vFlag =  document.getElementById('chkVend'); 
+  const usrHtm = document.getElementById('adduser');
+  const pwdHtm = document.getElementById('addpw');
+  const permHtm = document.getElementById('perm');
+  const veNaHtm = document.getElementById('veNom');
+  const veTlHtm = document.getElementById('venTel');
+  const veMaHtm = document.getElementById('venMail');
+  const vDt=valiDtUser(true);
+  if(vDt==false){return false;}
+  const modUser = {};
+  modUser.usr={
+    id:edtUsr.usr.id,
+    mail: usrHtm.value,
+    pw: pwdHtm.value,
+    auth: parseInt(permHtm.value),
+    vendId:edtUsr.usr.vendId
   };
   const venFlag= vFlag.checked; 
   console.log('venflag checked',venFlag);
   if(venFlag===true){
-  newUser.flag=venFlag; 
-  newUser.vend={
-    nombre:venom,
-    tel:vetel,
-    mail:vemail
+  modUser.flag=venFlag; 
+  modUser.vend={
+    id:edtUsr.vend.id!=''?edtUsr.vend.id:'assign',
+    nombre:veNaHtm.value,
+    tel:veTlHtm.value,
+    mail:veMaHtm.value
   };
- }else{
-  newUser.flag=false;
-  newUser.vend=null;
- }
- console.log('new user',newUser);
- return newUser;
+ }else if(venFlag===false && edtUsr.vend.id!=''){
+  modUser.flag=false;
+  modUser.vend={id:'delete'};
 
+ } 
+ console.log('mod user',modUser);
+ return modUser;
 }
 
+
+                        //user ,true
 async function crtDbUsr(newUser,mod){
- 
+ let response, changes = { usr: {}, vend: {} };
+ const vendedores=jason.bomSol.vendedores;
   try {
     if(!mod){
-    const response = await fetch('api/cmbeos/newven', {
+    response = await fetch('api/cmbeos/newven', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newUser)
     });
   }else if(mod===true){
-    const endpoint = `api/cmbeos/newven/${newUser.vend.id}`;
-    const response = await fetch(endpoint, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newUser)
-    });
+      //validate changes made on user
+      const data = await gtus();
+      console.log('data',data);
+      console.log('newUser',newUser);
+      if(!data){toastr.error('Error con guts', 'ERROR en APP');return false;}
+      const currUsr = data.find(usr=>usr.id==newUser.usr.id);
+      console.log('currUsr',currUsr);
+      if(!currUsr){
+        toastr.error('No se encuentra el usuario a modificar', 'ERROR en APP');
+        return false;
+      }else{
+        changes.usr.id=currUsr.id;
+        const entries = Object.entries(newUser.usr);
+        entries.forEach(([key, value]) => {
+          if(currUsr[key] != value){
+            changes.usr[key] = value;
+          }
+        });
+         
+        if(newUser.flag==true){
+          
+           const newVId = newUser.vend.id;
+           console.log('newVId en crtdbuser mod true y flag true',newVId);
+           changes.vend.id = newVId;    
+          const rep =selectVend(vendedores,newVId);
+          if(rep){
+            console.log('rep crtdbuser en mod tru y flag true',rep);
+          const vEntries = Object.entries(newUser.vend);
+          vEntries.forEach(([key, value]) => {
+            if(rep[key] != value){
+              changes.vend[key] = value;
+            }
+          });
+          changes.flag = newUser.flag; 
+        }else{
+          changes.vend = newUser.vend;
+          changes.flag = newUser.flag;
+        }
+        }else if(newUser.flag==false && currUsr.vendId!=''){
+          changes.vend={id:currUsr.vendId};
+          changes.flag=false;
+          changes.usr.vendId='delete';
+        }
 
+      }
+      
+      if(Object.keys(changes.usr).length == 1 && changes.usr.hasOwnProperty('id') && Object.keys(changes.vend).length === 1 && changes.vend.hasOwnProperty('id')) {
+        toastr.warning('No se realizaron cambios','Sin Cambios');
+        return false;
+      } else {
+        
+        console.log('changes', changes);
+        const endpoint = `api/cmbeos/newven/${changes.vend.id}`;
+        response = await fetch(endpoint, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(changes)
+        });
+      }
 
-  }
+    }
+
     const result = await response.json();
     
     return result.succ===true;
 
     } catch (error) {
-    console.error('Error creating user:', error);
-    return false;
+    console.error('Error creating or modifying user:', error);
+    return null;
   }
 
   
 }
 
-async function  modUsr(vId,usrM){
+async function  edtUsr(vId,usrM){
   console.log('tRow=>usrM',usrM);
   const rep =selectVend(jason.bomSol.vendedores,vId);
+  const voidRep={id:'',nombre:'',tel:'',mail:''};
   const venFlag= !vId? false:true;
   const edtUsr = {
     usr:usrM,
     flag:venFlag,
-    vend:rep
+    vend:!rep? voidRep :rep
   };
-  console.log('edtUsr',edtUsr);
+  console.log('edtUsr desde func edtusr',edtUsr);
   
   addUsr('edtUsr',edtUsr);
 }
+
 async function dltUser(venId,usrId) {
   //hacer delete a la api con el id en el endpoint nadamas elegir ese objeto borrarlo 
 }
@@ -519,7 +712,9 @@ async function dltUser(venId,usrId) {
     });
     const container=document.getElementById('addUsrDiv');
   container.style.display='none';
- 
+  const contC=document.getElementById('cotsDiv');
+  container.style.display='none';
+  contC.style.display='none';
   }
 
   function crtVend(rep){
@@ -593,8 +788,13 @@ async function dltUser(venId,usrId) {
       console.log('tabArr',tabArr);
       captntext = 'Usuarios';
     }else if(ul=='cots'){
-      tabArr ={ cots:[...anchor]};
-      venSel=document.getElementById('venFilt');
+      console.log('anchor ccots',anchor);
+      tabArr =anchor;
+      console.log('cots tabarr',tabArr);
+      const divCot=document.getElementById('cotsDiv');
+      divCot.style.display='block';
+      const venSel=document.getElementById('venFilt');
+      venSel.style.display='block';
       venSel.addEventListener('change',()=>{
         const filtVen=venSel.value;
         if(filtVen=='all'){
@@ -656,6 +856,11 @@ async function dltUser(venId,usrId) {
                                   row.appendChild(cell);
                                 }
 
+        }else if(ul=='modUsr' && key=='pw'){
+          const cell = document.createElement("td");
+          cell.textContent = '******';
+          row.appendChild(cell);
+
         }else{  
          const cell = document.createElement("td");
          cell.textContent = value;
@@ -698,7 +903,7 @@ async function dltUser(venId,usrId) {
        editRow(modelo,tId,ul,keys,origRow);
       }else{
         
-        modUsr(tRow.vendId,tRow);
+        edtUsr(tRow.vendId,tRow);
       }
       });
       editCell.appendChild(editButton);
@@ -1029,7 +1234,7 @@ async function saveRow(row, modelo, tId,ul,keys,originalRow) {
   }
   
 if (Object.keys(changes).length === 0) {
-  alert('No se hizo ningun cambio!');
+  toastr.warning('No se hizo ningun cambio!', 'Atención!');
   return;
 }else{
   changes.header={
@@ -1051,15 +1256,15 @@ if (Object.keys(changes).length === 0) {
   .then(saved => {
     console.log('saved:',saved);
     if(saved.succ === true){
-      alert('Cambios guardados en la base de datos');
+      toastr.success('Cambios guardados en la base de datos', 'Cambio Exitoso');
       bomSol().then(updatedData => {
         jason = updatedData;
       });
     }else{
-      alert('Error al guardar los cambios:', saved?.message);
+      toastr.error(`Error al guardar los cambios: ${saved?.message}`, 'ERROR en APP');
     }
   }).catch(error => {
-    alert('Error al guardar los cambios:', error);
+    toastr.error(`Error al guardar los cambios: ${error}`, 'ERROR en APP');
     
     console.error('Error en auth de usuario:', error);
   });
