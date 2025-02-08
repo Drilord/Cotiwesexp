@@ -760,7 +760,7 @@ async function svCot(data) {
     const cot = {};
     cot.id = py.id;
     cot.cotType = py.cotType;
-    cot.hp = data.hp;
+    cot.hp = cotType==2?data.hp:'';
     cot.volt = py.motor.volt;
     cot.nombre = py.nombre;
     cot.loc = py.loc;
@@ -896,21 +896,28 @@ function fillForm(data){
     sola.checked=true;
     bomb.checked=true;
     cotTypVal();
-    hp.value=data.hp;
+    
   }
   if(data.cotType==2){//sol
     sola.checked=true;
     bomb.checked=false;
     sola.dispatchEvent(changeEvent);
     cotTypVal();
-    const hpMan=document.getElementById('solHp'); 
-    hpMan.value=data.hp;
+    const waitForSolHp = setInterval(() => {
+      const hpMan = document.getElementById('solHp');
+      if (hpMan) {
+        clearInterval(waitForSolHp);
+        hpMan.value = data.hp;
+        hpMan.dispatchEvent(changeEvent);
+      }
+    }, 100);
   }
+  
   if(data.cotType==1){//bomb
     bomb.checked=true;
     sola.checked=false;
     bomb.dispatchEvent(changeEvent);
-    hp.value=data.hp;
+    
   }
   if(data.currT==1){ //alt
     altC.checked=true;
@@ -957,9 +964,11 @@ console.log('data in fill form:',data);
   nom.value=data.nombre;
   loc.value=data.loc;
   km.value=data.km;
+  if(data.CDT){
   cdtHtm.value=data.CDT;
   cdtHtm.focus();
   cdtHtm.blur();
+  }
   agC.checked=data.agCal;
   agC.dispatchEvent(changeEvent);
   idCot.value=data.id;
