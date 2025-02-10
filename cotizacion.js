@@ -1,4 +1,4 @@
-let a, b, c, d, e, f, g, h, i, j, k, l, curr, nomPyct, idPyct ;
+let a, b, c, d, e, f, g, h, i, j, k, l, curr, nomPyct, idPyct, servFlg ;
 
 /*
 navigator.storage.estimate().then(estimate => {
@@ -41,6 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // console.log(myObject.pyct.struct.precio);
       nomPyct=myObject.pyct.nombre;
       idPyct=myObject.pyct.id;
+      servFlg=myObject.pyct.servFlg;
       const pumpModel = myObject.Modelo;
       const pumpHP = myObject.hp;
       const venddr = myObject.pyct.rep;
@@ -77,7 +78,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const grua = myObject.pyct.grua ?? 0;
       const viat = Math.round(hosp + comidas + gasTras);
       const gasInd = myObject.pyct.gasInd / 100 + 1;
-      
+      const envEmb = myObject.pyct.envEmb;
+
+
       console.log("grua ", grua);
       console.log("viat ", viat);
       console.log("comidas ", comidas);
@@ -109,9 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const precMotor = Math.round((mot.costo ?? 0) * gasInd);
       const precioPump = Math.round(precioBom + precMotor);
       const SprecioPump = precioPump.toLocaleString("en-US");
-      const servPrice = Math.round(
+      const servPrice = servFlg==0? Math.round(
         (myObject.pyct.manObr ?? 0) * (cantPan?.cantidadPaneles ?? 1) * (gasInd ?? 0) + (viat ?? 0) + (grua ?? 0)
-      );
+      ): Math.round(envEmb);
       const SservPrice = servPrice.toLocaleString("en-US");
       const preMatElec = Math.round(myObject.pyct.matElec * pumpHP * gasInd);
       const SpreMatElec = preMatElec.toLocaleString("en-US");
@@ -208,6 +211,8 @@ document.addEventListener("DOMContentLoaded", () => {
       } conexiones eléctricas,${
         proyT == 2 ? `` : `instalación de la bomba,`
       } entrega de materiales, todo lo necesario para su funcionamiento correcto y gastos operativos.`;
+
+      const desEnv = `Servicios de embalaje y envío de materiales a la dirección de instalación.`;
       //Inner HTML dinamico
       cotType.innerHTML = `${
         proyT === 1
@@ -222,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nomP.innerText = ` ${myObject.pyct.nombre} `;
       descAdd.innerText = ``;
       nomV.innerHTML = `${venddr?.nombre}`;
+      if(servFlg==1){document.getElementById("servicios").style.visibility = "hidden";}
       desServ.innerHTML = `${desManObr}`;
       mail.innerText = `${venddr?.mail}`;
       tel.innerText = `${venddr?.tel}`;
@@ -271,9 +277,10 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td class="col-8 cotiTab">${strPaDes}</td>
                             <td class="col-1 cotiTab">$${SstrPPrice}</td>`;
       manObr.innerHTML = `<td class="col-1 cotiTab">1</td>
-                            <td class="col-8 cotiTab">${desManObr}</td>
+                            <td class="col-8 cotiTab">${servFlg==0?desManObr:desEnv}</td>
                             <td class="col-1 cotiTab">$${SservPrice}</td>`;
       coTotalHTM.innerText = `$${cotTot}`;
+      
       if (proyT == 1) {
         //poner solo  bombeo
 

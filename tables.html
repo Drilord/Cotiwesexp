@@ -15,9 +15,13 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>  toastr.options = {"positionClass": "toast-top-full-width"};</script>
        <script src="tables.js"></script>
        
-    <title>tablesact</title>
+    <title>Weslaco PA</title>
     <style>
        .container {
         background-color: rgb(236, 245, 225);
@@ -35,10 +39,11 @@
       }
       .div {
         margin: 10px;
-        
-        
-        
+
       }
+    .addusrIpt {
+    margin-bottom: 15px;
+    }
       table {
         border-collapse: separate;
         border-spacing: 0;
@@ -135,7 +140,7 @@
  </div>
  <!--Fin Ventana modal-->
  <div class="container" id="main">
-  <div class="row dirW comp" style="display: none;">
+  <div class="row dirW comp gere" style="display: none;">
     <!-- Button trigger Menu -->
     <button type="button" class="btn btn-success" data-bs-toggle="offcanvas" data-bs-target="#sideMenu">
       Abrir Menu
@@ -160,13 +165,13 @@
           <div class="accordion-body">
             <ul>
               <li><a id="addUsr" href="#">Agregar</a></li>
-              <li><a href="#">Modificar</a></li>
+              <li><a id="modUsr" href="#">Modificar</a></li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item dirW comp" style="display: none;">
         <h2 class="accordion-header" id="headingBombas">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBombas" aria-expanded="false" aria-controls="collapseBombas">
             Bombas
@@ -259,14 +264,14 @@
           </div>
         </div>
       </div>
-      <div class="accordion-item">
+      <div class="accordion-item dirW comp" style="display: none;">
         <h2 class="accordion-header" id="headingMotores">
           <button id="motoresM" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMotores" aria-expanded="false" aria-controls="collapseMotores">
             Motores
           </button>
         </h2>
       </div>
-      <div class="accordion-item">
+      <div class="accordion-item dirW comp" style="display: none;">
         <h2 class="accordion-header" id="headingSolar">
           <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolar" aria-expanded="false" aria-controls="collapseSolar">
         Solar
@@ -283,21 +288,22 @@
         </div>
       </div>
 
-      <div class="accordion-item">
+      <div class="accordion-item dirW comp">
         <h2 class="accordion-header" id="headingServicios">
           <button id="servicesM" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseServicios" aria-expanded="false" aria-controls="collapseServicios">
             Servicios
           </button>
         </h2>
-        <div class="accordion-item dirW" style="display: none;">
+      </div>
+        <div class="accordion-item dirW gere" style="display: none;">
           <h2 class="accordion-header" id="headingCotizaciones">
-            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCotizaciones" aria-expanded="false" aria-controls="collapseCotizaciones">
+            <button id="cots" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCotizaciones" aria-expanded="false" aria-controls="collapseCotizaciones">
               Cotizaciones
             </button>
           </h2>
           
         </div>
-      </div>
+      
       <style>
         .accordion-body ul {
           list-style-type: none;
@@ -319,7 +325,7 @@
       </div>
     </div>
     <div class="col-10">
-      <!-- Existing content -->
+      <!-- Admin y Logo container -->
       <div class="container" id="ctnrPass">
         <div class="row g-3">
           <div class="col-2 d-md-block d-none"></div>
@@ -329,24 +335,136 @@
           </div>
           <div class="col-2 d-md-block d-none"></div>
         </div>
-        <div  class="row">
-          <div class="col-2 d-md-block d-none"></div>
-          <div id="addUsrDiv" class="col-10 form-floating" style="display: none;">
-            <input class="form-control vLock" type="text" id="input1" placeholdere" />
-          <label for="input1">Usuario:</label>
+        <!-- Add usr container -->
+        <div class="row" id="addUsrDiv" style="display: none; ">
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-10 form-floating addusrIpt" >
+              <h3 class="text-center text-truncate ">Administración de Usuarios</h3>
+            </div>
+          </div>  
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating" >
+              <input class="form-control addusrIpt" type="text" id="adduser" placeholder="User" />
+              <label for="adduser">Usuario:</label>
+            </div>
+          </div>  
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating addusrIpt" >
+              <input class="form-control vLock" type="password" id="addpw" placeholder="Pwd" />
+              <label for="addpw">Contraseña:</label>
+              <span id="chgPwLeg" style="color: #ff0000; display: none;">Escriba una nueva contraseña solo si desea cambiarla</span>
+            </div>
+          </div> 
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating addusrIpt" >
+              <select id="perm" class="form-select text-right">
+                <option value="0">Vendedor</option>
+                <option value="1">Compras</option>
+                <option value="2">Gerencia Ventas</option>
+                <option value="3">Direccion</option>
+              </select>
+              <label for="perm">Permisos:</label>
+            </div>
+          </div>       
+          <div class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 col-md-6 form-switch addusrIpt">
+              <input class="form-check-input vLock" type="checkbox" id="chkVend" />
+              <label class="form-check-label" for="chkVend">Vendedor?</label></div>
+            <div class="col-4 d-md-block d-none"></div> 
           </div>
-        </div>
+          
+          <!-- Add Vend container -->
+        <div class="row" id="addVenDiv" style="display: none;">
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-10 form-floating addusrIpt" >
+              <h4 class="text-center text-truncate">Datos del vendedor para cotización</h4>
+            </div>
+          </div>  
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating" >
+              <input class="form-control addusrIpt" type="text" id="veNom" placeholder="Nambe" />
+              <label for="veNom">Nombre Completo:</label>
+            </div>
+          </div>  
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating" >
+              <input class="form-control addusrIpt" type="text" id="venTel" placeholder="Telesforo" />
+              <label for="venTel">Teléfono:</label>
+            </div>
+          </div> 
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating" >
+              <input class="form-control addusrIpt" type="text" id="venMail" placeholder="emilio" />
+              <label for="venMail">e-mail:</label>
+            </div>
+          </div>
+         </div>
+          <!-- end vend container -->
+         <div  class="row">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-6 form-floating addusrIpt" >
+          <button type="button" class="btn btn-success float-end" id="usrSaveBtn">
+          Guardar Nuevo Usuario 
+          </button>
+          <button type="button" class="btn btn-secondary float-end" id="usrCnclBtn" style="display: none;">
+            Cancelar 
+            </button>
+          
+          </div>
+         </div>
+         <div  class="row">
+          <div class="col-2 d-md-block d-none"></div>
+          <div class="col-6 form-floating addusrIpt" >
+          <button type="button" class="btn btn-danger float-end" id="usrDelBtn" style="display: none;">
+          Borrar Usuario 
+          </button>
+          </div>
+         </div>
+      </div>
+       <!-- end Add usr container -->
+        <!-- Cots container -->
+        <div class="row" id="cotsDiv" style="display: none; ">
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-10 form-floating addusrIpt" >
+              <h3 class="text-center text-truncate ">Cotizaciones</h3>
+            </div>
+          </div>  
+          <div  class="row">
+            <div class="col-2 d-md-block d-none"></div>
+            <div class="col-6 form-floating addusrIpt" >
+              <select id="venFilt" class="form-select text-right">
+                <option value="all">Todos</option>
+              </select>
+              <label for="venFilt">Vendedor:</label>
+            </div>
+          </div>       
+        </div>  
+        <!-- Tablas container -->
+         
         <div class="row ">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-10" id="paTablas"></div>
         </div>
+        <!-- subTablas container -->
         <div class="row ">
           <div class="col-2 d-md-block d-none"></div>
           <div class="col-10" id="paSubTablas"></div>
         </div>
+         <!-- fin subTablas container -->
       </div> 
+       <!-- fin ctnrPass container -->
     </div>
   </div>
-</div>
+</div> <!-- fin main -->
 </body>
 </html>

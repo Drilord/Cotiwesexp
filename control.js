@@ -1,124 +1,157 @@
 let a, b, c, d, e, f, g, h, i, j, k, l;
-let AL,selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0}}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+let btnCot=1,AL,selPump, tipCam, pumpCurrT=1, cotType=3, structType=1, pyct={descAdd:{flag:0},servFlg:0}, descValido, modalContent, dataS, dataPan, eqBomba, buttonState = 0, srvcs, cdtFlg=0, repId, reps; 
+document.addEventListener('DOMContentLoaded', authMain);
+async function bombsol(){
+ try{
+  const response = await fetch(`api/bombSol/`);
+  if(response.ok){
+    const data=response.json();
+    return data;
+  }else{
+    throw new Error('Error fetching data');
+  }
+ }catch(error){
 
-document.addEventListener('DOMContentLoaded', async () => {
- 
-  fetch(`api/bombSol/`) 
-    .then(response => response.json())
-    .then(jsonData => {
-      reps=jsonData.bomSol.vendedores;
-      authMain();
-      const CDT = document.getElementById('input6');
-      const temp = document.getElementById('check0');
-      const curra = document.getElementById('check6');
-      const currd = document.getElementById('check7');
-      const ltsSelect = document.getElementById('ltsSelect');
-      const gasIndhtm = document.getElementById('input7');
-      const chkDesA = document.getElementById('checkDesA');
-      const DescAdd = document.getElementById('descAdd');
+   console.error('Error fetching data:', error);
+}
+}
 
+async function init(){
+  
+    const jsonData= await bombsol();
+    if(jsonData){
+    reps=jsonData.bomSol.vendedores;
+    const vendSelect = selectVend(reps,repId);
+    const salesRep = document.getElementById('vendSelect');
+    salesRep.value= vendSelect?.nombre
+    pyct.rep= vendSelect;
+    const CDT = document.getElementById('input6');
+    const temp = document.getElementById('check0');
+    const curra = document.getElementById('check6');
+    const currd = document.getElementById('check7');
+    const ltsSelect = document.getElementById('ltsSelect');
+    const gasIndhtm = document.getElementById('input7');
+    const chkDesA = document.getElementById('checkDesA');
+    const DescAdd = document.getElementById('descAdd');
+    const envchk=document.getElementById('envCheck');
+    const envDiv=document.getElementById('envDiv');
+    srvcs=jsonData.bomSol.servicios;
+    dataS=jsonData.bomSol.estructura;
+    dataPan=jsonData.bomSol.solar;
+    eqBomba=jsonData.bomSol.equipamientoBomba;
+    estrucSol();     
+currType(6,jsonData.bomSol.bombas);
 
-      srvcs=jsonData.bomSol.servicios;
-      dataS=jsonData.bomSol.estructura;
-      dataPan=jsonData.bomSol.solar;
-      eqBomba=jsonData.bomSol.equipamientoBomba;
-      estrucSol();     
-  currType(6,jsonData.bomSol.bombas);
-  curra.addEventListener('change', ()=>{
-  const ltscurr=jsonData.bomSol.bombas
-  currType(6,ltscurr);
+envchk.addEventListener('change',()=>{
+  if(envchk.checked==true){
+    pyct.servFlg=0;
+    envDiv.style.display= 'none';
+  }else{
+    pyct.servFlg=1;
+    envDiv.style.display= 'block';
+  }
+});
+curra.addEventListener('change', ()=>{
+const ltscurr=jsonData.bomSol.bombas
+currType(6,ltscurr);
+selPump=datosBomba(jsonData);
+if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+maxCDT();
+console.log('en change listen de Alt',pumpCurrT);
+
+});
+currd.addEventListener('change', ()=>{
+  const ltscurr=jsonData.bomSol.bombasKolosal
+  currType(7,ltscurr);
   selPump=datosBomba(jsonData);
   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
   maxCDT();
   console.log('en change listen de Alt',pumpCurrT);
   
   });
-  currd.addEventListener('change', ()=>{
-    const ltscurr=jsonData.bomSol.bombasKolosal
-    currType(7,ltscurr);
-    selPump=datosBomba(jsonData);
-    if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-    maxCDT();
-    console.log('en change listen de Alt',pumpCurrT);
-    
-    });
-  gasIndhtm.addEventListener('change',()=>{descValido=null;});
-  
-  /*jsonData.bomSol.vendedores.forEach(vend => {
-    const option = document.createElement('option');
-    option.value = vend.nombre;
-    option.text = vend.nombre;
-    vendSelect.appendChild(option);
-  });
-     
-     pyct.rep= vendSelect;*/
-  chkDesA.addEventListener('change', () => {
-    if(chkDesA.checked==true){
-          pyct.descAdd={flag:1,text:''};
-          DescAdd.style.display= 'block';    
-    }else{DescAdd.style.display= 'none';
-      pyct.descAdd={flag:0};
-    }
-    console.log(pyct.descAdd.flag);
-  });
-  document.getElementById('descAdd').addEventListener('input', function () {
-    if (this.value.length >= 280) {
-      alert('Has alcanzado el límite máximo de caracteres.');
-    }
-  });
-  
-  CDT.addEventListener('blur', () => {
-  selPump=datosBomba(jsonData);
-  if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp); console.log(pyct.motor.hp);}
-  
-  });
-  temp.addEventListener('change', () => {
-    if(selPump && pumpCurrT==1){
-    motorBomba(jsonData,selPump.hp);
+gasIndhtm.addEventListener('change',()=>{descValido=null;});
+
+/*jsonData.bomSol.vendedores.forEach(vend => {
+  const option = document.createElement('option');
+  option.value = vend.nombre;
+  option.text = vend.nombre;
+  vendSelect.appendChild(option);
+});
+   
+   pyct.rep= vendSelect;*/
+chkDesA.addEventListener('change', () => {
+  if(chkDesA.checked==true){
+        pyct.descAdd={flag:1,text:''};
+        DescAdd.style.display= 'block';    
+  }else{DescAdd.style.display= 'none';
+    pyct.descAdd={flag:0};
+  }
+  console.log(pyct.descAdd.flag);
+});
+document.getElementById('descAdd').addEventListener('input', function () {
+  if (this.value.length >= 280) {
+    toastr.warning('Has alcanzado el límite máximo de caracteres.', 'Warning');
+  }
+});
+
+CDT.addEventListener('blur', () => {
+  selPump = datosBomba(jsonData);
+  if (selPump && pumpCurrT == 1) {
+    motorBomba(jsonData, selPump.hp);
     console.log(pyct.motor);
+  }
+});
+
+temp.addEventListener('change', () => {
+  if(selPump && pumpCurrT==1){
+  motorBomba(jsonData,selPump.hp);
+  console.log(pyct.motor);
+  }
+  });
+/*vendSelect.addEventListener('change', () => {
+  pyct.rep= selectVend(jsonData.bomSol.vendedores);
+  });*/
+  
+ltsSelect.addEventListener('change', () => {
+   selPump=datosBomba(jsonData);
+   if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
+   console.log(pyct.motor); 
+  });
+    }else{
+      throw new Error('Error con bombsol');
     }
-    });
-  /*vendSelect.addEventListener('change', () => {
-    pyct.rep= selectVend(jsonData.bomSol.vendedores);
-    });*/
-    
-  ltsSelect.addEventListener('change', () => {
-     selPump=datosBomba(jsonData);
-     if(selPump && pumpCurrT==1){motorBomba(jsonData,selPump.hp);} 
-     console.log(pyct.motor); 
-    });
+
+ 
+
+}
 
 
-    })
-    .catch(error => {
-      console.error('Error fetching data:', error);
-    });
-  }); //esto hace una func IIFE osea que se ejecuta en chinga on load jaja 
 
 async function authMain(){     
 try {
     const response = await fetch('api/vende/amoen')
     if (response.ok) {
       const data = await response.json(); 
+      document.getElementById('main').style.display='block'
       console.log('vend Id', data?.userData?.id); 
       repId=data?.userData?.id
       AL=data?.userData?.aLev
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
+        if(AL===2){dispLevel='.gere'}
+        init();
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
        });
       if(repId==0){
-    alert('Este usuario no puede cotizar');
+      toastr.error('Este usuario no puede cotizar', 'Error');
     const UI=document.getElementById('main');
     UI.style.display='none';
+    window.location.href = '/tables.html';
     return;}
 
-   const vendSelect = selectVend(reps,repId);
-   const salesRep = document.getElementById('vendSelect');
-   salesRep.value= vendSelect?.nombre
-   pyct.rep= vendSelect;
+   
     } else if (response.status === 401) {
        
       k=1
@@ -166,7 +199,7 @@ try {
     } 
   } catch (error) {
     console.error('Network error:', error);
-    alert("A network error occurred.");
+    toastr.error('Error de Comunicacion.', 'Error');
   }
 
 
@@ -193,12 +226,12 @@ async function valLogin(){
   pwd = pwd === '' ? null : pwd;
   if(usr==null){
     usrHtm.classList.add('is-invalid')
-    alert('EL campo Usuario no puede estar vacio')
+    toastr.warning('EL campo Usuario no puede estar vacio', 'Warning')
     return;
   }
   if(pwd==null){
     pwdHtm.classList.add('is-invalid')
-    alert('EL campo Contraseña no puede estar vacio')
+    toastr.warning('EL campo Contraseña no puede estar vacio', 'Warning')
     return;
   }
    
@@ -256,25 +289,24 @@ async function valLogin(){
    }
   }
   else if(auth.token!='invalid'&& auth.id!=null){  
-    
+    document.getElementById('main').style.display='block' 
    console.log('vend Id', auth.id); 
    repId=auth.id
    AL=auth?.authL ? auth.authL : 0;
         let dispLevel;
         if(AL===3){dispLevel='.dirW'}
+        if(AL===2){dispLevel='.gere'}
+        init();
         const authdisp=document.querySelectorAll(dispLevel);
         authdisp.forEach(element=>{
           element.style.display='block';
        });
    if(repId==0){
     usrHtm.classList.add('is-invalid')
-    alert('Este usuario no puede cotizar')
+    toastr.error('Este usuario no puede cotizar', 'Error');
+    window.location.href = '/tables.html';
     return;}
-   const vendSelect = selectVend(reps,repId);
-   const salesRep = document.getElementById('vendSelect');
-   salesRep.value= vendSelect?.nombre
-   pyct.rep= vendSelect;
-   const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
+    const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
    myModal.hide();
 
   } 
@@ -319,7 +351,7 @@ function calculateDistance(destinationAddress) {
   service.getDistanceMatrix(request, (response, status) => {
       if (status === "OK") {
           const distance = response.rows[0].elements[0].distance.value / 1000; // Convert meters to kilometers
-          if(isNaN(distance)){alert("Distancia no calculada intente corregirr direccion");return;}
+          if(isNaN(distance)){toastr.error('Distancia no calculada intente corregirr direccion', 'Error');return;}
           document.getElementById("input3").value = Math.round(distance.toFixed(2)); // Display with 2 decimal places
 
       } else {
@@ -454,6 +486,8 @@ async function consultarTipoCambio(banxicourl,token) {
 
 
 function validar() {
+  const envEmb=document.getElementById('envEmb');
+  const envchk=document.getElementById('envCheck');
   const nom=document.getElementById('input1'); 
   const loc=document.getElementById('input2');
   const km=document.getElementById('input3');
@@ -468,8 +502,9 @@ function validar() {
   const tipCambio=document.getElementById('input0'); 
   const ltsS=document.getElementById('ltsSelect');
   const descAdd=document.getElementById('descAdd');
+ 
 if(cdtFlg==1){
-  alert('Combinacion de CDT y Volumen de Agua incorrecto!');
+  toastr.error('Combinacion de CDT y Volumen de Agua incorrecto!', 'Corrija para continuar!');
   cdt.classList.add('is-invalid');
   ltsS.classList.add('is-invalid');
   return;}  
@@ -478,44 +513,46 @@ if (buttonState === 0) {
  //campos generales
  if(pyct.descAdd.flag==1){
    if(!descAdd.value || descAdd.value.trim()==''){
-          alert("desactive la casilla descripcion adicional");
+    toastr.error("desactive la casilla descripcion adicional", "Corrija para continuar!");
           descAdd.classList.add('is-invalid');
           return;
    }else{pyct.descAdd.text=descAdd.value ;} 
  }
- 
+ if(envEmb.value=='' && envchk.checked==false){
+    toastr.error('Introduzca el costo de envio', 'Corrija para continuar!');
+ }
  if(!tipCambio.value || isNaN(tipCambio.value)){
-  alert("ERROR CON EL TIPO DE CAMBIO")
+  toastr.error("ERROR CON EL TIPO DE CAMBIO", "No se puede continuar");
   tipCambio.classList.add('is-invalid');
   return;
  }
  if(!nom.value){
-  alert("El campo Nombre no puede estar vacio")
+  toastr.error("El campo Nombre no puede estar vacio", "Corrija para continuar!")
   nom.classList.add('is-invalid');
   return;
  } else{nom.classList.remove('is-invalid');}
 if(!loc.value){
-  alert("El campo Localidad no puede estar vacio");
+  toastr.error("El campo Localidad no puede estar vacio", "Corrija para continuar!");
   loc.classList.add('is-invalid');
   return;
  } else{loc.classList.remove('is-invalid');}
 if(!km.value){
-  alert("El campo Kilometros no puede estar vacio");
+  toastr.error("El campo Kilometros no puede estar vacio", "Corrija para continuar!");
   km.classList.add('is-invalid');
   return;
 }else{km.classList.remove('is-invalid');}  
 if (isNaN(km.value)) {
-   alert("El campo Kilometros no es un número.");
+  toastr.error("El campo Kilometros no es un número.", "Corrija para continuar!");
    km.classList.add('is-invalid');
    return;  
 }else{km.classList.remove('is-invalid');} 
 if (!marg.value) {
-  alert("Los gastos indirectos no pueden estar vacios.");
+  toastr.error("Los gastos indirectos no pueden estar vacios.", "Corrija para continuar!");
   marg.classList.add('is-invalid');
     return;
   } else{marg.classList.remove('is-invalid');}
 if (isNaN(marg.value)) {
-  alert("Los gastos indirectos deben ser numero.");
+  toastr.error("Los gastos indirectos deben ser numero.", "Corrija para continuar!");
   marg.classList.add('is-invalid');
     return;
   } else{marg.classList.remove('is-invalid');}
@@ -523,27 +560,27 @@ if (isNaN(marg.value)) {
  if(cotType == 1){
   pyct.cotType=1;
  
-  if(!selPump){alert("Proporcione CDT correcto");
+  if(!selPump){toastr.error("Proporcione CDT correcto", "Corrija para continuar!");
     cdt.classList.add('is-invalid');
     return;
   } else{cdt.classList.remove('is-invalid');}
   if(!cdt.value){
-    alert("El campo CDT no puede estar vacio");
+    toastr.error("El campo CDT no puede estar vacio", "Corrija para continuar!");
     cdt.classList.add('is-invalid');
     return;
   } else{cdt.classList.remove('is-invalid');}
   if(!proPozo.value){
-    alert("Debe introducir la profundidad del pozo");
+    toastr.error("Debe introducir la profundidad del pozo", "Corrija para continuar!");
     proPozo.classList.add('is-invalid');
     return;
   } else{proPozo.classList.remove('is-invalid');}
   if (isNaN(proPozo.value)) {
-    alert("La profundidad del pozo no es un número.");
+    toastr.error("La profundidad del pozo no es un número.", "Corrija para continuar!");
     proPozo.classList.add('is-invalid');
     return;
   } else{proPozo.classList.remove('is-invalid');}
  if (isNaN(grua.value)) {
-  alert("El costo de grua debe ser un número.");
+  toastr.error("El costo de grua debe ser un número.", "Corrija para continuar!");
   grua.classList.add('is-invalid');
     return;
   } else{grua.classList.remove('is-invalid');}
@@ -556,52 +593,57 @@ if (isNaN(marg.value)) {
  if(cotType == 2){
   pyct.cotType=2;
 if(!distP.value){
-  alert("Introduzca la distancia de la bomba a los paneles")
+  toastr.error("Introduzca la distancia de la bomba a los paneles", "Corrija para continuar!");
   distP.classList.add('is-invalid');
   return;
 }else{distP.classList.remove('is-invalid');}
 if (isNaN(distP.value)) {
-  alert("La distancia a Paneles no es un número.");
+  toastr.error("La distancia a Paneles no es un número.", "Corrija para continuar!");
   distP.classList.add('is-invalid');
   return;
 }else{distP.classList.remove('is-invalid');}
+if(!pyct.motor){
+  pyct.motor={};
+}  
+  pyct.motor.volt=document.getElementById("voltaje").value
+
 pyct.solar= datosSolar(parseFloat(hpMan.value),parseInt(distP.value),parseInt(proPozo.value))
 c = genID(hpMan.value);
 } 
 //full bomsol
 if(cotType == 3 || !cotType){
   pyct.cotType=3;
-  if(!selPump){alert("Proporcione CDT correcto");
+  if(!selPump){toastr.error("Proporcione CDT correcto", "Corrija para continuar!");
     cdt.classList.add('is-invalid');
     return;
   }else{cdt.classList.remove('is-invalid');} 
   if(!cdt.value){
-    alert("El campo CDT no puede estar vacio!")
+    toastr.error("El campo CDT no puede estar vacio!", "Corrija para continuar!")
     cdt.classList.add('is-invalid');
     return;
   }else{cdt.classList.remove('is-invalid');}
    if(!distP.value){
-     alert("Introduzca la distancia de la bomba a los paneles")
+    toastr.error("Introduzca la distancia de la bomba a los paneles", "Corrija para continuar!")
      distP.classList.add('is-invalid');
      return;
    }else{distP.classList.remove('is-invalid');}
    if (isNaN(distP.value)) {
-    alert("La distancia a Paneles no es un número.");
+    toastr.error("La distancia a Paneles no es un número.", "Corrija para continuar!");
     distP.classList.add('is-invalid');
   return;
 }else{distP.classList.remove('is-invalid');}
   if(!proPozo.value){
-    alert("Debe introducir la profundidad del pozo");
+    toastr.error("Debe introducir la profundidad del pozo", "Corrija para continuar!");
     proPozo.classList.add('is-invalid');
     return;
   } else{proPozo.classList.remove('is-invalid');}
   if (isNaN(proPozo.value)) {
-    alert("La profundidad del pozo no es un número.");
+    toastr.error("La profundidad del pozo no es un número.", "Corrija para continuar!");
     proPozo.classList.add('is-invalid');
     return;
   } else{proPozo.classList.remove('is-invalid');}
   if (isNaN(grua.value)) {
-    alert("El costo de grua debe ser un número.");
+    toastr.errorc("El costo de grua debe ser un número.", "Corrija para continuar!");
     grua.classList.add('is-invalid');
     return;
   } else{grua.classList.remove('is-invalid');}
@@ -618,7 +660,7 @@ if(parseInt(marg.value)<35){
  if(!descValido){authDesMod(); return;}
  if(descValido==1){marg.classList.remove('is-invalid'); pyct.gasInd=parseInt(marg.value)}
 }else{pyct.gasInd=parseInt(marg.value)}
-alert('ID generado: '+c+' puede Cotizar');
+toastr.success(`ID generado: ${c} puede Cotizar`, 'Cotizacion Valida');
 cotBtn.style.display= 'block';
 d=document.getElementById('idCot');
 d.value = c;   
@@ -659,8 +701,8 @@ try {
 
 }
 
-function cotizar(){ 
-    
+async function cotizar(){ 
+    pyct.envEmb=document.getElementById('envEmb').value;
     pyct.manObr = srvcs[0].precio;
     pyct.matElec = srvcs[1].precio;
     pyct.hpDia = srvcs[3].precio;
@@ -699,24 +741,257 @@ function cotizar(){
     const average =Math.round(total / Object.keys(pyct.ltsmes).length);
     pyct.ltsAvg = average.toLocaleString('en-US');
     console.log("Average:", average); 
-    saveToLocalStorage('cotData', selPump);
     
+    const cotSaved = await svCot(selPump,repId,);
+    if(cotSaved){
+      toastr.success('Cotizacion Guardada', 'Exito!');
+      saveToLocalStorage('cotData', selPump);
+    }else{
+      toastr.error('Cotizacion no Guardada', 'Error en APP');
+      saveToLocalStorage('cotData', selPump);
+    }
+
   }
   
-function actualizar() {
-    a = document.getElementById('input0').value;
-    alert('Los datos se actualizaron correctamente!');
+async function svCot(data) {
+    const py=data.pyct;
+    const currYr = new Date().getFullYear();
+    const currentMonth = new Date().getMonth() + 1; // getMonth() returns 0-11, so add 1 to get 1-12
+    const cot = {};
+    cot.id = py.id;
+    cot.cotType = py.cotType;
+    cot.hp = cotType==2?data.hp:'';
+    cot.volt = py.motor.volt;
+    cot.nombre = py.nombre;
+    cot.loc = py.loc;
+    cot.km = py.km;
+    cot.descAdd = py.descAdd.text;
+    cot.currT = py.curr;
+    cot.ltsSel = py.lts;
+    cot.propoz = py.proPozo;
+    cot.CDT = py.cdtP;
+    cot.gasInd = py.gasInd;
+    cot.distP = document.getElementById('input8').value;
+    cot.agCal = document.getElementById('check0').checked;
+    cot.strType = structType;
+    cot.grua = py.grua;
+    cot.vendId = repId;
+    cot.srvpr = py.envEmb;
+    cot.date = `${currentMonth}/${currYr}`;
+    
+try{
+    const response = await fetch('api/cots/new', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cot),
+    });
+    if (!response.ok) {
+      console.error('Error saving cot:', response);
+      return false;
+    }else
+    { const result = await response.json();
+      if(result.succ){
+        toastr.success('La cotizacion de guardo en la base de datos!', "Proceso Correcto!");  
+        return result.succ;
+      }else{
+        toastr.error('Error al guardar la cotizacion', 'Error en API!');
+        return result.succ;
+      }
+    }
+    
+  
+}catch(error){
+
 }
 
 
+   
+
+    toastr.success('La cotizacion de guardo en la base de datos!', "Proceso Correcto!");
+
+}
+async function gtCot() {
+  const url = `api/cots`;
+  try {
+    const response = await fetch(url);
+    const jsonData = await response.json();
+    return jsonData;
+  } catch (error) {
+    console.error('Error fetching data Cots:', error);
+  }
+}
+
+async function busCot(){
+  let selCot;
+  
+  
+  const busBtn=document.getElementById('buscBtn');
+   const cots= await gtCot();
+  const srch= document.getElementById('idCot');
+  srch.disabled=false;
+  srch.value='';
+  busBtn.innerText='Aplicar';
+  busBtn.onclick = () => {
+    const id = srch.value;
+    if (cots) {
+      selCot = cots.cots.find(cot => cot.id === id);
+    } else {
+      toastr.error('No se puede obtener la cotización', 'Error de App!');
+      throw new Error('Fatal no se puede obtener la cot de DB');
+    }
+    if (!selCot) {
+      toastr.error('Cotizacion no encontrada', 'Cambie para Continuar!');
+      srch.classList.add('is-invalid');
+      return;
+    } else {
+    if(AL !== 3 && AL !== 2){
+     if(selCot.vendId != repId){
+       toastr.error('Cotizacion Invalida', 'Vendedor Incorrecto!');
+       return;
+     }
+    }
+      toastr.success('Cotizacion encontrada', 'Aplicada!');
+      srch.classList.remove('is-invalid');
+      srch.disabled = true;
+
+      fillForm(selCot);
+      busBtn.innerText = 'Buscar...';
+      busBtn.onclick = busCot;
+      
+    }
+  };
+
+   
+
+}
+
+function fillForm(data){
+  const changeEvent = new Event('change');
+  const nom=document.getElementById('input1'); 
+  const loc=document.getElementById('input2');
+  const km=document.getElementById('input3');
+  const cdtHtm=document.getElementById('input6');  
+  const hp=document.getElementById('hp'); 
+  const distP=document.getElementById('input8');
+  const proPozo=document.getElementById('input5');
+  const marg=document.getElementById('input7');
+  const grua=document.getElementById('input9');
+  const ltsS=document.getElementById('ltsSelect');
+  const idCot=document.getElementById('idCot');
+  const bomb=document.getElementById('check1');
+  const sola=document.getElementById('check2');
+  const checkDesA=document.getElementById('checkDesA');
+  const desAddT=document.getElementById('descAdd');
+  const agC = document.getElementById('check0');
+  const dirC = document.getElementById('check7');
+  const altC = document.getElementById('check6');
+  const elev = document.getElementById('check3');
+  const piso = document.getElementById('check4');
+  const plana= document.getElementById("check5") ; 
+  const envEmb=document.getElementById('envEmb');
+  const envchk=document.getElementById('envCheck');
+  const allInp =document.querySelectorAll('vLock');
+
+  if(data.cotType==3){//full
+    sola.checked=true;
+    bomb.checked=true;
+    cotTypVal();
+    
+  }
+  if(data.cotType==2){//sol
+    sola.checked=true;
+    bomb.checked=false;
+    sola.dispatchEvent(changeEvent);
+    cotTypVal();
+    const waitForSolHp = setInterval(() => {
+      const hpMan = document.getElementById('solHp');
+      if (hpMan) {
+        clearInterval(waitForSolHp);
+        hpMan.value = data.hp;
+        hpMan.dispatchEvent(changeEvent);
+      }
+    }, 100);
+  }
+  
+  if(data.cotType==1){//bomb
+    bomb.checked=true;
+    sola.checked=false;
+    bomb.dispatchEvent(changeEvent);
+    
+  }
+  if(data.currT==1){ //alt
+    altC.checked=true;
+    altC.dispatchEvent(changeEvent);
+    dirC.checked=false;
+    ltsS.value=data.ltsSel;
+    ltsS.dispatchEvent(changeEvent);
+  }else if(data.currT==2){ //dir
+    dirC.checked=true;
+    dirC.dispatchEvent(changeEvent);
+    altC.checked=false;
+    ltsS.value=data.ltsSel;
+    ltsS.dispatchEvent(changeEvent);
+  }
+  //structType
+  switch (data.strType) {
+      case 1:
+        elev.checked = true;
+        validstruct(3);
+        break;
+      case 2:
+        piso.checked = true;
+        validstruct(4);
+        break;
+      case 3:
+        plana.checked = true;
+        validstruct(5);
+        break;
+      default:
+        console.error('Invalid structType:', data.strType);
+    }
+
+console.log('data in fill form:',data);
+  if(data.descAdd){
+  checkDesA.checked=true;  
+  checkDesA.dispatchEvent(changeEvent);
+  desAddT.value=data.descAdd;
+  }
+  if(data.srvpr){
+    envEmb.value=data.srvpr;
+    envchk.checked=false;      
+    envchk.dispatchEvent(changeEvent);
+  }
+  nom.value=data.nombre;
+  loc.value=data.loc;
+  km.value=data.km;
+  if(data.CDT){
+  cdtHtm.value=data.CDT;
+  cdtHtm.focus();
+  cdtHtm.blur();
+  }
+  agC.checked=data.agCal;
+  agC.dispatchEvent(changeEvent);
+  idCot.value=data.id;
+  
+  
+  
+  distP.value=data.distP;
+  proPozo.value=data.propoz;
+  marg.value=data.gasInd;
+  marg.dispatchEvent(changeEvent);
+  grua.value=data.grua;
+
+}
+
 function datosBomba(data) {
 let datosBomba= null ;
-const lts= document.getElementById("ltsSelect").value ;
+const lts= document.getElementById("ltsSelect")
+const ltsV= document.getElementById("ltsSelect").value ;
 const cdt= document.getElementById("input6"); 
 const hpDisp= document.getElementById("hp"); 
 let tBomba;
 if (isNaN(cdt.value)) {
-  alert("El campo CDT no es un número.");
+  toastr.error("El campo CDT no es un número.", "Corrija para continuar!");
   cdt.classList.add('is-invalid');
   return;  
 }else{cdt.classList.remove('is-invalid');}
@@ -727,7 +1002,7 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
    console.log('entro a if datosbomba directa')
 }        
         tBomba.forEach(bomba=>{
-          if(lts==bomba.lts){
+          if(ltsV==bomba.lts){
             bomba.modelos.forEach(model=>{
               if(model.altMax >= cdt.value){
                 if(!datosBomba){
@@ -744,10 +1019,14 @@ if(pumpCurrT==2){tBomba=data.bomSol.bombasKolosal
       hpDisp.value = datosBomba.hp ;
       datosBomba.costo=((datosBomba.precio*tipCam*1.16)*0.48)*0.95;
       console.log('Costo Bomba ', datosBomba.costo );
+      lts.classList.remove('is-invalid');
+      cdt.classList.remove('is-invalid');
       return datosBomba;
     }
     else{
-      alert("No existe bomba de "+lts+" lt/s para altura de "+cdt.value);
+      toastr.error(`No existe bomba de ${ltsV}lt/s para altura de ${cdt.value}`,`Corrija para continuar!`);
+      lts.classList.add('is-invalid');
+      cdt.classList.add('is-invalid');
       maxCDT();
     }
 }
@@ -827,7 +1106,7 @@ async function valiDesc(){
   const pwd=pwdHtm.value.trim();
     if(pwd===''){
       pwdHtm.classList.add('is-invalid');
-      alert('El campo contraseña de autorización no puede estar vacio!')
+      toastr.error('El campo contraseña de autorización no puede estar vacio!', 'Corrija para continuar!')
       return;
     }
   const apiParamsUrl = `api/disc/${pwd}`; 
@@ -839,6 +1118,7 @@ async function valiDesc(){
    console.log('auth:',auth.token);
   if(auth.token==='invalid'){
     if(j>=3){
+      toastr.error('Limite de intentos regargue la pagina', 'ERROR!')
       modalContent.innerHTML=`<span style="color: red;">limite de intentos regargue la pagina</span>`;
       modalbutton.style.display='none';
       modal2button.style.display='none';
@@ -853,7 +1133,7 @@ async function valiDesc(){
   }
   else if(auth.token==='valid'){  
     
-    alert("Descuento Autorizado");
+    toastr.success("Descuento Autorizado", "Exito!");
     descValido=1;
     desc.disabled=true;
     const myModal = bootstrap.Modal.getInstance(document.getElementById('staticBackdrop'));
@@ -1153,9 +1433,13 @@ else{cdtMax.textContent = `(CDT Max ${legendText}mts)`; cdtFlg=0; }
 function genID(selHp) {
   const nom = document.getElementById('input1').value;
   const vend = document.getElementById('vendSelect').value;
-  const nom3 = nom.substring(0, 3).toUpperCase();
-  const vend3 = vend.substring(0, 3).toUpperCase();
-  const finalID = `BomSol${cotType}-${nom3}-${vend3}-${selHp}`;
+
+  const nom3 = nom.substring(0, 2).toUpperCase();
+  const vend3 = vend.substring(0, 2).toUpperCase();
+  const cotT= cotType==1? 'Bom': cotType==2? 'Sol': 'BomSol'; 
+  const strT= structType==1? 'El': structType==2? 'Pi': 'Co';
+  const cuT= pumpCurrT==1? 'A': 'D';
+  const finalID = `${cotT}${cuT}-${nom3}-${strT}${vend3}-${selHp}`;
 
   return finalID;
 }
